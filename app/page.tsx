@@ -10,7 +10,7 @@ export default function Page() {
       <Hero />
 
       {/* About This Home + Booking */}
-      <section className="max-w-6xl mx-auto px-4 py-16">
+      <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row md:space-x-12">
           {/* VENSTRE: About This Home */}
           <div className="md:w-1/2 space-y-6">
@@ -47,7 +47,7 @@ export default function Page() {
           </div>
 
           {/* HØYRE: Booking Card, overlap hero */}
-          <div className="md:w-1/2 relative z-10 -mt-32 md:-mt-48">
+          <div className="md:w-1/2 relative z-10 -mt-32 md:-mt-48 max-w-lg">
             <div className="bg-gray-50 rounded-lg shadow-lg p-8">
               <h2 className="text-2xl font-bold text-center mb-8">
                 Check Availability & Book Your Stay

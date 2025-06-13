@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <header className="fixed w-full bg-white/90 backdrop-blur z-20">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between p-4">
         <Link href="/" className="text-2xl font-bold">
           Casa Sueño
         </Link>
