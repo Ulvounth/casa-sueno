@@ -1,102 +1,87 @@
+// app/components/BookingForm.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 
 export default function BookingForm() {
-  // All hooks must be called unconditionally
+  // Hydrer‐guard
   const [mounted, setMounted] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-
-  // Mark component as mounted to avoid SSR/client mismatch
+  const [guests, setGuests] = useState(1);
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Prevent rendering form until after hydration
   if (!mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Replace with real API call
-    console.log({ startDate, endDate, fullName, email });
-    alert("Booking request submitted!");
+    // TODO: Sjekk tilgjengelighet / hent priser
+    console.log({ startDate, endDate, guests });
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 bg-white p-6 rounded-lg shadow-sm"
+      className="w-full bg-white rounded-lg shadow-lg p-6 space-y-4"
     >
-      {/* Start Date */}
-      <div>
-        <label htmlFor="start-date" className="block text-sm font-medium mb-1">
-          Start Date
-        </label>
-        <input
-          id="start-date"
-          type="date"
-          required
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      {/* Tittel */}
+      <h3 className="text-lg font-medium">Legg til datoer for å se priser</h3>
+
+      {/* Dato‐feltene i tabell */}
+      <div className="grid grid-cols-2 border border-gray-300 rounded overflow-hidden">
+        <div className="p-2 border-r border-gray-300">
+          <label className="block text-xs font-semibold mb-1">
+            INNSJEKKING
+          </label>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
+            placeholder="Legg til dato"
+          />
+        </div>
+        <div className="p-2">
+          <label className="block text-xs font-semibold mb-1">UTSJEKKING</label>
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
+            placeholder="Legg til dato"
+          />
+        </div>
       </div>
 
-      {/* End Date */}
+      {/* Gjester */}
       <div>
-        <label htmlFor="end-date" className="block text-sm font-medium mb-1">
-          End Date
-        </label>
-        <input
-          id="end-date"
-          type="date"
-          required
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <label className="block text-xs font-semibold mb-1">GJESTER</label>
+        <select
+          value={guests}
+          onChange={(e) => setGuests(Number(e.target.value))}
+          className="w-full text-sm p-2 border border-gray-300 rounded focus:outline-none"
+        >
+          {[1, 2, 3, 4, 5].map((n) => (
+            <option key={n} value={n}>
+              {n} {n === 1 ? "gjest" : "gjester"}
+            </option>
+          ))}
+        </select>
       </div>
 
-      {/* Full Name */}
-      <div>
-        <label htmlFor="full-name" className="block text-sm font-medium mb-1">
-          Full Name
-        </label>
-        <input
-          id="full-name"
-          type="text"
-          required
-          placeholder="Your name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      {/* Email Address */}
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
-          Email Address
-        </label>
-        <input
-          id="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
+      {/* Knapp */}
       <button
         type="submit"
-        className="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+        className="
+          w-full py-3
+          bg-pink-600 hover:bg-pink-700
+          text-white font-semibold
+          rounded-lg
+          transition
+        "
       >
-        Submit Booking Request
+        Undersøk tilgjengelighet
       </button>
     </form>
   );
