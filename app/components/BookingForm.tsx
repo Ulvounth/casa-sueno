@@ -1,13 +1,22 @@
-// app/components/BookingForm.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function BookingForm() {
+  // All hooks must be called unconditionally
+  const [mounted, setMounted] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+
+  // Mark component as mounted to avoid SSR/client mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent rendering form until after hydration
+  if (!mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +39,7 @@ export default function BookingForm() {
           id="start-date"
           type="date"
           required
-          defaultValue={startDate}
+          value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
           className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -45,7 +54,7 @@ export default function BookingForm() {
           id="end-date"
           type="date"
           required
-          defaultValue={endDate}
+          value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
           className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -61,7 +70,7 @@ export default function BookingForm() {
           type="text"
           required
           placeholder="Your name"
-          defaultValue={fullName}
+          value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -77,7 +86,7 @@ export default function BookingForm() {
           type="email"
           required
           placeholder="you@example.com"
-          defaultValue={email}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
