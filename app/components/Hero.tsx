@@ -10,7 +10,6 @@ const videos = [
   "/videos/placeholder3.mp4",
 ];
 
-// point to your compressed carousel folder
 const carouselImages = [
   "/carousel/image1.jpg",
   "/carousel/image2.jpg",
@@ -45,25 +44,30 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* text & button */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg">
-          Welcome to Casa Sueño
-        </h1>
-        <p className="mt-4 text-lg md:text-2xl drop-shadow">
-          Your dream holiday home in Spain
-        </p>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="
-            mt-8 inline-flex items-center justify-center
-            rounded-full bg-purple-500
-            px-6 py-3 text-lg font-semibold text-white
-            shadow-sm transition hover:bg-purple-600
-            focus:outline-none focus:ring-2 focus:ring-purple-300
-          "
-        >
-          View All Photos
-        </button>
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
+        <div className="inline-block px-2 py-4">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white drop-shadow-lg">
+            Welcome to Casa Sueño
+          </h1>
+          <p className="mt-2 text-sm md:text-lg lg:text-xl text-white drop-shadow">
+            Your dream holiday home in Spain
+          </p>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="
+    mt-5 inline-flex items-center justify-center
+    rounded-2xl bg-white text-black
+    px-6 py-2 text-base font-semibold
+    shadow
+    transition
+    cursor-pointer
+    hover:bg-gray-200 hover:scale-105 hover:shadow-lg
+    focus:outline-none focus:ring-2 focus:ring-black/30
+  "
+          >
+            See all photos
+          </button>
+        </div>
       </div>
 
       {/* image-carousel modal */}

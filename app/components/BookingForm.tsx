@@ -27,20 +27,20 @@ export default function BookingForm() {
       onSubmit={handleSubmit}
       className="w-full bg-white rounded-lg shadow-lg p-6 space-y-4"
     >
-      {/* Tittel */}
-      <h3 className="text-lg font-medium">Legg til datoer for å se priser</h3>
+      {/* Title */}
+      <h3 className="text-lg font-medium">Add dates to see prices</h3>
 
-      {/* Dato‐feltene i tabell */}
+      {/* Date fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-300 rounded overflow-hidden gap-2">
         <div className="p-2 md:border-r border-gray-300">
           <label
             className="block text-xs font-semibold mb-1"
-            htmlFor="innsjekking"
+            htmlFor="checkin"
           >
-            INNSJEKKING
+            CHECK-IN
           </label>
           <DatePicker
-            id="innsjekking"
+            id="checkin"
             selected={startDate}
             onChange={(date) => {
               setStartDate(date);
@@ -50,7 +50,7 @@ export default function BookingForm() {
             startDate={startDate}
             endDate={endDate}
             minDate={new Date()}
-            placeholderText="Velg innsjekkingsdato"
+            placeholderText="Select check-in date"
             className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
@@ -59,19 +59,19 @@ export default function BookingForm() {
         <div className="p-2">
           <label
             className="block text-xs font-semibold mb-1"
-            htmlFor="utsjekking"
+            htmlFor="checkout"
           >
-            UTSJEKKING
+            CHECK-OUT
           </label>
           <DatePicker
-            id="utsjekking"
+            id="checkout"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
             minDate={startDate || new Date()}
-            placeholderText="Velg utsjekkingsdato"
+            placeholderText="Select check-out date"
             className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
@@ -80,10 +80,10 @@ export default function BookingForm() {
         </div>
       </div>
 
-      {/* Gjester */}
+      {/* Guests */}
       <div>
         <label className="block text-xs font-semibold mb-1" htmlFor="guests">
-          GJESTER
+          GUESTS
         </label>
         <select
           id="guests"
@@ -93,13 +93,13 @@ export default function BookingForm() {
         >
           {[1, 2, 3, 4, 5].map((n) => (
             <option key={n} value={n}>
-              {n} {n === 1 ? "gjest" : "gjester"}
+              {n} {n === 1 ? "guest" : "guests"}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Knapp */}
+      {/* Button */}
       <button
         type="submit"
         className="
@@ -110,7 +110,7 @@ export default function BookingForm() {
           transition
         "
       >
-        Undersøk tilgjengelighet
+        Check availability
       </button>
     </form>
   );
