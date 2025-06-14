@@ -11,7 +11,7 @@ export default function Page() {
 
       {/* About This Home + Booking */}
       <section className="max-w-7xl mx-auto px-4 py-16">
-        <div className="flex flex-col md:flex-row md:space-x-12">
+        <div className="flex flex-col md:flex-row md:space-x-12 justify-between">
           {/* VENSTRE: About This Home */}
           <div className="md:w-1/2 space-y-6">
             <h2 className="text-3xl font-bold">About This Home</h2>
