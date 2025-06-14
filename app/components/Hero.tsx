@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from "react";
 import ImageModal from "./ImageModal";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const videos = [
   "/videos/placeholder1.mp4",
@@ -29,10 +28,6 @@ export default function Hero() {
     }, 6000);
     return () => clearInterval(id);
   }, []);
-
-  const scrollToBooking = () => {
-    document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="relative h-[75vh] md:h-[65vh] w-full overflow-hidden">
@@ -70,15 +65,6 @@ export default function Hero() {
           View All Photos
         </button>
       </div>
-
-      {/* scroll-down arrow */}
-      <button
-        onClick={scrollToBooking}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white opacity-80 hover:opacity-100 animate-bounce"
-        aria-label="Scroll to booking section"
-      >
-        <ChevronDownIcon className="h-8 w-8" />
-      </button>
 
       {/* image-carousel modal */}
       {isModalOpen && (
