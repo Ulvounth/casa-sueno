@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Montserrat } from "next/font/google";
+import { SupabaseProvider } from "./providers/SupabaseProvider";
 
 export const metadata = {
   title: "Casa Sueño",
@@ -11,7 +12,7 @@ export const metadata = {
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "700"], // legg til flere vekter hvis ønskelig
+  weight: ["400", "700"],
   variable: "--font-montserrat",
 });
 
@@ -25,9 +26,11 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} bg-white text-gray-800 antialiased flex flex-col min-h-screen`}
       >
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <SupabaseProvider>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </SupabaseProvider>
       </body>
     </html>
   );
