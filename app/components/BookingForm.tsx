@@ -1,20 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { eachDayOfInterval } from "date-fns";
 
 export default function BookingForm() {
-  const [mounted, setMounted] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [guests, setGuests] = useState(1);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [busyDates, setBusyDates] = useState<Date[]>([]);
 
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+  useEffect(() => {
+    const fetchBookedDates = async () => {
+      const { data, error } = await supabase
+        .from("bookings")
+        .select("start_date, end_date");
+
+      if (error) {
+        console.error("Could not fetch bookings:", error.message);
+        return;
+      }
+
+      const blocked: Date[] = [];
+
+      data?.forEach(({ start_date, end_date }) => {
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+        const range = eachDayOfInterval({ start, end });
+
+        blocked.push(...range);
+      });
+
+      setBusyDates(blocked);
+    };
+
+    fetchBookedDates();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +57,23 @@ export default function BookingForm() {
 
     if (!startDate || !endDate) {
       setError("Please select both check-in and check-out dates.");
+      return;
+    }
+
+    // Sjekk for overlapp
+    const { data: existing, error: overlapError } = await supabase
+      .from("bookings")
+      .select("id")
+      .lte("start_date", endDate.toISOString().split("T")[0])
+      .gte("end_date", startDate.toISOString().split("T")[0]);
+
+    if (overlapError) {
+      setError("Could not check availability.");
+      return;
+    }
+
+    if (existing && existing.length > 0) {
+      setError("These dates are already booked.");
       return;
     }
 
@@ -81,6 +123,7 @@ export default function BookingForm() {
             className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
+            excludeDates={busyDates}
           />
         </div>
         <div className="p-2">
@@ -103,6 +146,7 @@ export default function BookingForm() {
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
             disabled={!startDate}
+            excludeDates={busyDates}
           />
         </div>
       </div>
@@ -134,13 +178,7 @@ export default function BookingForm() {
 
       <button
         type="submit"
-        className="
-          w-full py-3
-          bg-pink-600 hover:bg-pink-700
-          text-white font-semibold
-          rounded-lg
-          transition
-        "
+        className="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg transition"
       >
         Check availability
       </button>

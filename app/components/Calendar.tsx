@@ -1,7 +1,6 @@
-// app/components/Calendar.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   format,
   eachDayOfInterval,
@@ -10,22 +9,21 @@ import {
   addMonths,
   subMonths,
 } from "date-fns";
+import { supabase } from "@/lib/supabaseClient";
 
 interface CalendarProps {
   year?: number;
   month?: number;
-  busyDates?: string[]; // ISO-datoer som «2025-06-15»
   onSelectDate?: (iso: string) => void;
 }
 
 export default function Calendar({
   year = new Date().getFullYear(),
   month = new Date().getMonth() + 1,
-  busyDates = [],
   onSelectDate,
 }: CalendarProps) {
-  // State for hvilken måned som vises
   const [current, setCurrent] = useState(new Date(year, month - 1));
+  const [busyDates, setBusyDates] = useState<string[]>([]);
 
   const prevMonth = () => setCurrent((d: Date) => subMonths(d, 1));
   const nextMonth = () => setCurrent((d: Date) => addMonths(d, 1));
@@ -36,6 +34,35 @@ export default function Calendar({
 
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const displayMonth = format(current, "LLLL yyyy");
+
+  useEffect(() => {
+    const fetchBookedDates = async () => {
+      const { data, error } = await supabase
+        .from("bookings")
+        .select("start_date, end_date");
+
+      if (error) {
+        console.error("Failed to fetch bookings:", error.message);
+        return;
+      }
+
+      const allBusyDates: string[] = [];
+
+      data?.forEach(({ start_date, end_date }) => {
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+
+        const days = eachDayOfInterval({ start, end });
+        days.forEach((date) => {
+          allBusyDates.push(date.toISOString().split("T")[0]);
+        });
+      });
+
+      setBusyDates(allBusyDates);
+    };
+
+    fetchBookedDates();
+  }, []);
 
   return (
     <div className="p-4 border rounded-lg shadow-sm bg-white">
@@ -58,31 +85,28 @@ export default function Calendar({
         </button>
       </div>
 
-      {/* Ukedagsoverskrift */}
+      {/* Ukedager */}
       <div className="grid grid-cols-7 gap-2 text-center font-semibold text-gray-600">
         {weekdays.map((day) => (
           <div key={day}>{day}</div>
         ))}
       </div>
 
-      {/* Dager i måneden */}
+      {/* Dager */}
       <div className="grid grid-cols-7 gap-2 text-center mt-2">
         {monthDays.map((date) => {
-          const iso = format(date, "yyyy-MM-dd");
+          const iso = date.toISOString().split("T")[0];
           const isBusy = busyDates.includes(iso);
+
           return (
             <div
               key={iso}
-              onClick={() => onSelectDate?.(iso)}
-              className={`
-                py-2 rounded border cursor-pointer
-                ${
-                  isBusy
-                    ? "bg-red-100 text-red-800 border-red-200"
-                    : "bg-green-100 text-green-800 border-green-200"
-                }
-                hover:ring-2 hover:ring-blue-300
-              `}
+              onClick={() => !isBusy && onSelectDate?.(iso)}
+              className={`py-2 rounded border cursor-pointer transition ${
+                isBusy
+                  ? "bg-red-100 text-red-800 border-red-200 cursor-not-allowed line-through"
+                  : "bg-green-100 text-green-800 border-green-200 hover:ring-2 hover:ring-blue-300"
+              }`}
             >
               {format(date, "d")}
             </div>
