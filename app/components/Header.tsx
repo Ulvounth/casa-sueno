@@ -8,20 +8,47 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUserEmail(session?.user?.email ?? null);
+    const getSessionAndProfile = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      const user = session?.user;
+      if (!user) {
+        setUserEmail(null);
+        setIsAdmin(false);
+        return;
+      }
+
+      setUserEmail(user.email ?? null);
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("user_id", user.id)
+        .single();
+
+      setIsAdmin(data?.is_admin ?? false);
+    };
+
+    getSessionAndProfile();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      getSessionAndProfile();
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setUserEmail(session?.user?.email ?? null);
-    });
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUserEmail(null);
+    setIsAdmin(false);
   };
 
   const links = [
@@ -46,6 +73,17 @@ export default function Header() {
               </Link>
             </li>
           ))}
+
+          {isAdmin && (
+            <li>
+              <Link
+                href="/admin"
+                className="text-sm bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+              >
+                Admin Panel
+              </Link>
+            </li>
+          )}
 
           {userEmail ? (
             <>
@@ -107,6 +145,19 @@ export default function Header() {
               </Link>
             </li>
           ))}
+
+          {isAdmin && (
+            <li className="border-t">
+              <Link
+                href="/admin"
+                className="block px-4 py-3 hover:bg-gray-100"
+                onClick={() => setOpen(false)}
+              >
+                Admin Panel
+              </Link>
+            </li>
+          )}
+
           {userEmail ? (
             <>
               <li className="border-t px-4 py-2 text-sm">{userEmail}</li>
