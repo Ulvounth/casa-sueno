@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -9,17 +10,48 @@ export default function BookingForm() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [guests, setGuests] = useState(1);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({
-      startDate: startDate ? startDate.toISOString().split("T")[0] : "",
-      endDate: endDate ? endDate.toISOString().split("T")[0] : "",
-      guests,
-    });
+    setError("");
+    setSuccess(false);
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.user?.id) {
+      setError("You must be logged in to book.");
+      return;
+    }
+
+    if (!startDate || !endDate) {
+      setError("Please select both check-in and check-out dates.");
+      return;
+    }
+
+    const { error } = await supabase.from("bookings").insert([
+      {
+        user_id: session.user.id,
+        start_date: startDate.toISOString().split("T")[0],
+        end_date: endDate.toISOString().split("T")[0],
+        guests,
+      },
+    ]);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      setSuccess(true);
+      setStartDate(null);
+      setEndDate(null);
+      setGuests(1);
+    }
   };
 
   return (
@@ -27,16 +59,11 @@ export default function BookingForm() {
       onSubmit={handleSubmit}
       className="w-full bg-white rounded-lg shadow-lg p-6 space-y-4"
     >
-      {/* Title */}
       <h3 className="text-lg font-medium">Add dates to see prices</h3>
 
-      {/* Date fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-300 rounded overflow-hidden gap-2">
         <div className="p-2 md:border-r border-gray-300">
-          <label
-            className="block text-xs font-semibold mb-1"
-            htmlFor="checkin"
-          >
+          <label className="block text-xs font-semibold mb-1" htmlFor="checkin">
             CHECK-IN
           </label>
           <DatePicker
@@ -80,7 +107,6 @@ export default function BookingForm() {
         </div>
       </div>
 
-      {/* Guests */}
       <div>
         <label className="block text-xs font-semibold mb-1" htmlFor="guests">
           GUESTS
@@ -99,7 +125,13 @@ export default function BookingForm() {
         </select>
       </div>
 
-      {/* Button */}
+      {error && <p className="text-sm text-red-600">{error}</p>}
+      {success && (
+        <p className="text-sm text-green-600">
+          Booking successfully submitted!
+        </p>
+      )}
+
       <button
         type="submit"
         className="
