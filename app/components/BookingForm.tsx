@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { eachDayOfInterval } from "date-fns";
+import { eachDayOfInterval, subDays, parseISO } from "date-fns";
+import { formatDateSafe } from "@/lib/dateUtils";
 
 export default function BookingForm() {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -13,29 +14,46 @@ export default function BookingForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [busyDates, setBusyDates] = useState<Date[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchBookedDates = async () => {
-      const { data, error } = await supabase
-        .from("bookings")
-        .select("start_date, end_date");
+      setIsLoading(true);
+      setError("");
 
-      if (error) {
-        console.error("Could not fetch bookings:", error.message);
-        return;
+      try {
+        const { data, error } = await supabase
+          .from("bookings")
+          .select("start_date, end_date");
+
+        if (error) {
+          console.error("Error fetching bookings:", error);
+          setError(
+            "Failed to load booking information. Please refresh the page."
+          );
+          return;
+        }
+
+        const blocked: Date[] = [];
+
+        data?.forEach(({ start_date, end_date }) => {
+          const start = parseISO(start_date + "T00:00:00");
+          const end = parseISO(end_date + "T00:00:00");
+          // Include all days in the booking range (end date is exclusive for guests)
+          const range = eachDayOfInterval({ start, end: subDays(end, 1) });
+          blocked.push(...range);
+        });
+
+        setBusyDates(blocked);
+      } catch (err) {
+        console.error("Unexpected error:", err);
+        setError(
+          "Failed to load booking information. Please refresh the page."
+        );
+      } finally {
+        setIsLoading(false);
       }
-
-      const blocked: Date[] = [];
-
-      data?.forEach(({ start_date, end_date }) => {
-        const start = new Date(start_date);
-        const end = new Date(end_date);
-        const range = eachDayOfInterval({ start, end });
-
-        blocked.push(...range);
-      });
-
-      setBusyDates(blocked);
     };
 
     fetchBookedDates();
@@ -45,54 +63,94 @@ export default function BookingForm() {
     e.preventDefault();
     setError("");
     setSuccess(false);
+    setIsSubmitting(true);
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-    if (!session?.user?.id) {
-      setError("You must be logged in to book.");
-      return;
-    }
+      if (!session?.user?.id) {
+        setError("You must be logged in to book.");
+        return;
+      }
 
-    if (!startDate || !endDate) {
-      setError("Please select both check-in and check-out dates.");
-      return;
-    }
+      if (!startDate || !endDate) {
+        setError("Please select both check-in and check-out dates.");
+        return;
+      }
 
-    // Sjekk for overlapp
-    const { data: existing, error: overlapError } = await supabase
-      .from("bookings")
-      .select("id")
-      .lte("start_date", endDate.toISOString().split("T")[0])
-      .gte("end_date", startDate.toISOString().split("T")[0]);
+      // Improved overlap check: Check if any existing booking overlaps with the selected dates
+      // A booking overlaps if: start_date < our_end_date AND end_date > our_start_date
+      // Use timezone-safe date formatting to avoid off-by-one errors
+      const startDateStr = formatDateSafe(startDate);
+      const endDateStr = formatDateSafe(endDate);
 
-    if (overlapError) {
-      setError("Could not check availability.");
-      return;
-    }
+      const { data: existing, error: overlapError } = await supabase
+        .from("bookings")
+        .select("id, start_date, end_date")
+        .lt("start_date", endDateStr)
+        .gt("end_date", startDateStr);
 
-    if (existing && existing.length > 0) {
-      setError("These dates are already booked.");
-      return;
-    }
+      if (overlapError) {
+        setError("Could not check availability. Please try again.");
+        return;
+      }
 
-    const { error } = await supabase.from("bookings").insert([
-      {
-        user_id: session.user.id,
-        start_date: startDate.toISOString().split("T")[0],
-        end_date: endDate.toISOString().split("T")[0],
-        guests,
-      },
-    ]);
+      if (existing && existing.length > 0) {
+        setError(
+          "These dates are already booked. Please select different dates."
+        );
+        return;
+      }
 
-    if (error) {
-      setError(error.message);
-    } else {
-      setSuccess(true);
-      setStartDate(null);
-      setEndDate(null);
-      setGuests(1);
+      const { error } = await supabase.from("bookings").insert([
+        {
+          user_id: session.user.id,
+          start_date: startDateStr,
+          end_date: endDateStr,
+          guests,
+        },
+      ]);
+
+      if (error) {
+        setError(error.message);
+      } else {
+        setSuccess(true);
+        setStartDate(null);
+        setEndDate(null);
+        setGuests(1);
+        // Refresh the booked dates to update the calendar
+        const fetchBookedDates = async () => {
+          try {
+            const { data, error } = await supabase
+              .from("bookings")
+              .select("start_date, end_date");
+
+            if (!error && data) {
+              const blocked: Date[] = [];
+              data.forEach(({ start_date, end_date }) => {
+                const start = parseISO(start_date + "T00:00:00");
+                const end = parseISO(end_date + "T00:00:00");
+                const range = eachDayOfInterval({
+                  start,
+                  end: subDays(end, 1),
+                });
+                blocked.push(...range);
+              });
+              setBusyDates(blocked);
+            }
+          } catch (err) {
+            console.error("Error refreshing dates:", err);
+          }
+        };
+        fetchBookedDates();
+      }
+    } catch (err) {
+      console.error("Booking error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -103,13 +161,16 @@ export default function BookingForm() {
     >
       <h3 className="text-lg font-medium">Add dates to see prices</h3>
 
+      {isLoading && (
+        <div className="text-sm text-gray-600 text-center py-2">
+          Loading availability...
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-300 rounded overflow-hidden gap-2">
         <div className="p-2 md:border-r border-gray-300">
-          <label className="block text-xs font-semibold mb-1" htmlFor="checkin">
-            CHECK-IN
-          </label>
+          <label className="block text-xs font-semibold mb-1">CHECK-IN</label>
           <DatePicker
-            id="checkin"
             selected={startDate}
             onChange={(date) => {
               setStartDate(date);
@@ -119,44 +180,35 @@ export default function BookingForm() {
             startDate={startDate}
             endDate={endDate}
             minDate={new Date()}
+            excludeDates={busyDates}
             placeholderText="Select check-in date"
             className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
-            excludeDates={busyDates}
           />
         </div>
         <div className="p-2">
-          <label
-            className="block text-xs font-semibold mb-1"
-            htmlFor="checkout"
-          >
-            CHECK-OUT
-          </label>
+          <label className="block text-xs font-semibold mb-1">CHECK-OUT</label>
           <DatePicker
-            id="checkout"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
             minDate={startDate || new Date()}
+            excludeDates={busyDates}
             placeholderText="Select check-out date"
             className="w-full text-sm p-2 border border-gray-200 rounded focus:outline-none"
             dateFormat="dd.MM.yyyy"
             autoComplete="off"
             disabled={!startDate}
-            excludeDates={busyDates}
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-semibold mb-1" htmlFor="guests">
-          GUESTS
-        </label>
+        <label className="block text-xs font-semibold mb-1">GUESTS</label>
         <select
-          id="guests"
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
           className="w-full text-sm p-2 border border-gray-300 rounded focus:outline-none"
@@ -178,9 +230,10 @@ export default function BookingForm() {
 
       <button
         type="submit"
-        className="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg transition"
+        disabled={isSubmitting || isLoading}
+        className="w-full py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition"
       >
-        Check availability
+        {isSubmitting ? "Checking availability..." : "Check availability"}
       </button>
     </form>
   );

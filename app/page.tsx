@@ -1,7 +1,7 @@
 // app/page.tsx
 import Hero from "./components/Hero";
-import BookingForm from "./components/BookingForm";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import BookingWrapper from "./components/BookingWrapper";
 
 export default function Page() {
   return (
@@ -54,7 +54,7 @@ export default function Page() {
               </h2>
               {/* BookingForm tar nå full bredde i boksen */}
               <div className="w-full">
-                <BookingForm />
+                <BookingWrapper />
               </div>
             </div>
           </div>
