@@ -15,8 +15,7 @@ import {
   ClockIcon,
   BuildingOffice2Icon as BedIcon,
 } from "@heroicons/react/24/outline";
-import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
-import BookingWrapper from "./components/BookingWrapper";
+import BookingFormWithCalendar from "./components/BookingFormWithCalendar";
 
 export default function Page() {
   return (
@@ -213,13 +212,6 @@ export default function Page() {
                       <span className="text-2xl font-bold">€85</span>
                       <span className="text-gray-600">night</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <StarIconSolid className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm font-semibold">4.9</span>
-                      <span className="text-sm text-gray-600">
-                        (127 reviews)
-                      </span>
-                    </div>
                   </div>
 
                   <h3 className="text-lg font-semibold text-center mb-6">
@@ -227,7 +219,7 @@ export default function Page() {
                   </h3>
 
                   <div className="w-full">
-                    <BookingWrapper />
+                    <BookingFormWithCalendar />
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-gray-200">
@@ -239,67 +231,6 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Enhanced Reviews Section */}
-      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-gray-200">
-        <div className="flex items-center gap-2 mb-8">
-          <StarIconSolid className="h-6 w-6 text-yellow-400" />
-          <h3 className="text-2xl font-semibold">4.9 · 127 reviews</h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                M
-              </div>
-              <div>
-                <p className="font-semibold">Maria</p>
-                <p className="text-sm text-gray-600">August 2024</p>
-              </div>
-            </div>
-            <p className="text-gray-700">
-              &ldquo;Perfect location near La Zenia mall and beautiful beaches!
-              The roof terrace was amazing for evening drinks. Casa Sueño
-              exceeded all our expectations. Highly recommend!&rdquo;
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                J
-              </div>
-              <div>
-                <p className="font-semibold">James</p>
-                <p className="text-sm text-gray-600">July 2024</p>
-              </div>
-            </div>
-            <p className="text-gray-700">
-              &ldquo;Spotlessly clean and beautifully decorated. The two
-              bedrooms were perfect for our family. Walking distance to shops
-              and restaurants. Will definitely book again!&rdquo;
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-pink-400 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
-                A
-              </div>
-              <div>
-                <p className="font-semibold">Ana</p>
-                <p className="text-sm text-gray-600">June 2024</p>
-              </div>
-            </div>
-            <p className="text-gray-700">
-              &ldquo;The roof terrace is a dream! Perfect for sunbathing and
-              enjoying the Mediterranean climate. Great location for exploring
-              Costa Blanca&apos;s stunning coastline.&rdquo;
-            </p>
           </div>
         </div>
       </section>

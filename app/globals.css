@@ -9,3 +9,24 @@ body {
   color: var(--foreground);
   font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
+
+/* React DatePicker Custom Styles */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+}
+
+/* Style for booked dates */
+.react-datepicker__day--disabled {
+  color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+}
+
+.react-datepicker__day--disabled:hover {
+  background-color: #fef2f2 !important;
+}
