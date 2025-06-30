@@ -5,7 +5,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { supabase } from "../../lib/supabase";
-import { UserIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 export default function BookingFormWithCalendar() {
   const [formData, setFormData] = useState({
@@ -150,19 +149,19 @@ export default function BookingFormWithCalendar() {
 
   if (loading) {
     return (
-      <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-2 text-gray-600">Loading availability...</p>
+      <div className="text-center py-6">
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+        <p className="mt-2 text-sm text-gray-600">Loading availability...</p>
       </div>
     );
   }
 
   if (submitted) {
     return (
-      <div className="text-center py-8">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="text-center py-6">
+        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
           <svg
-            className="w-8 h-8 text-green-600"
+            className="w-6 h-6 text-green-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -175,12 +174,11 @@ export default function BookingFormWithCalendar() {
             />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Booking Confirmed!
         </h3>
-        <p className="text-gray-600 mb-4">
-          Thank you for your booking! Your dates have been confirmed and you
-          will receive a confirmation email shortly.
+        <p className="text-sm text-gray-600 mb-4">
+          Your dates have been confirmed. You&apos;ll receive an email shortly.
         </p>
         <button
           onClick={() => {
@@ -195,7 +193,7 @@ export default function BookingFormWithCalendar() {
               message: "",
             });
           }}
-          className="text-blue-600 hover:text-blue-700 font-medium"
+          className="text-sm text-blue-600 hover:text-blue-700 font-medium"
         >
           Make another booking
         </button>
@@ -214,14 +212,14 @@ export default function BookingFormWithCalendar() {
   const totalPrice = nights > 0 ? nights * 85 : 0;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Calendar Section */}
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Dates - Compact Layout */}
       <div>
-        <h4 className="font-medium text-gray-900 mb-3">Select Your Dates</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h4 className="font-medium text-gray-900 mb-3 text-sm">Select Dates</h4>
+        <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Check-in Date
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Check-in
             </label>
             <DatePicker
               selected={formData.checkin}
@@ -231,9 +229,9 @@ export default function BookingFormWithCalendar() {
               endDate={formData.checkout}
               minDate={new Date()}
               excludeDates={bookedDates}
-              placeholderText="Select check-in date"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              calendarClassName="bg-white border border-gray-200 rounded-lg shadow-lg"
+              placeholderText="Select date"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+              calendarClassName="text-sm"
               dayClassName={(date) => {
                 const isBooked = bookedDates.some(
                   (bookedDate) =>
@@ -247,8 +245,8 @@ export default function BookingFormWithCalendar() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Check-out Date
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Check-out
             </label>
             <DatePicker
               selected={formData.checkout}
@@ -262,9 +260,9 @@ export default function BookingFormWithCalendar() {
                   : addDays(new Date(), 1)
               }
               excludeDates={bookedDates}
-              placeholderText="Select check-out date"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              calendarClassName="bg-white border border-gray-200 rounded-lg shadow-lg"
+              placeholderText="Select date"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+              calendarClassName="text-sm"
               dayClassName={(date) => {
                 const isBooked = bookedDates.some(
                   (bookedDate) =>
@@ -279,23 +277,23 @@ export default function BookingFormWithCalendar() {
         </div>
 
         {bookedDates.length > 0 && (
-          <p className="text-sm text-gray-500 mt-2">
-            <span className="inline-block w-3 h-3 bg-red-50 border border-red-200 rounded mr-1"></span>
-            Red dates are already booked
+          <p className="text-xs text-gray-500 mt-2">
+            <span className="inline-block w-2 h-2 bg-red-100 border border-red-300 rounded mr-1"></span>
+            Unavailable dates are marked in red
           </p>
         )}
       </div>
 
-      {/* Guests */}
+      {/* Guests - Compact */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Number of Guests
+        <label className="block text-xs font-medium text-gray-700 mb-1">
+          Guests
         </label>
         <select
           name="guests"
           value={formData.guests}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
         >
           <option value={1}>1 guest</option>
           <option value={2}>2 guests</option>
@@ -304,97 +302,86 @@ export default function BookingFormWithCalendar() {
         </select>
       </div>
 
-      {/* Price Summary */}
+      {/* Price Summary - More Compact */}
       {totalPrice > 0 && (
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="flex justify-between text-sm">
+        <div className="bg-gray-50 p-3 rounded-md text-sm">
+          <div className="flex justify-between">
             <span>
               €85 × {nights} night{nights !== 1 ? "s" : ""}
             </span>
-            <span>€{totalPrice}</span>
-          </div>
-          <div className="flex justify-between font-semibold text-base mt-2 pt-2 border-t border-gray-200">
-            <span>Total</span>
-            <span>€{totalPrice}</span>
+            <span className="font-semibold">€{totalPrice}</span>
           </div>
         </div>
       )}
 
-      {/* Contact Information */}
-      <div className="border-t border-gray-200 pt-6">
-        <h4 className="font-medium text-gray-900 mb-4">Contact Information</h4>
+      {/* Contact Information - Compact */}
+      <div className="border-t border-gray-200 pt-4">
+        <h4 className="font-medium text-gray-900 mb-3 text-sm">
+          Contact Details
+        </h4>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name *
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Name *
             </label>
-            <div className="relative">
-              <UserIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Your full name"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Your name"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address *
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Email *
             </label>
-            <div className="relative">
-              <EnvelopeIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="your.email@example.com"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="your@email.com"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Phone Number (Optional)
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Phone (optional)
             </label>
-            <div className="relative">
-              <PhoneIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+32 123 456 789"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="+32 123 456 789"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Special Requests (Optional)
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Special requests (optional)
             </label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              rows={3}
-              placeholder="Any special requests or questions..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              rows={2}
+              placeholder="Any special requests..."
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent resize-none"
             />
           </div>
         </div>
       </div>
 
-      {/* Submit Button */}
+      {/* Submit Button - Compact */}
       <button
         type="submit"
         disabled={
@@ -404,14 +391,13 @@ export default function BookingFormWithCalendar() {
           !formData.name ||
           !formData.email
         }
-        className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        {isSubmitting ? "Processing Booking..." : "Confirm Booking"}
+        {isSubmitting ? "Processing..." : "Request Booking"}
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Your booking will be confirmed immediately. Payment instructions will be
-        sent via email.
+        Free cancellation • No upfront payment
       </p>
     </form>
   );
