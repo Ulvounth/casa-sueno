@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "./components/Hero";
+import FloatingBookingButton from "./components/FloatingBookingButton";
 import {
   CheckIcon,
   KeyIcon,
@@ -11,11 +12,9 @@ import {
   SunIcon,
   TvIcon,
   BeakerIcon as KitchenIcon,
-  HeartIcon,
   ClockIcon,
   BuildingOffice2Icon as BedIcon,
 } from "@heroicons/react/24/outline";
-import BookingFormWithCalendar from "./components/BookingFormWithCalendar";
 
 export default function Page() {
   return (
@@ -23,60 +22,62 @@ export default function Page() {
       {/* Hero */}
       <Hero />
 
-      {/* About This Home + Booking */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row md:space-x-12 justify-between">
-          {/* VENSTRE: About This Home */}
-          <div className="md:w-1/2 space-y-6">
-            <h2 className="text-2xl font-semibold">
-              Entire house hosted by Casa Sueño
-            </h2>
-            <p className="text-gray-600 mb-4">
-              4 guests · 2 bedrooms · 2 beds · 2 bathrooms
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Discover your perfect Mediterranean getaway in this stunning house
-              in Orihuela, just minutes from La Zenia shopping mall and some of
-              Costa Blanca&apos;s most beautiful beaches. Casa Sueño combines
-              modern comfort with traditional Spanish charm, featuring spacious
-              rooms, a private roof terrace, and everything you need for an
-              unforgettable vacation.
-            </p>
-            <ul className="space-y-4 text-gray-700">
-              <li className="flex items-start gap-3">
-                <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                <span>
-                  Entire place – You’ll have the villa all to yourself.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                <span>Self check-in with smart lock.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                <span>
-                  Air conditioning & ceiling fan for a comfortable stay.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                <span>
-                  Walkable neighborhood with restaurants & shops nearby.
-                </span>
-              </li>
-            </ul>
+      {/* About This Home */}
+      <section id="about-section" className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid lg:grid-cols-3 gap-12">
+          {/* LEFT COLUMN: Main content */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-semibold">
+                Entire house hosted by Casa Sueño
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                4 guests · 2 bedrooms · 2 beds · 2 bathrooms
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                Discover your perfect Mediterranean getaway in this stunning
+                house in Orihuela, just minutes from La Zenia shopping mall and
+                some of Costa Blanca&apos;s most beautiful beaches. Casa Sueño
+                combines modern comfort with traditional Spanish charm,
+                featuring spacious rooms, a private roof terrace, and everything
+                you need for an unforgettable vacation.
+              </p>
+              <ul className="space-y-4 text-gray-700">
+                <li className="flex items-start gap-3">
+                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
+                  <span>
+                    Entire place – You&apos;ll have the villa all to yourself.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
+                  <span>Self check-in with smart lock.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
+                  <span>
+                    Air conditioning & ceiling fan for a comfortable stay.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
+                  <span>
+                    Walkable neighborhood with restaurants & shops nearby.
+                  </span>
+                </li>
+              </ul>
+            </div>
 
             {/* Enhanced Key Features */}
             <div className="space-y-6 mt-8">
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-2xl font-semibold">
                 What makes this place special
               </h3>
-              <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
                   <KeyIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold">Self check-in</h4>
+                    <h4 className="font-semibold text-lg">Self check-in</h4>
                     <p className="text-gray-600">
                       Check yourself in with the smart lock for hassle-free
                       arrival.
@@ -86,7 +87,7 @@ export default function Page() {
                 <div className="flex items-start gap-4">
                   <SparklesIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold">Sparkling clean</h4>
+                    <h4 className="font-semibold text-lg">Sparkling clean</h4>
                     <p className="text-gray-600">
                       Recent guests consistently praise our spotless cleanliness
                       standards.
@@ -96,7 +97,7 @@ export default function Page() {
                 <div className="flex items-start gap-4">
                   <MapPinIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold">Prime location</h4>
+                    <h4 className="font-semibold text-lg">Prime location</h4>
                     <p className="text-gray-600">
                       Walk to La Zenia mall, drive 5 minutes to stunning
                       beaches.
@@ -106,7 +107,9 @@ export default function Page() {
                 <div className="flex items-start gap-4">
                   <SunIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold">Private roof terrace</h4>
+                    <h4 className="font-semibold text-lg">
+                      Private roof terrace
+                    </h4>
                     <p className="text-gray-600">
                       Enjoy Mediterranean sunsets from your own rooftop space.
                     </p>
@@ -114,66 +117,125 @@ export default function Page() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Amenities */}
-            <div className="border-t border-gray-200 pt-8 mt-8">
-              <h3 className="text-xl font-semibold mb-6">
-                What this place offers
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3">
-                  <WifiIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Free WiFi throughout</span>
+          {/* RIGHT COLUMN: Sidebar content */}
+          <div className="lg:col-span-1 space-y-8">
+            {/* Price Card */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              <div className="text-center mb-6">
+                <div className="flex items-baseline justify-center gap-2 mb-2">
+                  <span className="text-3xl font-bold text-blue-600">€85</span>
+                  <span className="text-gray-600">per night</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <SnowflakeIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Air conditioning</span>
+                <p className="text-sm text-gray-500">
+                  Free cancellation • No upfront payment
+                </p>
+              </div>
+
+              {/* Guest Reviews Preview */}
+              <div className="border-t border-gray-200 pt-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex text-yellow-400">{"★".repeat(5)}</div>
+                  <span className="text-sm font-medium">4.9 out of 5</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <KitchenIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Full equipped kitchen</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <TvIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Smart TV with streaming</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <SunIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Private roof terrace</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <BedIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">2 comfortable bedrooms</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ShieldCheckIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">Safe & secure area</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ClockIcon className="h-5 w-5 text-gray-600" />
-                  <span className="text-gray-700">24/7 host support</span>
-                </div>
+                <p className="text-sm text-gray-600 italic">
+                  &quot;Perfect location and spotless clean. The rooftop terrace
+                  was amazing for sunset drinks!&quot;
+                </p>
+                <p className="text-xs text-gray-500 mt-2">- Recent guest</p>
               </div>
             </div>
 
-            {/* Location Highlights */}
-            <div className="border-t border-gray-200 pt-8 mt-8">
-              <h3 className="text-xl font-semibold mb-4">
-                Where you&apos;ll be
-              </h3>
-              <p className="text-gray-700 mb-4 font-medium">
-                Orihuela, Costa Blanca, Spain
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Perfectly positioned in the heart of Costa Blanca, Casa Sueño
-                offers the best of both worlds: peaceful residential charm and
-                easy access to top attractions. La Zenia Boulevard shopping
-                center is just a short walk away, while pristine beaches like
-                Playa Flamenca and Cabo Roig are a quick 5-minute drive.
-              </p>
+            {/* Quick Facts */}
+            <div className="bg-blue-50 rounded-xl p-6">
+              <h4 className="font-semibold text-lg mb-4">Quick Facts</h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Check-in</span>
+                  <span className="font-medium">3:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Check-out</span>
+                  <span className="font-medium">11:00 AM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Minimum stay</span>
+                  <span className="font-medium">2 nights</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">House rules</span>
+                  <span className="font-medium">No smoking</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Full-width sections below */}
+        <div className="mt-12 space-y-12">
+          {/* Amenities */}
+          <div className="border-t border-gray-200 pt-8">
+            <h3 className="text-2xl font-semibold mb-6">
+              What this place offers
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="flex items-center gap-3">
+                <WifiIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Free WiFi</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <SnowflakeIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Air conditioning</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <KitchenIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Full kitchen</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TvIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Smart TV</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <SunIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Roof terrace</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <BedIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">2 bedrooms</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <ShieldCheckIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Safe area</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <ClockIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">24/7 support</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Location Highlights */}
+          <div className="border-t border-gray-200 pt-8">
+            <h3 className="text-2xl font-semibold mb-4">
+              Where you&apos;ll be
+            </h3>
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div>
+                <p className="text-gray-700 mb-4 font-medium text-lg">
+                  Orihuela, Costa Blanca, Spain
+                </p>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Perfectly positioned in the heart of Costa Blanca, Casa Sueño
+                  offers the best of both worlds: peaceful residential charm and
+                  easy access to top attractions. La Zenia Boulevard shopping
+                  center is just a short walk away, while pristine beaches like
+                  Playa Flamenca and Cabo Roig are a quick 5-minute drive.
+                </p>
+              </div>
 
               {/* Location Features */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 gap-3">
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
@@ -201,39 +263,11 @@ export default function Page() {
               </div>
             </div>
           </div>
-
-          {/* RIGHT: Enhanced Booking Card */}
-          <div className="lg:w-1/3 mt-8 lg:mt-0">
-            <div className="lg:sticky lg:top-24">
-              <div className="relative z-10 -mt-32 lg:-mt-48 max-w-lg mx-auto lg:max-w-none">
-                <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-6">
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-2xl font-bold">€85</span>
-                      <span className="text-gray-600">night</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-lg font-semibold text-center mb-6">
-                    Reserve Your Perfect Getaway
-                  </h3>
-
-                  <div className="w-full">
-                    <BookingFormWithCalendar />
-                  </div>
-
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-                      <HeartIcon className="h-4 w-4" />
-                      <span>You won&apos;t be charged yet</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
+
+      {/* Floating Booking Button */}
+      <FloatingBookingButton />
     </main>
   );
 }
