@@ -70,8 +70,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll down indicator - Just arrow - positioned at bottom of screen */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+      {/* Scroll down indicator - Just arrow - positioned at bottom of screen - Hidden on mobile */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden md:block">
         <button
           onClick={() => {
             document.getElementById("about-section")?.scrollIntoView({

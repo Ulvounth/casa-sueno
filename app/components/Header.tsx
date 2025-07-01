@@ -44,7 +44,7 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden"
+            className="md:hidden cursor-pointer"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -69,29 +69,27 @@ export default function Header() {
 
         {/* Slide-in menu from right */}
         <div
-          className={`absolute top-0 right-0 h-full w-80 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/50 backdrop-blur-lg shadow-2xl border-l border-gray-200/50 transform transition-all duration-500 ease-out ${
+          className={`absolute top-0 right-0 h-full w-80 bg-white/95 backdrop-blur-lg shadow-2xl border-l border-gray-200/70 transform transition-all duration-500 ease-out ${
             open ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Decorative gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-100/20 to-purple-100/20 pointer-events-none"></div>
+          {/* Subtle decorative overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-blue-50/20 to-slate-50/30 pointer-events-none"></div>
 
           <div className="relative p-6 pt-20">
             {/* Close button */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-4 right-4 p-3 hover:bg-white/80 rounded-full transition-all duration-200 hover:shadow-lg group"
+              className="absolute top-4 right-4 p-3 hover:bg-gray-100/80 rounded-full transition-all duration-200 hover:shadow-md group"
               aria-label="Close menu"
             >
-              <XMarkIcon className="h-6 w-6 text-gray-600 group-hover:text-gray-800 transition-colors" />
+              <XMarkIcon className="h-6 w-6 text-gray-500 group-hover:text-gray-700 transition-colors" />
             </button>
 
             {/* Welcome text */}
             <div className="mb-8">
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Casa Sueño
-              </h3>
-              <p className="text-sm text-gray-600 mt-1">Navigation</p>
+              <h3 className="text-xl font-bold text-gray-800">Casa Sueño</h3>
+              <p className="text-sm text-gray-500 mt-1">Navigation</p>
             </div>
 
             {/* Menu items */}
@@ -100,10 +98,10 @@ export default function Header() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className={`group block py-4 px-5 rounded-xl transition-all duration-300 font-medium text-lg relative overflow-hidden ${
+                    className={`group block py-4 px-5 rounded-lg transition-all duration-300 font-medium text-lg relative overflow-hidden ${
                       pathname === l.href
-                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transform scale-105"
-                        : "text-gray-700 hover:bg-white/70 hover:shadow-md hover:transform hover:scale-[1.02]"
+                        ? "bg-blue-600 text-white shadow-md transform scale-[1.02]"
+                        : "text-gray-700 hover:bg-gray-100/80 hover:shadow-sm hover:transform hover:scale-[1.01]"
                     }`}
                     onClick={() => setOpen(false)}
                     style={{
@@ -118,15 +116,10 @@ export default function Header() {
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-white rounded-r-full"></div>
                     )}
 
-                    {/* Background glow for active */}
-                    {pathname === l.href && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-xl blur-sm"></div>
-                    )}
-
                     <span className="relative z-10">{l.label}</span>
 
-                    {/* Hover effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    {/* Subtle hover effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-50/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   </Link>
                 </li>
               ))}
@@ -135,7 +128,7 @@ export default function Header() {
             {/* Bottom decoration */}
             <div className="mt-12 pt-6 border-t border-gray-200/50">
               <div className="text-center">
-                <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"></div>
+                <div className="w-12 h-1 bg-blue-600 rounded-full mx-auto"></div>
                 <p className="text-xs text-gray-500 mt-3">
                   Your dream holiday home
                 </p>

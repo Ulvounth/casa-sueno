@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
 
 export default function BookingFormWithCalendar() {
@@ -221,58 +222,64 @@ export default function BookingFormWithCalendar() {
             <label className="block text-xs font-medium text-gray-700 mb-1">
               Check-in
             </label>
-            <DatePicker
-              selected={formData.checkin}
-              onChange={(date) => handleDateChange(date, "checkin")}
-              selectsStart
-              startDate={formData.checkin}
-              endDate={formData.checkout}
-              minDate={new Date()}
-              excludeDates={bookedDates}
-              placeholderText="Select date"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
-              calendarClassName="text-sm"
-              dayClassName={(date) => {
-                const isBooked = bookedDates.some(
-                  (bookedDate) =>
-                    bookedDate.toDateString() === date.toDateString()
-                );
-                return isBooked
-                  ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                  : "hover:bg-blue-50";
-              }}
-            />
+            <div className="relative">
+              <DatePicker
+                selected={formData.checkin}
+                onChange={(date) => handleDateChange(date, "checkin")}
+                selectsStart
+                startDate={formData.checkin}
+                endDate={formData.checkout}
+                minDate={new Date()}
+                excludeDates={bookedDates}
+                placeholderText="Select date"
+                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                calendarClassName="text-sm"
+                dayClassName={(date) => {
+                  const isBooked = bookedDates.some(
+                    (bookedDate) =>
+                      bookedDate.toDateString() === date.toDateString()
+                  );
+                  return isBooked
+                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                    : "hover:bg-blue-50";
+                }}
+              />
+              <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
 
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
               Check-out
             </label>
-            <DatePicker
-              selected={formData.checkout}
-              onChange={(date) => handleDateChange(date, "checkout")}
-              selectsEnd
-              startDate={formData.checkin}
-              endDate={formData.checkout}
-              minDate={
-                formData.checkin
-                  ? addDays(formData.checkin, 1)
-                  : addDays(new Date(), 1)
-              }
-              excludeDates={bookedDates}
-              placeholderText="Select date"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
-              calendarClassName="text-sm"
-              dayClassName={(date) => {
-                const isBooked = bookedDates.some(
-                  (bookedDate) =>
-                    bookedDate.toDateString() === date.toDateString()
-                );
-                return isBooked
-                  ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                  : "hover:bg-blue-50";
-              }}
-            />
+            <div className="relative">
+              <DatePicker
+                selected={formData.checkout}
+                onChange={(date) => handleDateChange(date, "checkout")}
+                selectsEnd
+                startDate={formData.checkin}
+                endDate={formData.checkout}
+                minDate={
+                  formData.checkin
+                    ? addDays(formData.checkin, 1)
+                    : addDays(new Date(), 1)
+                }
+                excludeDates={bookedDates}
+                placeholderText="Select date"
+                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                calendarClassName="text-sm"
+                dayClassName={(date) => {
+                  const isBooked = bookedDates.some(
+                    (bookedDate) =>
+                      bookedDate.toDateString() === date.toDateString()
+                  );
+                  return isBooked
+                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                    : "hover:bg-blue-50";
+                }}
+              />
+              <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
         </div>
 
