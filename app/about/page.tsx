@@ -1,10 +1,12 @@
 // app/about/page.tsx
 import Image from "next/image";
+import Link from "next/link";
 import {
   HeartIcon,
   MapPinIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
+import FloatingBookingButton from "../components/FloatingBookingButton";
 
 export default function AboutPage() {
   return (
@@ -21,10 +23,10 @@ export default function AboutPage() {
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Meet Our Family</h1>
+          <h1 className="text-5xl font-bold mb-4">About Casa Sueño</h1>
           <p className="text-xl max-w-2xl mx-auto">
-            Welcome to Casa Sueño! Get to know the Belgian family behind your
-            perfect Spanish getaway.
+            Discover the story behind your perfect Spanish getaway and what
+            makes our holiday home special.
           </p>
         </div>
       </section>
@@ -36,37 +38,36 @@ export default function AboutPage() {
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold text-gray-900">Our Story</h2>
             <p className="text-gray-700 leading-relaxed">
-              Hello! We&apos;re Arda, Amber, and our little son Amari.
-              We&apos;re a Belgian family who took the leap and moved to
-              beautiful Spain at the end of 2023, fulfilling our dream of living
-              the Mediterranean lifestyle.
+              Welcome to Casa Sueño, your home away from home in beautiful
+              Spain. Our holiday rental was carefully designed to provide guests
+              with an authentic Spanish experience while maintaining all the
+              comforts of modern living.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              After falling in love with the Costa Blanca region during our
-              holidays, we decided to make Orihuela our permanent home. Casa
-              Sueño became our sanctuary, and now we&apos;re excited to share
-              this special place with fellow travelers who appreciate quality,
-              comfort, and authentic Spanish charm.
+              Located in one of Spain&apos;s most charming regions, Casa Sueño
+              offers the perfect base for exploring the rich culture, stunning
+              beaches, and vibrant local communities that make this area so
+              special. We&apos;ve thoughtfully curated every detail to ensure
+              your stay is memorable.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Arda works as an online coach, which gives us the flexibility to
-              enjoy this wonderful lifestyle while helping others achieve their
-              goals. We love exploring the local beaches, discovering hidden
-              restaurants, and creating memories as a family in our new Spanish
-              home.
+              Whether you&apos;re seeking relaxation, adventure, or cultural
+              immersion, Casa Sueño provides the perfect setting for your
+              Spanish holiday. We&apos;re committed to helping you create
+              lasting memories in this beautiful corner of Spain.
             </p>
 
             <div className="pt-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                What we love about Spain
+                What makes our location special
               </h3>
               <div className="flex flex-wrap gap-3">
                 {[
                   "Beautiful beaches",
                   "Amazing cuisine",
                   "Warm weather",
-                  "Friendly locals",
-                  "Family lifestyle",
+                  "Rich culture",
+                  "Historic sites",
                   "Outdoor activities",
                 ].map((interest) => (
                   <span
@@ -80,39 +81,36 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Column - Family Facts */}
+          {/* Right Column - Property Facts */}
           <div className="space-y-8">
             <h2 className="text-3xl font-semibold text-gray-900">
-              About our family
+              About Casa Sueño
             </h2>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <MapPinIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Originally from
-                  </h3>
-                  <p className="text-gray-600">Belgium</p>
+                  <h3 className="font-semibold text-gray-900">Location</h3>
+                  <p className="text-gray-600">Beautiful Spanish countryside</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <AcademicCapIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Moved to Spain
-                  </h3>
-                  <p className="text-gray-600">End of 2023</p>
+                  <h3 className="font-semibold text-gray-900">Property Type</h3>
+                  <p className="text-gray-600">Modern holiday villa</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <HeartIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">Family</h3>
+                  <h3 className="font-semibold text-gray-900">Amenities</h3>
                   <p className="text-gray-600">
-                    Arda (online coach), Amber, and Amari.
+                    Fully equipped kitchen, comfortable bedrooms, modern
+                    bathrooms.
                   </p>
                 </div>
               </div>
@@ -121,16 +119,18 @@ export default function AboutPage() {
             {/* Contact CTA */}
             <div className="bg-orange-50 p-6 rounded-lg border border-orange-100">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Planning your stay?
+                Have questions about the area?
               </h3>
               <p className="text-gray-600 mb-4">
-                We&apos;d love to help make your Spanish holiday unforgettable!
-                Feel free to reach out with any questions about Casa Sueño or
-                recommendations for the area.
+                Need local recommendations or have questions about Casa Sueño?
+                We&apos;re here to help make your Spanish holiday unforgettable!
               </p>
-              <button className="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors">
-                Contact us
-              </button>
+              <Link
+                href="/contact"
+                className="inline-block bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors"
+              >
+                Ask a question
+              </Link>
             </div>
           </div>
         </div>
@@ -148,11 +148,11 @@ export default function AboutPage() {
                 <span className="text-2xl">🏡</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Local Knowledge
+                Premium Experience
               </h3>
               <p className="text-gray-600">
-                As residents, we know all the best beaches, restaurants, and
-                hidden gems in the area
+                As local property managers, we know all the best beaches,
+                restaurants, and hidden gems in the area
               </p>
             </div>
 
@@ -184,6 +184,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Booking Button */}
+      <FloatingBookingButton />
     </main>
   );
 }
