@@ -151,7 +151,7 @@ export default function BookingFormWithCalendar() {
   if (loading) {
     return (
       <div className="text-center py-6">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-600 mx-auto"></div>
         <p className="mt-2 text-sm text-gray-600">Loading availability...</p>
       </div>
     );
@@ -194,7 +194,7 @@ export default function BookingFormWithCalendar() {
               message: "",
             });
           }}
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+          className="text-sm text-amber-600 hover:text-amber-700 font-medium"
         >
           Make another booking
         </button>
@@ -398,7 +398,7 @@ export default function BookingFormWithCalendar() {
           !formData.name ||
           !formData.email
         }
-        className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-amber-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {isSubmitting ? "Processing..." : "Request Booking"}
       </button>

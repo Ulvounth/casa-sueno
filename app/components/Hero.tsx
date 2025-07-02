@@ -83,9 +83,9 @@ export default function Hero() {
           {/* Arrow circle only */}
           <div className="relative">
             <div className="absolute inset-0 bg-black/40 rounded-full blur-sm scale-110"></div>
-            <div className="relative w-12 h-12 border-2 border-white/90 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/25 group-hover:border-white shadow-lg">
+            <div className="relative w-10 h-10 border-2 border-white/90 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/25 group-hover:border-white shadow-lg">
               <svg
-                className="w-5 h-5 animate-bounce group-hover:animate-none"
+                className="w-4 h-4 animate-bounce group-hover:animate-none"
                 fill="none"
                 stroke="white"
                 viewBox="0 0 24 24"

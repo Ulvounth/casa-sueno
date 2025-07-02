@@ -4,12 +4,12 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-gray-300">
+    <footer className="bg-stone-800 text-stone-300">
       <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo & beskrivelse */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-white">Casa Sueño</h2>
-          <p className="text-sm text-gray-400">
+          <h2 className="text-2xl font-bold text-amber-100">Casa Sueño</h2>
+          <p className="text-sm text-stone-400">
             Your dream holiday home in Spain. Welcome guests year-round for an
             unforgettable stay.
           </p>
@@ -17,17 +17,17 @@ export default function Footer() {
 
         {/* Hurtiglenker */}
         <div className="space-y-2">
-          <h3 className="font-semibold text-white">Quick Links</h3>
+          <h3 className="font-semibold text-amber-100">Quick Links</h3>
           <ul className="space-y-1">
             <li>
-              <Link href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-amber-200 transition-colors">
                 Home
               </Link>
             </li>
             <li>
               <Link
                 href="/about"
-                className="hover:text-white transition-colors"
+                className="hover:text-amber-200 transition-colors"
               >
                 About
               </Link>
@@ -35,7 +35,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/contact"
-                className="hover:text-white transition-colors"
+                className="hover:text-amber-200 transition-colors"
               >
                 Contact
               </Link>
@@ -43,7 +43,7 @@ export default function Footer() {
             <li>
               <Link
                 href="/booking"
-                className="hover:text-white transition-colors"
+                className="hover:text-amber-200 transition-colors"
               >
                 Booking
               </Link>
@@ -53,23 +53,23 @@ export default function Footer() {
 
         {/* Sosiale medier */}
         <div className="space-y-4">
-          <h3 className="font-semibold text-white">Follow Us</h3>
+          <h3 className="font-semibold text-amber-100">Follow Us</h3>
           <div className="flex space-x-4">
             <Link href="#" aria-label="Facebook">
-              <FaFacebookF className="h-6 w-6 hover:text-blue-400 transition-colors" />
+              <FaFacebookF className="h-6 w-6 hover:text-amber-400 transition-colors" />
             </Link>
             <Link href="#" aria-label="Instagram">
-              <FaInstagram className="h-6 w-6 hover:text-pink-400 transition-colors" />
+              <FaInstagram className="h-6 w-6 hover:text-rose-400 transition-colors" />
             </Link>
             <Link href="#" aria-label="Twitter">
-              <FaTwitter className="h-6 w-6 hover:text-blue-300 transition-colors" />
+              <FaTwitter className="h-6 w-6 hover:text-amber-300 transition-colors" />
             </Link>
           </div>
         </div>
       </div>
 
       {/* Bunntekst */}
-      <div className="max-w-7xl mx-auto border-t border-gray-700 py-6 px-4 text-center text-sm text-gray-400">
+      <div className="max-w-7xl mx-auto border-t border-stone-700 py-6 px-4 text-center text-sm text-stone-400">
         &copy; {new Date().getFullYear()} Casa Sueño. All rights reserved.
       </div>
     </footer>

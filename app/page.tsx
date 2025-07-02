@@ -121,32 +121,6 @@ export default function Page() {
 
           {/* RIGHT COLUMN: Sidebar content */}
           <div className="lg:col-span-1 space-y-8">
-            {/* Price Card */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <div className="text-center mb-6">
-                <div className="flex items-baseline justify-center gap-2 mb-2">
-                  <span className="text-3xl font-bold text-blue-600">€85</span>
-                  <span className="text-gray-600">per night</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  Free cancellation • No upfront payment
-                </p>
-              </div>
-
-              {/* Guest Reviews Preview */}
-              <div className="border-t border-gray-200 pt-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex text-yellow-400">{"★".repeat(5)}</div>
-                  <span className="text-sm font-medium">4.9 out of 5</span>
-                </div>
-                <p className="text-sm text-gray-600 italic">
-                  &quot;Perfect location and spotless clean. The rooftop terrace
-                  was amazing for sunset drinks!&quot;
-                </p>
-                <p className="text-xs text-gray-500 mt-2">- Recent guest</p>
-              </div>
-            </div>
-
             {/* Quick Facts */}
             <div className="bg-blue-50 rounded-xl p-6">
               <h4 className="font-semibold text-lg mb-4">Quick Facts</h4>
