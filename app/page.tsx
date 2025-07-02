@@ -1,4 +1,5 @@
 // app/page.tsx
+import Link from "next/link";
 import Hero from "./components/Hero";
 import FloatingBookingButton from "./components/FloatingBookingButton";
 import {
@@ -138,8 +139,64 @@ export default function Page() {
                   <span className="font-medium">2 nights</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">House rules</span>
-                  <span className="font-medium">No smoking</span>
+                  <span className="text-gray-600">Max guests</span>
+                  <span className="font-medium">4 people</span>
+                </div>
+              </div>
+            </div>
+
+            {/* House Rules Summary */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <h4 className="font-semibold text-lg mb-4">House Rules</h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-red-500">✗</span>
+                  <span className="text-gray-600">No smoking indoors</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-500">✗</span>
+                  <span className="text-gray-600">No parties or events</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-500">✗</span>
+                  <span className="text-gray-600">No pets allowed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-600">⏰</span>
+                  <span className="text-gray-600">
+                    Quiet hours: 10 PM - 8 AM
+                  </span>
+                </div>
+                <div className="pt-3">
+                  <Link
+                    href="/house-rules"
+                    className="text-amber-600 hover:text-amber-700 font-medium text-sm"
+                  >
+                    View all house rules →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Safety Information */}
+            <div className="bg-green-50 rounded-xl p-6 border border-green-200">
+              <h4 className="font-semibold text-lg mb-4">Safety & Security</h4>
+              <div className="space-y-2 text-sm text-green-800">
+                <div className="flex items-center gap-2">
+                  <span>✓</span>
+                  <span>Smoke detectors installed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>✓</span>
+                  <span>First aid kit available</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>✓</span>
+                  <span>Safe for valuables</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>✓</span>
+                  <span>24/7 emergency contact</span>
                 </div>
               </div>
             </div>
@@ -211,27 +268,39 @@ export default function Page() {
               {/* Location Features */}
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
                   <span>
                     <strong>La Zenia Boulevard:</strong> 5 min walk
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
                   <span>
                     <strong>Playa Flamenca Beach:</strong> 5 min drive
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
                   <span>
                     <strong>Cabo Roig Beach:</strong> 7 min drive
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
                   <span>
                     <strong>Alicante Airport:</strong> 45 min drive
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <span>
+                    <strong>Supermarket:</strong> 3 min walk
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <span>
+                    <strong>Restaurants:</strong> Multiple options nearby
                   </span>
                 </div>
               </div>

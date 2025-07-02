@@ -1,18 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [policiesOpen, setPoliciesOpen] = useState(false);
   const pathname = usePathname();
+  const dropdownRef = useRef<HTMLLIElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setPoliciesOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const links = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+  ];
+
+  const policyLinks = [
+    { href: "/house-rules", label: "House Rules" },
+    { href: "/cancellation-policy", label: "Cancellation Policy" },
+    { href: "/terms", label: "Terms & Conditions" },
+    { href: "/privacy", label: "Privacy Policy" },
   ];
 
   return (
@@ -40,6 +70,46 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+
+            {/* Policies Dropdown */}
+            <li className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setPoliciesOpen(!policiesOpen)}
+                className={`hover:text-stone-900 transition-colors relative flex items-center gap-1 ${
+                  policyLinks.some((link) => pathname === link.href)
+                    ? "text-amber-600 font-medium"
+                    : ""
+                }`}
+              >
+                Policies
+                <ChevronDownIcon
+                  className={`h-4 w-4 transition-transform ${policiesOpen ? "rotate-180" : ""}`}
+                />
+                {policyLinks.some((link) => pathname === link.href) && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 rounded-full"></span>
+                )}
+              </button>
+
+              {/* Dropdown Menu */}
+              {policiesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-stone-200 py-2 z-50">
+                  {policyLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`block px-4 py-2 text-sm hover:bg-amber-50 transition-colors ${
+                        pathname === link.href
+                          ? "text-amber-600 bg-amber-50"
+                          : "text-stone-700"
+                      }`}
+                      onClick={() => setPoliciesOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </li>
           </ul>
 
           {/* Mobile menu button */}
@@ -123,6 +193,27 @@ export default function Header() {
                   </Link>
                 </li>
               ))}
+
+              {/* Policies Section */}
+              <li className="pt-4">
+                <div className="text-sm font-semibold text-stone-500 px-5 pb-2">
+                  Policies
+                </div>
+                {policyLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`group block py-3 px-5 ml-4 rounded-lg transition-all duration-300 text-sm relative overflow-hidden ${
+                      pathname === link.href
+                        ? "bg-amber-100 text-amber-800 shadow-sm"
+                        : "text-stone-600 hover:bg-stone-100/60 hover:shadow-sm"
+                    }`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="relative z-10">{link.label}</span>
+                  </Link>
+                ))}
+              </li>
             </ul>
 
             {/* Bottom decoration */}
