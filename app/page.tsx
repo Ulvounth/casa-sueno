@@ -122,7 +122,7 @@ export default function Page() {
           {/* RIGHT COLUMN: Sidebar content */}
           <div className="lg:col-span-1 space-y-8">
             {/* Quick Facts */}
-            <div className="bg-blue-50 rounded-xl p-6">
+            <div className="bg-amber-50 rounded-xl p-6">
               <h4 className="font-semibold text-lg mb-4">Quick Facts</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">

@@ -40,10 +40,6 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
           {/* Content */}
           <div className="p-4">
             <div className="mb-4">
-              <div className="flex items-baseline gap-2 mb-2">
-                <span className="text-2xl font-bold">€85</span>
-                <span className="text-gray-600">per night</span>
-              </div>
               <p className="text-sm text-gray-600">
                 Reserve your perfect Mediterranean getaway
               </p>

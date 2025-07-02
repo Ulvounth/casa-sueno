@@ -71,9 +71,7 @@ export default function ContactPage() {
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-amber-600 to-orange-700 bg-clip-text text-transparent">
-              Get in Touch
-            </span>
+            <span className="text-amber-600">Get in Touch</span>
           </h1>
           <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
             Ready to book your dream holiday at Casa Sueño? Have questions about
@@ -94,7 +92,7 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-600 rounded-lg flex items-center justify-center">
                       <EnvelopeIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
@@ -111,7 +109,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-600 rounded-lg flex items-center justify-center">
                       <PhoneIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
@@ -128,7 +126,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-600 rounded-lg flex items-center justify-center">
                       <MapPinIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
@@ -146,7 +144,7 @@ export default function ContactPage() {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl p-8 text-white">
+            <div className="bg-amber-600 rounded-2xl p-8 text-white">
               <h3 className="text-xl font-bold mb-4">Why Choose Casa Sueño?</h3>
               <ul className="space-y-3">
                 <li className="flex items-center space-x-3">
@@ -273,7 +271,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold py-4 px-6 rounded-lg hover:from-amber-600 hover:to-orange-700 focus:ring-4 focus:ring-amber-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] hover:shadow-lg"
+                className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-4 px-6 rounded-lg focus:ring-4 focus:ring-amber-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] hover:shadow-lg"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center space-x-2">
