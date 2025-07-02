@@ -16,13 +16,13 @@ export default function FloatingBookingButton() {
           onClick={() => setIsModalOpen(true)}
           className="
             flex items-center gap-2
-            bg-blue-600 hover:bg-blue-700 
+            bg-amber-600 hover:bg-amber-700 
             text-white font-semibold
             px-4 py-3 rounded-full
             shadow-lg hover:shadow-xl
             transition-all duration-200
             hover:scale-105
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+            focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
           "
         >
           <CalendarIcon className="h-5 w-5" />

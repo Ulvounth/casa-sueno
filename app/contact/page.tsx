@@ -66,16 +66,16 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/50">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50/30 to-orange-50/50">
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-amber-600 to-orange-700 bg-clip-text text-transparent">
               Get in Touch
             </span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
             Ready to book your dream holiday at Casa Sueño? Have questions about
             our beautiful Spanish retreat? We&apos;d love to hear from you!
           </p>
@@ -86,24 +86,24 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-stone-200/50">
+              <h2 className="text-2xl font-bold text-stone-800 mb-6">
                 Contact Information
               </h2>
 
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
                       <EnvelopeIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-stone-800">
                       Email
                     </h3>
-                    <p className="text-gray-600">info@casasueno.com</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-stone-600">info@casasueno.com</p>
+                    <p className="text-sm text-stone-500">
                       We&apos;ll respond within 24 hours
                     </p>
                   </div>
@@ -111,16 +111,16 @@ export default function ContactPage() {
 
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
                       <PhoneIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-stone-800">
                       Phone
                     </h3>
-                    <p className="text-gray-600">+34 123 456 789</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-stone-600">+34 123 456 789</p>
+                    <p className="text-sm text-stone-500">
                       Available 9:00 - 18:00 CET
                     </p>
                   </div>
@@ -128,16 +128,16 @@ export default function ContactPage() {
 
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-r from-rose-400 to-pink-500 rounded-lg flex items-center justify-center">
                       <MapPinIcon className="h-6 w-6 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-stone-800">
                       Location
                     </h3>
-                    <p className="text-gray-600">Andalusia, Spain</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-stone-600">Andalusia, Spain</p>
+                    <p className="text-sm text-stone-500">
                       Beautiful Spanish countryside
                     </p>
                   </div>
@@ -146,7 +146,7 @@ export default function ContactPage() {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
+            <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl p-8 text-white">
               <h3 className="text-xl font-bold mb-4">Why Choose Casa Sueño?</h3>
               <ul className="space-y-3">
                 <li className="flex items-center space-x-3">
@@ -170,8 +170,8 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-stone-200/50">
+            <h2 className="text-2xl font-bold text-stone-800 mb-6">
               Send us a Message
             </h2>
 
@@ -179,7 +179,7 @@ export default function ContactPage() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-stone-700 mb-2"
                 >
                   Full Name *
                 </label>
@@ -190,7 +190,7 @@ export default function ContactPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80"
+                  className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="Your full name"
                 />
               </div>
@@ -198,7 +198,7 @@ export default function ContactPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-stone-700 mb-2"
                 >
                   Email Address *
                 </label>
@@ -209,7 +209,7 @@ export default function ContactPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80"
+                  className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -217,7 +217,7 @@ export default function ContactPage() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-stone-700 mb-2"
                 >
                   Phone Number
                 </label>
@@ -227,7 +227,7 @@ export default function ContactPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80"
+                  className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
@@ -235,7 +235,7 @@ export default function ContactPage() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-stone-700 mb-2"
                 >
                   Message *
                 </label>
@@ -246,7 +246,7 @@ export default function ContactPage() {
                   rows={6}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/80 resize-none"
+                  className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80 resize-none"
                   placeholder="Tell us about your planned stay, any special requirements, or questions you have..."
                 ></textarea>
               </div>
@@ -273,7 +273,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-4 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] hover:shadow-lg"
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold py-4 px-6 rounded-lg hover:from-amber-600 hover:to-orange-700 focus:ring-4 focus:ring-amber-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] hover:shadow-lg"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center space-x-2">

@@ -36,21 +36,21 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Left Column - About Family */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-semibold text-gray-900">Our Story</h2>
-            <p className="text-gray-700 leading-relaxed">
+            <h2 className="text-3xl font-semibold text-stone-800">Our Story</h2>
+            <p className="text-stone-700 leading-relaxed">
               Welcome to Casa Sueño, your home away from home in beautiful
               Spain. Our holiday rental was carefully designed to provide guests
               with an authentic Spanish experience while maintaining all the
               comforts of modern living.
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-stone-700 leading-relaxed">
               Located in one of Spain&apos;s most charming regions, Casa Sueño
               offers the perfect base for exploring the rich culture, stunning
               beaches, and vibrant local communities that make this area so
               special. We&apos;ve thoughtfully curated every detail to ensure
               your stay is memorable.
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-stone-700 leading-relaxed">
               Whether you&apos;re seeking relaxation, adventure, or cultural
               immersion, Casa Sueño provides the perfect setting for your
               Spanish holiday. We&apos;re committed to helping you create
@@ -58,7 +58,7 @@ export default function AboutPage() {
             </p>
 
             <div className="pt-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              <h3 className="text-xl font-semibold text-stone-800 mb-4">
                 What makes our location special
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -72,7 +72,7 @@ export default function AboutPage() {
                 ].map((interest) => (
                   <span
                     key={interest}
-                    className="px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium"
+                    className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium"
                   >
                     {interest}
                   </span>
@@ -83,16 +83,18 @@ export default function AboutPage() {
 
           {/* Right Column - Property Facts */}
           <div className="space-y-8">
-            <h2 className="text-3xl font-semibold text-gray-900">
+            <h2 className="text-3xl font-semibold text-stone-800">
               About Casa Sueño
             </h2>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <MapPinIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
+                <MapPinIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">Location</h3>
-                  <p className="text-gray-600">Beautiful Spanish countryside</p>
+                  <h3 className="font-semibold text-stone-800">Location</h3>
+                  <p className="text-stone-600">
+                    Beautiful Spanish countryside
+                  </p>
                 </div>
               </div>
 
@@ -117,17 +119,17 @@ export default function AboutPage() {
             </div>
 
             {/* Contact CTA */}
-            <div className="bg-orange-50 p-6 rounded-lg border border-orange-100">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            <div className="bg-amber-50 p-6 rounded-lg border border-amber-100">
+              <h3 className="text-xl font-semibold text-stone-800 mb-3">
                 Have questions about the area?
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-stone-600 mb-4">
                 Need local recommendations or have questions about Casa Sueño?
                 We&apos;re here to help make your Spanish holiday unforgettable!
               </p>
               <Link
                 href="/contact"
-                className="inline-block bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors"
+                className="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
               >
                 Ask a question
               </Link>
