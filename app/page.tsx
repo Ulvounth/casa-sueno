@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Hero from "./components/Hero";
 import FloatingBookingButton from "./components/FloatingBookingButton";
+import InteractiveMap from "./components/InteractiveMap";
 import {
   CheckIcon,
   KeyIcon,
@@ -270,6 +271,9 @@ export default function Page() {
                 </div>
               </div>
             </div>
+
+            {/* Interactive Map Section */}
+            <InteractiveMap />
           </div>
         </div>
       </section>
