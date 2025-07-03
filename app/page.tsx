@@ -177,29 +177,6 @@ export default function Page() {
                 </div>
               </div>
             </div>
-
-            {/* Safety Information */}
-            <div className="bg-green-50 rounded-xl p-6 border border-green-200">
-              <h4 className="font-semibold text-lg mb-4">Safety & Security</h4>
-              <div className="space-y-2 text-sm text-green-800">
-                <div className="flex items-center gap-2">
-                  <span>✓</span>
-                  <span>Smoke detectors installed</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>✓</span>
-                  <span>First aid kit available</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>✓</span>
-                  <span>Safe for valuables</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>✓</span>
-                  <span>24/7 emergency contact</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -268,39 +245,27 @@ export default function Page() {
               {/* Location Features */}
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
                     <strong>La Zenia Boulevard:</strong> 5 min walk
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
                     <strong>Playa Flamenca Beach:</strong> 5 min drive
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
                     <strong>Cabo Roig Beach:</strong> 7 min drive
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
                     <strong>Alicante Airport:</strong> 45 min drive
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
-                  <span>
-                    <strong>Supermarket:</strong> 3 min walk
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPinIcon className="h-4 w-4 text-amber-600" />
-                  <span>
-                    <strong>Restaurants:</strong> Multiple options nearby
                   </span>
                 </div>
               </div>

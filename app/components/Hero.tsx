@@ -54,16 +54,7 @@ export default function Hero() {
           </p>
           <button
             onClick={() => setModalOpen(true)}
-            className="
-    mt-8 inline-flex items-center justify-center
-    rounded-2xl bg-white text-black
-    px-8 py-3 text-lg font-semibold
-    shadow-lg
-    transition
-    cursor-pointer
-    hover:bg-gray-200 hover:scale-105 hover:shadow-xl
-    focus:outline-none focus:ring-2 focus:ring-black/30
-  "
+            className="mt-8 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-black px-6 py-2 text-base font-medium shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md hover:scale-105 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
           >
             See all photos
           </button>
