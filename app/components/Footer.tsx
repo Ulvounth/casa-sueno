@@ -132,9 +132,18 @@ export default function Footer() {
           <div className="text-sm text-stone-400">
             &copy; {new Date().getFullYear()} Casa Sueño. All rights reserved.
           </div>
-          <div className="text-xs text-stone-500">
-            Licensed vacation rental property in Orihuela, Spain • GDPR
-            Compliant
+          <div className="text-xs text-stone-500 flex items-center gap-4">
+            <span>
+              Licensed vacation rental property in Orihuela, Spain • GDPR
+              Compliant
+            </span>
+            <Link
+              href="/admin"
+              className="text-stone-600 hover:text-amber-400 transition-colors"
+              title="Admin Panel"
+            >
+              •
+            </Link>
           </div>
         </div>
       </div>

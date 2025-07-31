@@ -34,7 +34,6 @@ export default function ContactPage() {
       });
 
       const result = await response.json();
-      console.log("API Response:", result);
 
       if (response.ok && result.success) {
         setSubmitStatus("success");
