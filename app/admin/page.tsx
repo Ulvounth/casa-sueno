@@ -88,7 +88,7 @@ function AdminPanel() {
       setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout error:", error);
-      // Logout lokalt selv om server request feiler
+      // Logout locally even if server request fails
       setIsAuthenticated(false);
     }
   };
@@ -139,7 +139,7 @@ function AdminPanel() {
 
       if (error) {
         console.error("Error updating booking:", error);
-        alert("Feil ved oppdatering av booking: " + error.message);
+        alert("Error updating booking: " + error.message);
         return;
       }
 
@@ -150,12 +150,12 @@ function AdminPanel() {
       );
     } catch (error) {
       console.error("Error:", error);
-      alert("Feil ved oppdatering av booking");
+      alert("Error updating booking");
     }
   };
 
   const deleteBooking = async (bookingId: string) => {
-    if (!confirm("Er du sikker på at du vil slette denne bookingen?")) {
+    if (!confirm("Are you sure you want to delete this booking?")) {
       return;
     }
 
@@ -167,7 +167,7 @@ function AdminPanel() {
 
       if (error) {
         console.error("Error deleting booking:", error);
-        alert("Feil ved sletting av booking");
+        alert("Error deleting booking");
         return;
       }
 
@@ -176,7 +176,7 @@ function AdminPanel() {
       alert("Booking slettet");
     } catch (error) {
       console.error("Error:", error);
-      alert("Feil ved sletting av booking");
+      alert("Error deleting booking");
     }
   };
 
@@ -238,7 +238,7 @@ function AdminPanel() {
                 Casa Sueño Admin
               </h1>
               <p className="mt-1 text-gray-600">
-                Administrer bookinger og tilgjengelighet
+                Manage bookings and availability
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -270,7 +270,7 @@ function AdminPanel() {
             </h2>
             <div className="flex gap-4">
               {[
-                { key: "all", label: "Alle", count: bookings.length },
+                { key: "all", label: "All", count: bookings.length },
                 {
                   key: "confirmed",
                   label: "Bekreftet",

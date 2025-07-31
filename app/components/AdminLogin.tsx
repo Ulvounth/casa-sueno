@@ -37,12 +37,12 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
           setLockoutTime(data.lockoutTime);
           setError(data.error);
         } else {
-          setError(data.error || "Innlogging feilet");
+          setError(data.error || "Login failed");
         }
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError("Nettverksfeil - prøv igjen");
+      setError("Network error - please try again");
     }
 
     setLoading(false);
@@ -65,7 +65,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Passord
+                Password
               </label>
               <div className="mt-1 relative">
                 <input
@@ -77,7 +77,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 sm:text-sm"
-                  placeholder="Skriv inn passord"
+                  placeholder="Enter password"
                   disabled={lockoutTime !== null}
                 />
                 <button

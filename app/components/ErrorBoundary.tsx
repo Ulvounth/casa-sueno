@@ -38,25 +38,25 @@ export default class ErrorBoundary extends Component<
                 Admin Panel Error
               </h2>
               <p className="text-red-600 text-sm mb-4">
-                Det oppstod en feil i admin-panelet. Dette kan være på grunn av
-                browser-extensions.
+                An error occurred in the admin panel. This may be due to browser
+                extensions.
               </p>
               <div className="space-y-2">
                 <button
                   onClick={() => this.setState({ hasError: false })}
                   className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors"
                 >
-                  Prøv igjen
+                  Try Again
                 </button>
                 <button
                   onClick={() => window.location.reload()}
                   className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
                 >
-                  Refresh siden
+                  Refresh Page
                 </button>
               </div>
               <p className="text-xs text-gray-500 mt-4">
-                Prøv å disable browser-extensions eller bruk incognito mode
+                Try disabling browser extensions or use incognito mode
               </p>
             </div>
           </div>

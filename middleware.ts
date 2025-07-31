@@ -5,9 +5,9 @@ const JWT_SECRET =
   process.env.JWT_SECRET || "your-secure-secret-change-in-production";
 
 export function middleware(request: NextRequest) {
-  // Beskytt admin ruter
+  // Protect admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
-    // Skip login siden
+    // Skip login page
     if (
       request.nextUrl.pathname === "/admin" ||
       request.nextUrl.pathname.startsWith("/admin/login")
@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Security headers for alle sider
+  // Security headers for all pages
   const response = NextResponse.next();
 
   // Prevent clickjacking
