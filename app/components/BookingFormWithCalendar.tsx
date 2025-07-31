@@ -27,7 +27,8 @@ export default function BookingFormWithCalendar() {
     try {
       const { data: bookings, error } = await supabase
         .from("bookings")
-        .select("start_date, end_date");
+        .select("start_date, end_date, status")
+        .in("status", ["confirmed", "pending"]); // Only fetch confirmed and pending bookings
 
       if (error) {
         console.error("Error fetching bookings:", error);
