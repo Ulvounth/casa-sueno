@@ -141,29 +141,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
-            {/* Quick Info */}
-            <div className="bg-amber-600 rounded-2xl p-8 text-white">
-              <h3 className="text-xl font-bold mb-4">Why Choose Casa Sueño?</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span>Authentic Spanish architecture</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span>Peaceful countryside location</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span>Modern amenities & comfort</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span>Personalized guest experience</span>
-                </li>
-              </ul>
-            </div>
           </div>
 
           {/* Contact Form */}

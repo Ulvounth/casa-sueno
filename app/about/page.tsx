@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gray-900">
+      <section className="relative py-40 bg-gray-900">
         <div className="absolute inset-0">
           <Image
             src="/images/about-heading.jpg"
@@ -23,8 +23,8 @@ export default function AboutPage() {
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">About Casa Sueño</h1>
-          <p className="text-xl max-w-2xl mx-auto">
+          <h1 className="text-6xl font-bold mb-6">About Casa Sueño</h1>
+          <p className="text-2xl max-w-3xl mx-auto leading-relaxed">
             Discover the story behind your perfect Spanish getaway and what
             makes our holiday home special.
           </p>
@@ -56,29 +56,6 @@ export default function AboutPage() {
               Spanish holiday. We&apos;re committed to helping you create
               lasting memories in this beautiful corner of Spain.
             </p>
-
-            <div className="pt-6">
-              <h3 className="text-xl font-semibold text-stone-800 mb-4">
-                What makes our location special
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {[
-                  "Beautiful beaches",
-                  "Amazing cuisine",
-                  "Warm weather",
-                  "Rich culture",
-                  "Historic sites",
-                  "Outdoor activities",
-                ].map((interest) => (
-                  <span
-                    key={interest}
-                    className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium"
-                  >
-                    {interest}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Right Column - Property Facts */}
@@ -99,18 +76,20 @@ export default function AboutPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <AcademicCapIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
+                <AcademicCapIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">Property Type</h3>
-                  <p className="text-gray-600">Modern holiday villa</p>
+                  <h3 className="font-semibold text-stone-800">
+                    Property Type
+                  </h3>
+                  <p className="text-stone-600">Modern holiday villa</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <HeartIcon className="h-6 w-6 text-orange-600 mt-1 flex-shrink-0" />
+                <HeartIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900">Amenities</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-semibold text-stone-800">Amenities</h3>
+                  <p className="text-stone-600">
                     Fully equipped kitchen, comfortable bedrooms, modern
                     bathrooms.
                   </p>
@@ -138,50 +117,60 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="bg-gray-50 py-12">
+      {/* Why Choose Us Section - Cool but cohesive design */}
+      <section className="bg-gradient-to-br from-stone-50 to-amber-50/30 py-20">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-semibold text-gray-900 text-center mb-8">
-            Why stay at Casa Sueño
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-stone-800 mb-4">
+              Why stay at Casa Sueño
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full"></div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏡</span>
+            <div className="group">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-amber-100/50 hover:bg-white/95 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-amber-500/30 transition-all duration-300 group-hover:scale-110">
+                  <span className="text-3xl">🏡</span>
+                </div>
+                <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
+                  Premium Experience
+                </h3>
+                <p className="text-stone-600 leading-relaxed text-center">
+                  As local property managers, we know all the best beaches,
+                  restaurants, and hidden gems in the area
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Premium Experience
-              </h3>
-              <p className="text-gray-600">
-                As local property managers, we know all the best beaches,
-                restaurants, and hidden gems in the area
-              </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">❤️</span>
+            <div className="group">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-amber-100/50 hover:bg-white/95 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-pink-500/30 transition-all duration-300 group-hover:scale-110">
+                  <span className="text-3xl">❤️</span>
+                </div>
+                <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
+                  Personal Touch
+                </h3>
+                <p className="text-stone-600 leading-relaxed text-center">
+                  We treat our guests like family and ensure every detail is
+                  perfect for your stay
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Personal Touch
-              </h3>
-              <p className="text-gray-600">
-                We treat our guests like family and ensure every detail is
-                perfect for your stay
-              </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌟</span>
+            <div className="group">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-amber-100/50 hover:bg-white/95 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-orange-500/30 transition-all duration-300 group-hover:scale-110">
+                  <span className="text-3xl">🌟</span>
+                </div>
+                <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
+                  Quality Guaranteed
+                </h3>
+                <p className="text-stone-600 leading-relaxed text-center">
+                  Casa Sueño is our home too - we maintain the highest standards
+                  of cleanliness and comfort
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Quality Guaranteed
-              </h3>
-              <p className="text-gray-600">
-                Casa Sueño is our home too - we maintain the highest standards
-                of cleanliness and comfort
-              </p>
             </div>
           </div>
         </div>
