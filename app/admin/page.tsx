@@ -118,7 +118,7 @@ function AdminPanel() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Sjekker autentisering...</p>
+            <p className="mt-4 text-gray-600">Checking authentication...</p>
           </div>
         </div>
       );
@@ -145,9 +145,7 @@ function AdminPanel() {
 
       // Refresh bookings to get updated data
       await fetchBookings();
-      alert(
-        `Booking ${newStatus === "confirmed" ? "bekreftet" : "kansellert"}`
-      );
+      alert(`Booking ${newStatus === "confirmed" ? "confirmed" : "cancelled"}`);
     } catch (error) {
       console.error("Error:", error);
       alert("Error updating booking");
@@ -173,7 +171,7 @@ function AdminPanel() {
 
       await fetchBookings();
       setSelectedBooking(null);
-      alert("Booking slettet");
+      alert("Booking deleted");
     } catch (error) {
       console.error("Error:", error);
       alert("Error deleting booking");
@@ -221,7 +219,7 @@ function AdminPanel() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Laster bookinger...</p>
+          <p className="mt-4 text-gray-600">Loading bookings...</p>
         </div>
       </div>
     );
@@ -231,29 +229,29 @@ function AdminPanel() {
     <div className="min-h-screen bg-gray-50">
       {/* Header - Fixed with high z-index to override main site header */}
       <div className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 sm:py-6 gap-3 sm:gap-0">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-xl sm:text-3xl font-bold text-gray-900">
                 Casa Sueño Admin
               </h1>
-              <p className="mt-1 text-gray-600">
+              <p className="mt-1 text-xs sm:text-base text-gray-600">
                 Manage bookings and availability
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="bg-amber-50 px-4 py-2 rounded-lg border border-amber-200">
-                <p className="text-sm font-medium text-amber-800">
-                  Totalt {bookings.length} bookinger
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <div className="bg-amber-50 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-amber-200">
+                <p className="text-xs sm:text-sm font-medium text-amber-800">
+                  Total {bookings.length} bookings
                 </p>
               </div>
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-                title="Logg ut"
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors ml-auto sm:ml-0"
+                title="Log out"
               >
                 <ArrowRightOnRectangleIcon className="h-4 w-4" />
-                Logg ut
+                <span>Log out</span>
               </button>
             </div>
           </div>
@@ -261,30 +259,30 @@ function AdminPanel() {
       </div>
 
       {/* Main content with top padding to account for fixed header */}
-      <div className="pt-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="pt-40 sm:pt-36">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8">
           {/* Filters */}
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Filtrer bookinger
+          <div className="bg-white rounded-lg shadow-sm border p-3 sm:p-6 mb-4 sm:mb-8">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+              Filter bookings
             </h2>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-4">
               {[
                 { key: "all", label: "All", count: bookings.length },
                 {
                   key: "confirmed",
-                  label: "Bekreftet",
+                  label: "Confirmed",
                   count: bookings.filter((b) => b.status === "confirmed")
                     .length,
                 },
                 {
                   key: "pending",
-                  label: "Venter",
+                  label: "Pending",
                   count: bookings.filter((b) => b.status === "pending").length,
                 },
                 {
                   key: "cancelled",
-                  label: "Kansellert",
+                  label: "Cancelled",
                   count: bookings.filter((b) => b.status === "cancelled")
                     .length,
                 },
@@ -300,13 +298,16 @@ function AdminPanel() {
                         | "cancelled"
                     )
                   }
-                  className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
+                  className={`px-2 sm:px-4 py-2 rounded-lg border text-xs sm:text-sm font-medium transition-colors ${
                     statusFilter === filter.key
                       ? "bg-amber-600 text-white border-amber-600"
                       : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
                   }`}
                 >
-                  {filter.label} ({filter.count})
+                  <span className="block sm:hidden">{filter.label}</span>
+                  <span className="hidden sm:block">
+                    {filter.label} ({filter.count})
+                  </span>
                 </button>
               ))}
             </div>
@@ -314,63 +315,72 @@ function AdminPanel() {
 
           {/* Bookings Grid */}
           {filteredBookings.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-sm border p-12 text-center">
-              <CalendarIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Ingen bookinger
+            <div className="bg-white rounded-lg shadow-sm border p-6 sm:p-12 text-center">
+              <CalendarIcon className="h-8 sm:h-12 w-8 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
+              <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-2">
+                No bookings
               </h3>
-              <p className="text-gray-600">
+              <p className="text-xs sm:text-base text-gray-600">
                 {statusFilter === "all"
-                  ? "Det er ingen bookinger å vise."
-                  : `Ingen bookinger med status "${statusFilter}".`}
+                  ? "There are no bookings to show."
+                  : `No bookings with status "${statusFilter}".`}
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredBookings.map((booking) => (
                 <div
                   key={booking.id}
                   className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow"
                 >
-                  <div className="p-6">
+                  <div className="p-3 sm:p-6">
                     {/* Status and Actions */}
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="flex justify-between items-start mb-3 sm:mb-4">
                       <div
-                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(booking.status)}`}
+                        className={`inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(booking.status)}`}
                       >
                         {getStatusIcon(booking.status)}
-                        {booking.status === "confirmed"
-                          ? "Bekreftet"
-                          : booking.status === "cancelled"
-                            ? "Kansellert"
-                            : "Venter"}
+                        <span className="hidden sm:inline">
+                          {booking.status === "confirmed"
+                            ? "Confirmed"
+                            : booking.status === "cancelled"
+                              ? "Cancelled"
+                              : "Pending"}
+                        </span>
+                        <span className="sm:hidden">
+                          {booking.status === "confirmed"
+                            ? "OK"
+                            : booking.status === "cancelled"
+                              ? "X"
+                              : "?"}
+                        </span>
                       </div>
                       <button
                         onClick={() => setSelectedBooking(booking)}
-                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                        className="p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
                       >
-                        <EyeIcon className="h-4 w-4" />
+                        <EyeIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       </button>
                     </div>
 
                     {/* Guest Info */}
-                    <div className="space-y-2 mb-4">
+                    <div className="space-y-2 mb-3 sm:mb-4">
                       <div className="flex items-center gap-2">
-                        <UserIcon className="h-4 w-4 text-gray-400" />
-                        <span className="font-medium text-gray-900">
+                        <UserIcon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                        <span className="font-medium text-gray-900 text-xs sm:text-base truncate">
                           {booking.guest_name}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <EnvelopeIcon className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">
+                      <div className="flex items-start gap-2">
+                        <EnvelopeIcon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm text-gray-600 break-all">
                           {booking.guest_email}
                         </span>
                       </div>
                       {booking.guest_phone && (
                         <div className="flex items-center gap-2">
-                          <PhoneIcon className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm text-gray-600">
+                          <PhoneIcon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 flex-shrink-0" />
+                          <span className="text-xs sm:text-sm text-gray-600">
                             {booking.guest_phone}
                           </span>
                         </div>
@@ -378,60 +388,61 @@ function AdminPanel() {
                     </div>
 
                     {/* Dates */}
-                    <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <CalendarIcon className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm font-medium text-gray-700">
-                          Opphold
+                    <div className="bg-gray-50 rounded-lg p-2 sm:p-3 mb-3 sm:mb-4">
+                      <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                        <CalendarIcon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500 flex-shrink-0" />
+                        <span className="text-xs sm:text-sm font-medium text-gray-700">
+                          Stay
                         </span>
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-xs sm:text-sm text-gray-600">
                         <div>
-                          Inn:{" "}
+                          Check-in:{" "}
                           {format(parseISO(booking.start_date), "dd.MM.yyyy")}
                         </div>
                         <div>
-                          Ut: {format(parseISO(booking.end_date), "dd.MM.yyyy")}
+                          Check-out:{" "}
+                          {format(parseISO(booking.end_date), "dd.MM.yyyy")}
                         </div>
                         <div className="mt-1 font-medium">
                           {calculateNights(
                             booking.start_date,
                             booking.end_date
                           )}{" "}
-                          netter • {booking.guests} gjester
+                          nights • {booking.guests} guests
                         </div>
                       </div>
                     </div>
 
                     {/* Price */}
                     {booking.total_price && (
-                      <div className="flex items-center gap-2 mb-4">
-                        <CurrencyEuroIcon className="h-4 w-4 text-green-600" />
-                        <span className="font-semibold text-green-600">
+                      <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                        <CurrencyEuroIcon className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
+                        <span className="font-semibold text-green-600 text-sm sm:text-base">
                           €{booking.total_price}
                         </span>
                       </div>
                     )}
 
                     {/* Actions */}
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       {booking.status === "pending" && (
                         <>
                           <button
                             onClick={() =>
                               updateBookingStatus(booking.id, "confirmed")
                             }
-                            className="flex-1 bg-green-600 text-white text-xs py-2 px-3 rounded-md hover:bg-green-700 transition-colors"
+                            className="flex-1 bg-green-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-green-700 transition-colors touch-manipulation"
                           >
-                            Bekreft
+                            Confirm
                           </button>
                           <button
                             onClick={() =>
                               updateBookingStatus(booking.id, "cancelled")
                             }
-                            className="flex-1 bg-red-600 text-white text-xs py-2 px-3 rounded-md hover:bg-red-700 transition-colors"
+                            className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
                           >
-                            Avslå
+                            Decline
                           </button>
                         </>
                       )}
@@ -440,9 +451,9 @@ function AdminPanel() {
                           onClick={() =>
                             updateBookingStatus(booking.id, "cancelled")
                           }
-                          className="flex-1 bg-red-600 text-white text-xs py-2 px-3 rounded-md hover:bg-red-700 transition-colors"
+                          className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
                         >
-                          Kanseller
+                          Cancel
                         </button>
                       )}
                     </div>
@@ -467,7 +478,7 @@ function AdminPanel() {
                   <div className="flex items-start">
                     <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                       <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-                        Booking detaljer
+                        Booking details
                       </h3>
 
                       <div className="space-y-4">
@@ -481,41 +492,41 @@ function AdminPanel() {
                           >
                             {getStatusIcon(selectedBooking.status)}
                             {selectedBooking.status === "confirmed"
-                              ? "Bekreftet"
+                              ? "Confirmed"
                               : selectedBooking.status === "cancelled"
-                                ? "Kansellert"
-                                : "Venter"}
+                                ? "Cancelled"
+                                : "Pending"}
                           </div>
                         </div>
 
                         {/* Guest Details */}
                         <div className="border-t pt-4">
                           <h4 className="font-medium text-gray-900 mb-2">
-                            Gjesteinformasjon
+                            Guest information
                           </h4>
                           <div className="space-y-2 text-sm">
                             <div>
-                              Navn:{" "}
+                              Name:{" "}
                               <span className="font-medium">
                                 {selectedBooking.guest_name}
                               </span>
                             </div>
                             <div>
-                              E-post:{" "}
+                              Email:{" "}
                               <span className="font-medium">
                                 {selectedBooking.guest_email}
                               </span>
                             </div>
                             {selectedBooking.guest_phone && (
                               <div>
-                                Telefon:{" "}
+                                Phone:{" "}
                                 <span className="font-medium">
                                   {selectedBooking.guest_phone}
                                 </span>
                               </div>
                             )}
                             <div>
-                              Antall gjester:{" "}
+                              Number of guests:{" "}
                               <span className="font-medium">
                                 {selectedBooking.guests}
                               </span>
@@ -526,11 +537,11 @@ function AdminPanel() {
                         {/* Dates */}
                         <div className="border-t pt-4">
                           <h4 className="font-medium text-gray-900 mb-2">
-                            Opphold
+                            Stay
                           </h4>
                           <div className="space-y-2 text-sm">
                             <div>
-                              Innsjekking:{" "}
+                              Check-in:{" "}
                               <span className="font-medium">
                                 {format(
                                   parseISO(selectedBooking.start_date),
@@ -539,7 +550,7 @@ function AdminPanel() {
                               </span>
                             </div>
                             <div>
-                              Utsjekking:{" "}
+                              Check-out:{" "}
                               <span className="font-medium">
                                 {format(
                                   parseISO(selectedBooking.end_date),
@@ -548,7 +559,7 @@ function AdminPanel() {
                               </span>
                             </div>
                             <div>
-                              Antall netter:{" "}
+                              Number of nights:{" "}
                               <span className="font-medium">
                                 {calculateNights(
                                   selectedBooking.start_date,
@@ -563,7 +574,7 @@ function AdminPanel() {
                         {selectedBooking.total_price && (
                           <div className="border-t pt-4">
                             <h4 className="font-medium text-gray-900 mb-2">
-                              Pris
+                              Price
                             </h4>
                             <div className="text-lg font-semibold text-green-600">
                               €{selectedBooking.total_price}
@@ -575,7 +586,7 @@ function AdminPanel() {
                         {selectedBooking.special_requests && (
                           <div className="border-t pt-4">
                             <h4 className="font-medium text-gray-900 mb-2">
-                              Spesielle ønsker
+                              Special requests
                             </h4>
                             <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
                               {selectedBooking.special_requests}
@@ -586,7 +597,7 @@ function AdminPanel() {
                         {/* Created Date */}
                         <div className="border-t pt-4">
                           <div className="text-xs text-gray-500">
-                            Opprettet:{" "}
+                            Created:{" "}
                             {format(
                               parseISO(selectedBooking.created_at),
                               "dd.MM.yyyy HH:mm"
@@ -605,14 +616,14 @@ function AdminPanel() {
                     onClick={() => deleteBooking(selectedBooking.id)}
                   >
                     <TrashIcon className="h-4 w-4 mr-2" />
-                    Slett
+                    Delete
                   </button>
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setSelectedBooking(null)}
                   >
-                    Lukk
+                    Close
                   </button>
                 </div>
               </div>

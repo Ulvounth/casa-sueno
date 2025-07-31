@@ -16,6 +16,13 @@ import {
   BeakerIcon as KitchenIcon,
   ClockIcon,
   BuildingOffice2Icon as BedIcon,
+  CubeIcon as DishwasherIcon,
+  CogIcon as WashingMachineIcon,
+  CakeIcon as CoffeeMachineIcon,
+  FireIcon as MicrowaveIcon,
+  UserIcon as TowelsIcon,
+  HomeIcon as TravelCribIcon,
+  ArrowPathIcon as PoolIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Page() {
@@ -41,8 +48,9 @@ export default function Page() {
                 house in Orihuela, just minutes from La Zenia shopping mall and
                 some of Costa Blanca&apos;s most beautiful beaches. Casa Sueño
                 combines modern comfort with traditional Spanish charm,
-                featuring spacious rooms, a private roof terrace, and everything
-                you need for an unforgettable vacation.
+                featuring spacious rooms, a private roof terrace, access to a
+                private pool shared with friendly neighbors, and everything you
+                need for an unforgettable vacation.
               </p>
               <ul className="space-y-4 text-gray-700">
                 <li className="flex items-start gap-3">
@@ -66,6 +74,10 @@ export default function Page() {
                   <span>
                     Walkable neighborhood with restaurants & shops nearby.
                   </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
+                  <span>Access to private pool shared with neighbors.</span>
                 </li>
               </ul>
             </div>
@@ -210,8 +222,36 @@ export default function Page() {
                 <span className="text-gray-700">Roof terrace</span>
               </div>
               <div className="flex items-center gap-3">
+                <PoolIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Private pool (shared)</span>
+              </div>
+              <div className="flex items-center gap-3">
                 <BedIcon className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-700">2 bedrooms</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CoffeeMachineIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Coffee machine</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <DishwasherIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Dishwasher</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <WashingMachineIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Washing machine</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TowelsIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Towels & bed linen</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TravelCribIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Travel crib for children</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <MicrowaveIcon className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-700">Microwave</span>
               </div>
               <div className="flex items-center gap-3">
                 <ShieldCheckIcon className="h-5 w-5 text-gray-600" />
@@ -220,6 +260,23 @@ export default function Page() {
               <div className="flex items-center gap-3">
                 <ClockIcon className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-700">24/7 support</span>
+              </div>
+            </div>
+
+            {/* Everything included note */}
+            <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <SparklesIcon className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-amber-800 font-medium">
+                    Everything you need for a perfect holiday
+                  </p>
+                  <p className="text-amber-700 text-sm mt-1">
+                    All basic amenities are included - just bring your clothes
+                    and enjoy your stay! From kitchen essentials to fresh
+                    linens, we&apos;ve got you covered.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
