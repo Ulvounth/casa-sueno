@@ -95,23 +95,32 @@ export default function BookingFormWithCalendar() {
     const totalPrice = nights * 85; // €85 per night
 
     try {
-      // Insert booking into Supabase with complete guest information
-      const { error } = await supabase.from("bookings").insert({
-        start_date: format(formData.checkin, "yyyy-MM-dd"),
-        end_date: format(formData.checkout, "yyyy-MM-dd"),
-        guests: formData.guests,
-        user_id: null, // No authentication system
-        guest_name: formData.name,
-        guest_email: formData.email,
-        guest_phone: formData.phone || null,
-        total_price: totalPrice,
-        special_requests: formData.message || null,
-        status: "confirmed",
+      // Send booking request to API
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          checkin: format(formData.checkin, "yyyy-MM-dd"),
+          checkout: format(formData.checkout, "yyyy-MM-dd"),
+          guests: formData.guests,
+          message: formData.message,
+          totalPrice: totalPrice,
+        }),
       });
 
-      if (error) {
-        console.error("Booking error:", error);
-        alert("There was an error processing your booking. Please try again.");
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        console.error("Booking API error:", result);
+        alert(
+          result.error ||
+            "There was an error processing your booking. Please try again."
+        );
         return;
       }
 
