@@ -187,6 +187,8 @@ export default function ContactPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
+                  autoComplete="off"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="Your full name"
                 />
@@ -206,6 +208,8 @@ export default function ContactPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="off"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="your.email@example.com"
                 />
@@ -224,6 +228,8 @@ export default function ContactPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  autoComplete="off"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="+1 (555) 123-4567"
                 />
@@ -243,6 +249,8 @@ export default function ContactPage() {
                   rows={6}
                   value={formData.message}
                   onChange={handleChange}
+                  autoComplete="off"
+                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80 resize-none"
                   placeholder="Tell us about your planned stay, any special requirements, or questions you have..."
                 ></textarea>

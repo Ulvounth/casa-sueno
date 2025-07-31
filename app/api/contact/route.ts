@@ -5,10 +5,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, phone, subject, message } = await request.json();
+    const { name, email, phone, message } = await request.json();
 
     // Validate required fields
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -22,12 +22,11 @@ export async function POST(request: NextRequest) {
       from: fromEmail,
       to: toEmail,
       subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ""}\nSubject: ${subject}\nMessage: ${message}`,
+      text: `Name: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ""}\nMessage: ${message}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
-        <p><strong>Subject:</strong> ${subject}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
     };
