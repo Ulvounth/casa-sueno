@@ -40,8 +40,8 @@ export default function Hero() {
         loop={false}
       />
 
-      {/* dark overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Enhanced gradient overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />
 
       {/* text & button - positioned below header */}
       <div className="max-w-7xl mx-auto relative z-10 px-4 pt-24 md:pt-28">
@@ -54,8 +54,21 @@ export default function Hero() {
           </p>
           <button
             onClick={() => setModalOpen(true)}
-            className="mt-8 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-black px-6 py-2 text-base font-medium shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md hover:scale-105 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
+            className="mt-8 inline-flex items-center justify-center rounded-xl bg-white/95 backdrop-blur-sm text-gray-900 px-8 py-3 text-lg font-semibold shadow-2xl transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30 border border-white/20 group"
           >
+            <svg
+              className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
             See all photos
           </button>
         </div>

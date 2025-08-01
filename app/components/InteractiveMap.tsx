@@ -4,7 +4,6 @@
 export default function InteractiveMap() {
   return (
     <div className="mt-8">
-      <h4 className="text-xl font-semibold mb-4">Where you&apos;ll be</h4>
       <div className="relative rounded-xl overflow-hidden shadow-lg border border-gray-200">
         {/* Embedded Google Maps iframe - fully interactive */}
         <iframe

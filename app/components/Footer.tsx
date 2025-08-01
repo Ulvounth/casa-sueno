@@ -115,7 +115,10 @@ export default function Footer() {
               <Link href="#" aria-label="Facebook">
                 <FaFacebookF className="h-5 w-5 hover:text-amber-400 transition-colors" />
               </Link>
-              <Link href="#" aria-label="Instagram">
+              <Link
+                href="https://www.instagram.com/casasueno.es/"
+                aria-label="Instagram"
+              >
                 <FaInstagram className="h-5 w-5 hover:text-rose-400 transition-colors" />
               </Link>
               <Link href="#" aria-label="Twitter">

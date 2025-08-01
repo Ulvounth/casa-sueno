@@ -3,6 +3,7 @@ import Link from "next/link";
 import Hero from "./components/Hero";
 import FloatingBookingButton from "./components/FloatingBookingButton";
 import InteractiveMap from "./components/InteractiveMap";
+import AvailabilityPreview from "./components/AvailabilityPreview";
 import {
   CheckIcon,
   KeyIcon,
@@ -44,21 +45,19 @@ export default function Page() {
                 4 guests · 2 bedrooms · 2 beds · 2 bathrooms
               </p>
               <p className="text-gray-700 leading-relaxed text-lg">
-                Discover your perfect Mediterranean getaway in this stunning
-                house in Orihuela, just minutes from La Zenia shopping mall and
-                some of Costa Blanca&apos;s most beautiful beaches. Casa Sueño
-                combines modern comfort with traditional Spanish charm,
-                featuring spacious rooms, a private roof terrace, access to a
-                private pool shared with friendly neighbors, and everything you
-                need for an unforgettable vacation.
+                Discover your perfect Mediterranean getaway in this stunning,
+                newly renovated house in Orihuela. Casa Sueño features two
+                comfortable bedrooms, two full bathrooms, and a spectacular
+                private roof terrace with panoramic views - perfect for morning
+                coffee or evening cocktails under the Spanish sun. Located in
+                the heart of Costa Blanca, you&apos;re just a short walk from La
+                Zenia Boulevard shopping center with its variety of shops and
+                restaurants, and only minutes from multiple pristine beaches.
+                The house combines modern comfort with traditional Spanish
+                charm, plus access to a private pool shared with friendly
+                neighbors - everything you need for an unforgettable vacation.
               </p>
               <ul className="space-y-4 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                  <span>
-                    Entire place – You&apos;ll have the villa all to yourself.
-                  </span>
-                </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
                   <span>Self check-in with smart lock.</span>
@@ -135,6 +134,9 @@ export default function Page() {
 
           {/* RIGHT COLUMN: Sidebar content */}
           <div className="lg:col-span-1 space-y-8">
+            {/* Availability Preview */}
+            <AvailabilityPreview />
+
             {/* Quick Facts */}
             <div className="bg-amber-50 rounded-xl p-6">
               <h4 className="font-semibold text-lg mb-4">Quick Facts</h4>
@@ -174,12 +176,7 @@ export default function Page() {
                   <span className="text-red-500">✗</span>
                   <span className="text-gray-600">No pets allowed</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-600">⏰</span>
-                  <span className="text-gray-600">
-                    Quiet hours: 10 PM - 8 AM
-                  </span>
-                </div>
+
                 <div className="pt-3">
                   <Link
                     href="/house-rules"
