@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -48,13 +49,20 @@ export default function Header() {
   return (
     <>
       <header className="fixed w-full bg-stone-50/90 backdrop-blur z-20">
-        <nav className="max-w-7xl mx-auto flex items-center justify-between p-4">
-          <Link href="/" className="text-2xl font-bold text-stone-800">
-            Casa Sueño
+        <nav className="max-w-7xl mx-auto flex items-center justify-between p-2">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo/CasaSueño.png"
+              alt="Casa Sueño"
+              width={300}
+              height={80}
+              className="h-16 w-auto hover:opacity-80 transition-opacity duration-200"
+              priority
+            />
           </Link>
 
           {/* Desktop menu */}
-          <ul className="hidden md:flex space-x-8 text-stone-700 items-center">
+          <ul className="hidden md:flex space-x-8 text-stone-700 items-center text-lg">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
@@ -75,7 +83,7 @@ export default function Header() {
             <li className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setPoliciesOpen(!policiesOpen)}
-                className={`hover:text-stone-900 transition-colors relative flex items-center gap-1 ${
+                className={`hover:text-stone-900 transition-colors relative flex items-center gap-1 text-lg ${
                   policyLinks.some((link) => pathname === link.href)
                     ? "text-amber-600 font-medium"
                     : ""

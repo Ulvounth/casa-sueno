@@ -1,5 +1,6 @@
 // app/components/Footer.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
@@ -8,7 +9,15 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & beskrivelse */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-amber-100">Casa Sueño</h2>
+          <Link href="/" className="inline-block">
+            <Image
+              src="/logo/CasaSueño.png"
+              alt="Casa Sueño"
+              width={350}
+              height={90}
+              className="h-16 w-auto hover:opacity-80 transition-opacity duration-200 brightness-0 invert"
+            />
+          </Link>
           <p className="text-sm text-stone-400">
             Your dream holiday home in Spain. Experience authentic Spanish charm
             with modern comfort in beautiful Orihuela.
