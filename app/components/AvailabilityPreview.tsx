@@ -8,11 +8,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
 import { parseISO, addDays, isSameDay } from "date-fns";
+import BookingModal from "./BookingModal";
 
 export default function AvailabilityPreview() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Get current month and year
   const currentMonth = currentDate.getMonth();
@@ -183,7 +185,7 @@ export default function AvailabilityPreview() {
           </div>
 
           {/* Legend */}
-          <div className="flex items-center justify-between text-xs text-gray-600">
+          <div className="flex items-center justify-between text-xs text-gray-600 mb-4">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-green-50 border border-green-200 rounded"></div>
               <span>Available</span>
@@ -194,14 +196,22 @@ export default function AvailabilityPreview() {
             </div>
           </div>
 
-          {/* Call to action */}
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <p className="text-xs text-gray-600 text-center">
-              See exact dates and pricing in our booking form
-            </p>
-          </div>
+          {/* Book Now Button */}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+          >
+            <CalendarDaysIcon className="h-5 w-5" />
+            Book Now
+          </button>
         </>
       )}
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
