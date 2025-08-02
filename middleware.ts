@@ -59,10 +59,19 @@ export function middleware(request: NextRequest) {
   // Referrer Policy
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
-  // Content Security Policy
+  // Content Security Policy - Updated to allow Stripe
   response.headers.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://vrsaehlthpojsdgwaxtk.supabase.co; frame-src 'self' https://www.google.com;"
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://*.stripe.com",
+      "connect-src 'self' https://vrsaehlthpojsdgwaxtk.supabase.co https://api.stripe.com https://checkout.stripe.com https://*.stripe.com wss://*.supabase.co",
+      "frame-src 'self' https://www.google.com https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://*.stripe.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https:",
+      "font-src 'self' data:",
+      "form-action 'self' https://*.stripe.com",
+    ].join("; ")
   );
 
   return response;
