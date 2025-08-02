@@ -12,6 +12,12 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
+  // Allow Stripe checkout APIs to pass through without CSP restrictions
+  if (request.nextUrl.pathname.startsWith("/api/create-checkout-session")) {
+    const response = NextResponse.next();
+    return response;
+  }
+
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
     // Skip login page
