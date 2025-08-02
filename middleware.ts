@@ -6,9 +6,9 @@ const JWT_SECRET =
 
 export function middleware(request: NextRequest) {
   // Allow Stripe webhook to pass through without CSP restrictions
-  if (request.nextUrl.pathname.startsWith('/api/stripe-webhook')) {
+  if (request.nextUrl.pathname.startsWith("/api/stripe-webhook")) {
     const response = NextResponse.next();
-    response.headers.delete('Content-Security-Policy');
+    response.headers.delete("Content-Security-Policy");
     return response;
   }
 

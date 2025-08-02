@@ -8,12 +8,28 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
 import { loadStripe } from "@stripe/stripe-js";
 
-// Initialize Stripe
+// Initialize Stripe with error handling
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
+).catch((error) => {
+  console.error("Failed to load Stripe:", error);
+  return null;
+});
 
 export default function BookingFormWithCalendar() {
+  // Debug environment variables
+  useEffect(() => {
+    console.log("Environment check:");
+    console.log(
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY exists:",
+      !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    );
+    console.log(
+      "Key starts with pk_:",
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_")
+    );
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -141,18 +157,33 @@ export default function BookingFormWithCalendar() {
       }
 
       // Redirect to Stripe Checkout
+      console.log(
+        "Attempting to load Stripe with key:",
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+          ? "Key exists"
+          : "Key missing"
+      );
       const stripe = await stripePromise;
+      console.log("Stripe loaded:", stripe ? "Success" : "Failed");
+
       if (stripe) {
+        console.log(
+          "Redirecting to checkout with session ID:",
+          result.sessionId
+        );
         const { error } = await stripe.redirectToCheckout({
           sessionId: result.sessionId,
         });
 
         if (error) {
           console.error("Stripe redirect error:", error);
-          alert("There was an error redirecting to payment. Please try again.");
+          alert(`Payment redirect failed: ${error.message}`);
         }
       } else {
-        alert("Payment system is not available. Please try again later.");
+        console.error("Stripe failed to load");
+        alert(
+          "Payment system failed to load. Please refresh the page and try again."
+        );
       }
     } catch (error) {
       console.error("Booking error:", error);
