@@ -48,7 +48,7 @@ export function middleware(request: NextRequest) {
   // Modern security headers for Next.js 15
   const securityHeaders = {
     "X-Frame-Options": "DENY",
-    "X-Content-Type-Options": "nosniff", 
+    "X-Content-Type-Options": "nosniff",
     "X-XSS-Protection": "1; mode=block",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Content-Security-Policy": [
@@ -60,7 +60,7 @@ export function middleware(request: NextRequest) {
       "img-src 'self' data: https:",
       "font-src 'self' data:",
       "form-action 'self' https://*.stripe.com",
-    ].join("; ")
+    ].join("; "),
   };
 
   // Set all headers at once

@@ -6,44 +6,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
-
-// Initialize Stripe with proper error handling for App Router
-let stripePromise: Promise<Stripe | null> | null = null;
-
-const getStripe = (): Promise<Stripe | null> => {
-  if (!stripePromise) {
-    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    if (!publishableKey) {
-      console.error("Missing Stripe publishable key");
-      return Promise.resolve(null);
-    }
-    stripePromise = loadStripe(publishableKey).catch((error) => {
-      console.error("Failed to load Stripe:", error);
-      return null;
-    });
-  }
-  return stripePromise;
-};
 
 export default function BookingFormWithCalendar() {
-  // Environment check with modern App Router approach
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      try {
-        const hasKey = !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-        const validKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_");
-        
-        console.group("🔧 Environment Check");
-        console.log("Stripe Key Present:", hasKey);
-        console.log("Key Format Valid:", validKey);
-        console.groupEnd();
-      } catch (error) {
-        console.error("Environment check failed:", error);
-      }
-    }
-  }, []); // Empty dependency array - runs once on mount
-
+  // No more Stripe.js environment checks needed
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -137,8 +102,8 @@ export default function BookingFormWithCalendar() {
     const totalPrice = subtotal + cleaningFee;
 
     try {
-      // Create Stripe checkout session
-      const response = await fetch("/api/create-checkout-session", {
+      // Create Stripe checkout session with server-side redirect
+      const response = await fetch("/api/redirect-to-stripe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -170,29 +135,12 @@ export default function BookingFormWithCalendar() {
         return;
       }
 
-      // Redirect to Stripe Checkout - Modern App Router approach
-      console.log("Loading Stripe...");
-      const stripe = await getStripe();
-      console.log("Stripe loaded:", stripe ? "Success" : "Failed");
-
-      if (stripe) {
-        console.log(
-          "Redirecting to checkout with session ID:",
-          result.sessionId
-        );
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: result.sessionId,
-        });
-
-        if (error) {
-          console.error("Stripe redirect error:", error);
-          alert(`Payment redirect failed: ${error.message}`);
-        }
+      // Direct redirect without Stripe.js - This avoids all client-side JS errors
+      if (result.redirectUrl) {
+        console.log("Redirecting to Stripe Checkout...");
+        window.location.href = result.redirectUrl;
       } else {
-        console.error("Stripe failed to load");
-        alert(
-          "Payment system failed to load. Please refresh the page and try again."
-        );
+        throw new Error("No redirect URL received");
       }
     } catch (error) {
       console.error("Booking error:", error);
@@ -203,30 +151,39 @@ export default function BookingFormWithCalendar() {
   };
 
   // Modern handleChange with useCallback for performance
-  const handleChange = useCallback((
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    // Defensive programming with proper type guards
-    if (!e?.target) {
-      console.warn("Event target is null or undefined");
-      return;
-    }
-    
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    const { name, value } = target;
-    
-    if (!name || typeof name !== 'string') {
-      console.warn("Input name attribute is missing or invalid:", { name, target });
-      return;
-    }
-    
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value ?? '',
-    }));
-  }, []);
+  const handleChange = useCallback(
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
+      // Defensive programming with proper type guards
+      if (!e?.target) {
+        console.warn("Event target is null or undefined");
+        return;
+      }
+
+      const target = e.target as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | HTMLSelectElement;
+      const { name, value } = target;
+
+      if (!name || typeof name !== "string") {
+        console.warn("Input name attribute is missing or invalid:", {
+          name,
+          target,
+        });
+        return;
+      }
+
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value ?? "",
+      }));
+    },
+    []
+  );
 
   const handleDateChange = (
     date: Date | null,
