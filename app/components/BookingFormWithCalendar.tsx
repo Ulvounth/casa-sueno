@@ -198,6 +198,12 @@ export default function BookingFormWithCalendar() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
+    // Add null check for e.target and e.target.name
+    if (!e.target || !e.target.name) {
+      console.warn("Event target or name is undefined:", e.target);
+      return;
+    }
+    
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
