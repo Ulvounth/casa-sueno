@@ -17,18 +17,22 @@ const stripePromise = loadStripe(
 });
 
 export default function BookingFormWithCalendar() {
-  // Debug environment variables
+  // Debug environment variables - only run once
   useEffect(() => {
-    console.log("Environment check:");
-    console.log(
-      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY exists:",
-      !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    );
-    console.log(
-      "Key starts with pk_:",
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_")
-    );
-  }, []);
+    try {
+      console.log("Environment check:");
+      console.log(
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY exists:",
+        !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+      );
+      console.log(
+        "Key starts with pk_:",
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_")
+      );
+    } catch (error) {
+      console.error("Error in environment check:", error);
+    }
+  }, []); // Empty dependency array to run only once
 
   const [formData, setFormData] = useState({
     name: "",
@@ -198,15 +202,21 @@ export default function BookingFormWithCalendar() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    // Add null check for e.target and e.target.name
-    if (!e.target || !e.target.name) {
-      console.warn("Event target or name is undefined:", e.target);
+    // Add comprehensive null checks
+    if (!e || !e.target) {
+      console.warn("Event or event target is null:", e);
+      return;
+    }
+    
+    const { name, value } = e.target;
+    if (!name || typeof name !== 'string') {
+      console.warn("Event target name is invalid:", name);
       return;
     }
     
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value || '',
     }));
   };
 
