@@ -5,6 +5,13 @@ const JWT_SECRET =
   process.env.JWT_SECRET || "your-secure-secret-change-in-production";
 
 export function middleware(request: NextRequest) {
+  // Allow Stripe webhook to pass through without CSP restrictions
+  if (request.nextUrl.pathname.startsWith('/api/stripe-webhook')) {
+    const response = NextResponse.next();
+    response.headers.delete('Content-Security-Policy');
+    return response;
+  }
+
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
     // Skip login page
@@ -57,13 +64,14 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/admin/:path*",
+    "/api/stripe-webhook",
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };
