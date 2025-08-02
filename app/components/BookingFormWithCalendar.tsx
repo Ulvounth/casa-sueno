@@ -6,6 +6,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Initialize Stripe
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 export default function BookingFormWithCalendar() {
   const [formData, setFormData] = useState({
@@ -93,11 +99,16 @@ export default function BookingFormWithCalendar() {
       (formData.checkout.getTime() - formData.checkin.getTime()) /
         (1000 * 60 * 60 * 24)
     );
-    const totalPrice = nights * 85; // €85 per night
+
+    // Pricing breakdown
+    const pricePerNight = 85; // €85 per night
+    const cleaningFee = 50; // €50 cleaning fee
+    const subtotal = nights * pricePerNight;
+    const totalPrice = subtotal + cleaningFee;
 
     try {
-      // Send booking request to API
-      const response = await fetch("/api/booking", {
+      // Create Stripe checkout session
+      const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,25 +121,39 @@ export default function BookingFormWithCalendar() {
           checkout: format(formData.checkout, "yyyy-MM-dd"),
           guests: formData.guests,
           message: formData.message,
+          nights: nights,
+          pricePerNight: pricePerNight,
+          cleaningFee: cleaningFee,
+          subtotal: subtotal,
           totalPrice: totalPrice,
         }),
       });
 
       const result = await response.json();
 
-      if (!response.ok || !result.success) {
-        console.error("Booking API error:", result);
+      if (!response.ok) {
+        console.error("Checkout session error:", result);
         alert(
           result.error ||
-            "There was an error processing your booking. Please try again."
+            "There was an error creating the checkout session. Please try again."
         );
         return;
       }
 
-      // Refresh booked dates to show the new booking
-      await fetchBookedDates();
+      // Redirect to Stripe Checkout
+      const stripe = await stripePromise;
+      if (stripe) {
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: result.sessionId,
+        });
 
-      setSubmitted(true);
+        if (error) {
+          console.error("Stripe redirect error:", error);
+          alert("There was an error redirecting to payment. Please try again.");
+        }
+      } else {
+        alert("Payment system is not available. Please try again later.");
+      }
     } catch (error) {
       console.error("Booking error:", error);
       alert("There was an error processing your booking. Please try again.");
@@ -220,7 +245,12 @@ export default function BookingFormWithCalendar() {
             (1000 * 60 * 60 * 24)
         )
       : 0;
-  const totalPrice = nights > 0 ? nights * 85 : 0;
+
+  // Pricing breakdown
+  const pricePerNight = 85; // €85 per night
+  const cleaningFee = 50; // €50 cleaning fee
+  const subtotal = nights > 0 ? nights * pricePerNight : 0;
+  const totalPrice = subtotal > 0 ? subtotal + cleaningFee : 0;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -319,14 +349,22 @@ export default function BookingFormWithCalendar() {
         </select>
       </div>
 
-      {/* Price Summary - More Compact */}
+      {/* Price Summary - Detailed Breakdown */}
       {totalPrice > 0 && (
-        <div className="bg-gray-50 p-3 rounded-md text-sm">
+        <div className="bg-gray-50 p-4 rounded-lg text-sm space-y-2">
           <div className="flex justify-between">
             <span>
-              €85 × {nights} night{nights !== 1 ? "s" : ""}
+              €{pricePerNight} × {nights} night{nights !== 1 ? "s" : ""}
             </span>
-            <span className="font-semibold">€{totalPrice}</span>
+            <span>€{subtotal}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Cleaning fee</span>
+            <span>€{cleaningFee}</span>
+          </div>
+          <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
+            <span>Total</span>
+            <span>€{totalPrice}</span>
           </div>
         </div>
       )}
@@ -398,7 +436,7 @@ export default function BookingFormWithCalendar() {
         </div>
       </div>
 
-      {/* Submit Button - Compact */}
+      {/* Submit Button - Updated for Payment */}
       <button
         type="submit"
         disabled={
@@ -408,10 +446,37 @@ export default function BookingFormWithCalendar() {
           !formData.name ||
           !formData.email
         }
-        className="w-full bg-amber-600 text-white py-2.5 px-4 rounded-md text-sm font-medium hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-amber-600 text-white py-3 px-4 rounded-lg text-sm font-semibold hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
       >
-        {isSubmitting ? "Processing..." : "Request Booking"}
+        {isSubmitting ? (
+          <>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            Processing...
+          </>
+        ) : (
+          <>
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+              />
+            </svg>
+            Proceed to Payment
+          </>
+        )}
       </button>
+
+      {/* Payment info text */}
+      <p className="text-xs text-gray-500 text-center">
+        You&apos;ll be redirected to Stripe to complete your secure payment
+      </p>
 
       <p className="text-xs text-gray-500 text-center">
         Free cancellation • No upfront payment

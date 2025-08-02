@@ -15,6 +15,10 @@ export async function POST(request: NextRequest) {
       checkout,
       guests,
       message,
+      nights,
+      pricePerNight,
+      cleaningFee,
+      subtotal,
       totalPrice,
     } = await request.json();
 
@@ -49,6 +53,10 @@ export async function POST(request: NextRequest) {
         guest_name: name,
         guest_email: email,
         guest_phone: phone || null,
+        nights: nights,
+        price_per_night: pricePerNight,
+        cleaning_fee: cleaningFee,
+        subtotal: subtotal,
         total_price: totalPrice,
         special_requests: message || null,
         status: "confirmed",
@@ -84,7 +92,15 @@ export async function POST(request: NextRequest) {
             <p><strong>Check-in:</strong> ${format(new Date(checkin), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Check-out:</strong> ${format(new Date(checkout), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Guests:</strong> ${guests}</p>
-            <p><strong>Total Price:</strong> €${totalPrice}</p>
+            
+            <h4 style="color: #374151; margin-bottom: 10px;">Price Breakdown</h4>
+            <div style="margin-left: 10px;">
+              <p>€${pricePerNight} × ${nights} night${nights !== 1 ? "s" : ""}: <strong>€${subtotal}</strong></p>
+              <p>Cleaning fee: <strong>€${cleaningFee}</strong></p>
+              <hr style="border: 1px solid #e5e7eb; margin: 10px 0;">
+              <p style="font-size: 18px;"><strong>Total: €${totalPrice}</strong></p>
+            </div>
+            
             ${message ? `<p><strong>Special Requests:</strong> ${message}</p>` : ""}
           </div>
           
@@ -124,7 +140,15 @@ export async function POST(request: NextRequest) {
             <p><strong>Check-in:</strong> ${format(new Date(checkin), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Check-out:</strong> ${format(new Date(checkout), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Guests:</strong> ${guests}</p>
-            <p><strong>Total Price:</strong> €${totalPrice}</p>
+            
+            <h4 style="color: #374151; margin-bottom: 10px;">Price Breakdown</h4>
+            <div style="margin-left: 10px;">
+              <p>€${pricePerNight} × ${nights} night${nights !== 1 ? "s" : ""}: <strong>€${subtotal}</strong></p>
+              <p>Cleaning fee: <strong>€${cleaningFee}</strong></p>
+              <hr style="border: 1px solid #e5e7eb; margin: 10px 0;">
+              <p style="font-size: 18px;"><strong>Total: €${totalPrice}</strong></p>
+            </div>
+            
             ${message ? `<p><strong>Special Requests:</strong> ${message}</p>` : ""}
           </div>
           
