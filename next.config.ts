@@ -1,27 +1,31 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://checkout.stripe.com",
-              "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://*.supabase.co",
-              "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
-              "img-src 'self' data: https:",
-              "style-src 'self' 'unsafe-inline'",
-              "font-src 'self' data:",
-            ].join('; '),
-          },
-        ],
-      },
-    ];
-  },
+  // Temporarily disable CSP to allow Stripe to work
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'Content-Security-Policy',
+  //           value: [
+  //             "default-src 'self'",
+  //             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://checkout.stripe.com https://*.stripe.com",
+  //             "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://*.stripe.com https://*.supabase.co https://resend.com https://*.resend.com",
+  //             "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://*.stripe.com",
+  //             "img-src 'self' data: https: blob:",
+  //             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  //             "font-src 'self' data: https://fonts.gstatic.com",
+  //             "object-src 'none'",
+  //             "base-uri 'self'",
+  //             "form-action 'self' https://*.stripe.com",
+  //           ].join('; '),
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
