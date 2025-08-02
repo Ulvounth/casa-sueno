@@ -5,26 +5,24 @@ const JWT_SECRET =
   process.env.JWT_SECRET || "your-secure-secret-change-in-production";
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
   // Allow Stripe webhook to pass through without CSP restrictions
-  if (request.nextUrl.pathname.startsWith("/api/stripe-webhook")) {
+  if (pathname.startsWith("/api/stripe-webhook")) {
     const response = NextResponse.next();
     response.headers.delete("Content-Security-Policy");
     return response;
   }
 
   // Allow Stripe checkout APIs to pass through without CSP restrictions
-  if (request.nextUrl.pathname.startsWith("/api/create-checkout-session")) {
-    const response = NextResponse.next();
-    return response;
+  if (pathname.startsWith("/api/create-checkout-session")) {
+    return NextResponse.next();
   }
 
   // Protect admin routes
-  if (request.nextUrl.pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin")) {
     // Skip login page
-    if (
-      request.nextUrl.pathname === "/admin" ||
-      request.nextUrl.pathname.startsWith("/admin/login")
-    ) {
+    if (pathname === "/admin" || pathname.startsWith("/admin/login")) {
       return NextResponse.next();
     }
 
@@ -44,25 +42,16 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Security headers for all pages
+  // Apply security headers to all other requests
   const response = NextResponse.next();
 
-  // Prevent clickjacking
-  response.headers.set("X-Frame-Options", "DENY");
-
-  // Prevent MIME type sniffing
-  response.headers.set("X-Content-Type-Options", "nosniff");
-
-  // XSS Protection
-  response.headers.set("X-XSS-Protection", "1; mode=block");
-
-  // Referrer Policy
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-
-  // Content Security Policy - Updated to allow Stripe
-  response.headers.set(
-    "Content-Security-Policy",
-    [
+  // Modern security headers for Next.js 15
+  const securityHeaders = {
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff", 
+    "X-XSS-Protection": "1; mode=block",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": [
       "default-src 'self'",
       "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://*.stripe.com",
       "connect-src 'self' https://vrsaehlthpojsdgwaxtk.supabase.co https://api.stripe.com https://checkout.stripe.com https://*.stripe.com wss://*.supabase.co",
@@ -72,7 +61,12 @@ export function middleware(request: NextRequest) {
       "font-src 'self' data:",
       "form-action 'self' https://*.stripe.com",
     ].join("; ")
-  );
+  };
+
+  // Set all headers at once
+  Object.entries(securityHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
 
   return response;
 }

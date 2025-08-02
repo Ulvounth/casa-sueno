@@ -1,38 +1,48 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 
-// Initialize Stripe with error handling
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-).catch((error) => {
-  console.error("Failed to load Stripe:", error);
-  return null;
-});
+// Initialize Stripe with proper error handling for App Router
+let stripePromise: Promise<Stripe | null> | null = null;
+
+const getStripe = (): Promise<Stripe | null> => {
+  if (!stripePromise) {
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!publishableKey) {
+      console.error("Missing Stripe publishable key");
+      return Promise.resolve(null);
+    }
+    stripePromise = loadStripe(publishableKey).catch((error) => {
+      console.error("Failed to load Stripe:", error);
+      return null;
+    });
+  }
+  return stripePromise;
+};
 
 export default function BookingFormWithCalendar() {
-  // Debug environment variables - only run once
+  // Environment check with modern App Router approach
   useEffect(() => {
-    try {
-      console.log("Environment check:");
-      console.log(
-        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY exists:",
-        !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-      );
-      console.log(
-        "Key starts with pk_:",
-        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_")
-      );
-    } catch (error) {
-      console.error("Error in environment check:", error);
+    if (process.env.NODE_ENV === 'development') {
+      try {
+        const hasKey = !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const validKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_");
+        
+        console.group("🔧 Environment Check");
+        console.log("Stripe Key Present:", hasKey);
+        console.log("Key Format Valid:", validKey);
+        console.groupEnd();
+      } catch (error) {
+        console.error("Environment check failed:", error);
+      }
     }
-  }, []); // Empty dependency array to run only once
+  }, []); // Empty dependency array - runs once on mount
 
   const [formData, setFormData] = useState({
     name: "",
@@ -160,14 +170,9 @@ export default function BookingFormWithCalendar() {
         return;
       }
 
-      // Redirect to Stripe Checkout
-      console.log(
-        "Attempting to load Stripe with key:",
-        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-          ? "Key exists"
-          : "Key missing"
-      );
-      const stripe = await stripePromise;
+      // Redirect to Stripe Checkout - Modern App Router approach
+      console.log("Loading Stripe...");
+      const stripe = await getStripe();
       console.log("Stripe loaded:", stripe ? "Success" : "Failed");
 
       if (stripe) {
@@ -197,28 +202,31 @@ export default function BookingFormWithCalendar() {
     }
   };
 
-  const handleChange = (
+  // Modern handleChange with useCallback for performance
+  const handleChange = useCallback((
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    // Add comprehensive null checks
-    if (!e || !e.target) {
-      console.warn("Event or event target is null:", e);
+    // Defensive programming with proper type guards
+    if (!e?.target) {
+      console.warn("Event target is null or undefined");
       return;
     }
     
-    const { name, value } = e.target;
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    const { name, value } = target;
+    
     if (!name || typeof name !== 'string') {
-      console.warn("Event target name is invalid:", name);
+      console.warn("Input name attribute is missing or invalid:", { name, target });
       return;
     }
     
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value || '',
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value ?? '',
     }));
-  };
+  }, []);
 
   const handleDateChange = (
     date: Date | null,

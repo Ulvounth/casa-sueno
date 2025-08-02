@@ -3,15 +3,21 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // CSP is now handled in middleware.ts
   experimental: {
-    optimizePackageImports: ['@heroicons/react']
+    // Modern optimizations for Next.js 15
+    optimizePackageImports: ['@heroicons/react', 'date-fns'],
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
-  // Disable CSS optimization warnings
-  onDemandEntries: {
-    // Period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 25 * 1000,
-    // Number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 2,
-  }
+  // Disable problematic preloading
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default nextConfig;
