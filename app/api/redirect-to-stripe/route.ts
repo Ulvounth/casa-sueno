@@ -73,11 +73,10 @@ export async function POST(request: NextRequest) {
     });
 
     // Return redirect URL instead of session ID
-    return NextResponse.json({ 
+    return NextResponse.json({
       redirectUrl: session.url,
-      sessionId: session.id 
+      sessionId: session.id,
     });
-
   } catch (error) {
     console.error("Error creating checkout session:", error);
     return NextResponse.json(

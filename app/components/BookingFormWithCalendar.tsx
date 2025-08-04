@@ -150,50 +150,75 @@ export default function BookingFormWithCalendar() {
     }
   };
 
-  // Modern handleChange with useCallback for performance
+  // Ultra-defensive handleChange to prevent any undefined errors
   const handleChange = useCallback(
     (
       e: React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >
     ) => {
-      // Defensive programming with proper type guards
-      if (!e?.target) {
-        console.warn("Event target is null or undefined");
-        return;
+      // Multiple layers of defensive checks
+      try {
+        if (!e) {
+          console.warn("Event is null or undefined");
+          return;
+        }
+
+        if (!e.target) {
+          console.warn("Event target is null or undefined");
+          return;
+        }
+
+        const target = e.target;
+        
+        // Check if target has name property before accessing it
+        if (!("name" in target) || !target.name) {
+          console.warn("Target missing name property:", target);
+          return;
+        }
+
+        if (!("value" in target)) {
+          console.warn("Target missing value property:", target);
+          return;
+        }
+
+        const name = target.name;
+        const value = target.value;
+
+        if (typeof name !== "string") {
+          console.warn("Name is not a string:", name);
+          return;
+        }
+
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value ?? "",
+        }));
+      } catch (error) {
+        console.error("Error in handleChange:", error);
       }
-
-      const target = e.target as
-        | HTMLInputElement
-        | HTMLTextAreaElement
-        | HTMLSelectElement;
-      const { name, value } = target;
-
-      if (!name || typeof name !== "string") {
-        console.warn("Input name attribute is missing or invalid:", {
-          name,
-          target,
-        });
-        return;
-      }
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value ?? "",
-      }));
     },
     []
   );
 
-  const handleDateChange = (
+  const handleDateChange = useCallback((
     date: Date | null,
     field: "checkin" | "checkout"
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: date,
-    }));
-  };
+    try {
+      if (field !== "checkin" && field !== "checkout") {
+        console.warn("Invalid field for date change:", field);
+        return;
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        [field]: date,
+      }));
+    } catch (error) {
+      console.error("Error in handleDateChange:", error);
+    }
+  }, []);
 
   if (loading) {
     return (
