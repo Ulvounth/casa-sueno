@@ -58,37 +58,14 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // Ultra-defensive event handling to prevent undefined errors
     try {
-      if (!e || !e.target) {
-        console.warn("Event or target is null/undefined in contact form");
-        return;
+      const { name, value } = e.target;
+      if (name && typeof name === "string") {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value || "",
+        }));
       }
-
-      const target = e.target;
-      
-      if (!("name" in target) || !target.name) {
-        console.warn("Target missing name property in contact form:", target);
-        return;
-      }
-
-      if (!("value" in target)) {
-        console.warn("Target missing value property in contact form:", target);
-        return;
-      }
-
-      const name = target.name;
-      const value = target.value;
-
-      if (typeof name !== "string") {
-        console.warn("Name is not a string in contact form:", name);
-        return;
-      }
-
-      setFormData({
-        ...formData,
-        [name]: value ?? "",
-      });
     } catch (error) {
       console.error("Error in contact form handleChange:", error);
     }
@@ -194,8 +171,6 @@ export default function ContactPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  autoComplete="off"
-                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="Your full name"
                 />
@@ -215,8 +190,6 @@ export default function ContactPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  autoComplete="off"
-                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="your.email@example.com"
                 />
@@ -235,8 +208,6 @@ export default function ContactPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  autoComplete="off"
-                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80"
                   placeholder="+1 (555) 123-4567"
                 />
@@ -256,8 +227,6 @@ export default function ContactPage() {
                   rows={6}
                   value={formData.message}
                   onChange={handleChange}
-                  autoComplete="off"
-                  suppressHydrationWarning
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/80 resize-none"
                   placeholder="Tell us about your planned stay, any special requirements, or questions you have..."
                 ></textarea>

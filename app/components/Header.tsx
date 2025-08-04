@@ -19,11 +19,16 @@ export default function Header() {
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setPoliciesOpen(false);
+      try {
+        if (
+          dropdownRef.current &&
+          event.target &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          setPoliciesOpen(false);
+        }
+      } catch (error) {
+        console.error("Error in handleClickOutside:", error);
       }
     }
 

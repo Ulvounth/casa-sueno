@@ -26,9 +26,29 @@ import {
   ArrowPathIcon as PoolIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<{ cancelled?: string }>;
+}) {
+  const params = await searchParams;
+  const cancelled = params?.cancelled === "true";
+
   return (
     <main className="flex flex-col">
+      {/* Cancelled Notification */}
+      {cancelled && (
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-yellow-700">
+                Payment was cancelled. You can try booking again anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <Hero />
 

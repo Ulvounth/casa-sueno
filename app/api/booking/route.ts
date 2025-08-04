@@ -22,13 +22,6 @@ export async function POST(request: NextRequest) {
       totalPrice,
     } = await request.json();
 
-    console.log("Booking request received:", {
-      name,
-      email,
-      checkin,
-      checkout,
-    });
-
     // Validate required fields
     if (!name || !email || !checkin || !checkout || !guests) {
       return NextResponse.json(
@@ -158,15 +151,9 @@ export async function POST(request: NextRequest) {
     };
 
     try {
-      // Send guest confirmation email first
-      console.log(`Sending confirmation email to guest: ${email}`);
-      const guestEmailResult = await resend.emails.send(guestEmailOptions);
-      console.log("Guest email sent successfully:", guestEmailResult);
-
-      // Send owner notification email
-      console.log(`Sending notification email to owner: ${toEmail}`);
-      const ownerEmailResult = await resend.emails.send(ownerEmailOptions);
-      console.log("Owner email sent successfully:", ownerEmailResult);
+      // Send emails
+      await resend.emails.send(guestEmailOptions);
+      await resend.emails.send(ownerEmailOptions);
     } catch (emailError) {
       console.error("Email sending error:", emailError);
       // Don't fail the booking if email fails, but log the error

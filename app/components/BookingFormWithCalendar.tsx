@@ -137,7 +137,6 @@ export default function BookingFormWithCalendar() {
 
       // Direct redirect without Stripe.js - This avoids all client-side JS errors
       if (result.redirectUrl) {
-        console.log("Redirecting to Stripe Checkout...");
         window.location.href = result.redirectUrl;
       } else {
         throw new Error("No redirect URL received");
@@ -150,50 +149,21 @@ export default function BookingFormWithCalendar() {
     }
   };
 
-  // Ultra-defensive handleChange to prevent any undefined errors
+  // Simplified defensive handleChange
   const handleChange = useCallback(
     (
       e: React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >
     ) => {
-      // Multiple layers of defensive checks
       try {
-        if (!e) {
-          console.warn("Event is null or undefined");
-          return;
+        const { name, value } = e.target;
+        if (name && typeof name === "string") {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: value || "",
+          }));
         }
-
-        if (!e.target) {
-          console.warn("Event target is null or undefined");
-          return;
-        }
-
-        const target = e.target;
-        
-        // Check if target has name property before accessing it
-        if (!("name" in target) || !target.name) {
-          console.warn("Target missing name property:", target);
-          return;
-        }
-
-        if (!("value" in target)) {
-          console.warn("Target missing value property:", target);
-          return;
-        }
-
-        const name = target.name;
-        const value = target.value;
-
-        if (typeof name !== "string") {
-          console.warn("Name is not a string:", name);
-          return;
-        }
-
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value ?? "",
-        }));
       } catch (error) {
         console.error("Error in handleChange:", error);
       }
@@ -201,24 +171,21 @@ export default function BookingFormWithCalendar() {
     []
   );
 
-  const handleDateChange = useCallback((
-    date: Date | null,
-    field: "checkin" | "checkout"
-  ) => {
-    try {
-      if (field !== "checkin" && field !== "checkout") {
-        console.warn("Invalid field for date change:", field);
-        return;
+  const handleDateChange = useCallback(
+    (date: Date | null, field: "checkin" | "checkout") => {
+      try {
+        if (field === "checkin" || field === "checkout") {
+          setFormData((prev) => ({
+            ...prev,
+            [field]: date,
+          }));
+        }
+      } catch (error) {
+        console.error("Error in handleDateChange:", error);
       }
-
-      setFormData((prev) => ({
-        ...prev,
-        [field]: date,
-      }));
-    } catch (error) {
-      console.error("Error in handleDateChange:", error);
-    }
-  }, []);
+    },
+    []
+  );
 
   if (loading) {
     return (
@@ -302,13 +269,7 @@ export default function BookingFormWithCalendar() {
             <div className="relative">
               <DatePicker
                 selected={formData.checkin}
-                onChange={(date) => {
-                  try {
-                    handleDateChange(date, "checkin");
-                  } catch (error) {
-                    console.error("Error in checkin date change:", error);
-                  }
-                }}
+                onChange={(date) => handleDateChange(date, "checkin")}
                 selectsStart
                 startDate={formData.checkin}
                 endDate={formData.checkout}
@@ -318,18 +279,13 @@ export default function BookingFormWithCalendar() {
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
-                  try {
-                    const isBooked = bookedDates.some(
-                      (bookedDate) =>
-                        bookedDate.toDateString() === date.toDateString()
-                    );
-                    return isBooked
-                      ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                      : "hover:bg-blue-50";
-                  } catch (error) {
-                    console.error("Error in dayClassName:", error);
-                    return "hover:bg-blue-50";
-                  }
+                  const isBooked = bookedDates.some(
+                    (bookedDate) =>
+                      bookedDate.toDateString() === date.toDateString()
+                  );
+                  return isBooked
+                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                    : "hover:bg-blue-50";
                 }}
               />
               <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
@@ -343,13 +299,7 @@ export default function BookingFormWithCalendar() {
             <div className="relative">
               <DatePicker
                 selected={formData.checkout}
-                onChange={(date) => {
-                  try {
-                    handleDateChange(date, "checkout");
-                  } catch (error) {
-                    console.error("Error in checkout date change:", error);
-                  }
-                }}
+                onChange={(date) => handleDateChange(date, "checkout")}
                 selectsEnd
                 startDate={formData.checkin}
                 endDate={formData.checkout}
@@ -363,18 +313,13 @@ export default function BookingFormWithCalendar() {
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
-                  try {
-                    const isBooked = bookedDates.some(
-                      (bookedDate) =>
-                        bookedDate.toDateString() === date.toDateString()
-                    );
-                    return isBooked
-                      ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                      : "hover:bg-blue-50";
-                  } catch (error) {
-                    console.error("Error in checkout dayClassName:", error);
-                    return "hover:bg-blue-50";
-                  }
+                  const isBooked = bookedDates.some(
+                    (bookedDate) =>
+                      bookedDate.toDateString() === date.toDateString()
+                  );
+                  return isBooked
+                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                    : "hover:bg-blue-50";
                 }}
               />
               <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />

@@ -167,7 +167,9 @@ export async function POST(request: NextRequest) {
       await resend.emails.send(guestEmailOptions);
       await resend.emails.send(ownerEmailOptions);
 
-      console.log("Booking created and emails sent successfully");
+      // Create booking and send emails
+      await resend.emails.send(guestEmailOptions);
+      await resend.emails.send(ownerEmailOptions);
     } catch (error) {
       console.error("Error processing payment confirmation:", error);
       return NextResponse.json(

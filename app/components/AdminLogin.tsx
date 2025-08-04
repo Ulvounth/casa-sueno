@@ -77,15 +77,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
                   autoComplete="current-password"
                   required
                   value={password}
-                  onChange={(e) => {
-                    try {
-                      if (e && e.target && "value" in e.target) {
-                        setPassword(e.target.value ?? "");
-                      }
-                    } catch (error) {
-                      console.error("Error in password change:", error);
-                    }
-                  }}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-3 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-base sm:text-sm"
                   placeholder="Enter password"
                   disabled={lockoutTime !== null}
