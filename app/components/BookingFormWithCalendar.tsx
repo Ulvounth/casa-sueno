@@ -302,7 +302,13 @@ export default function BookingFormWithCalendar() {
             <div className="relative">
               <DatePicker
                 selected={formData.checkin}
-                onChange={(date) => handleDateChange(date, "checkin")}
+                onChange={(date) => {
+                  try {
+                    handleDateChange(date, "checkin");
+                  } catch (error) {
+                    console.error("Error in checkin date change:", error);
+                  }
+                }}
                 selectsStart
                 startDate={formData.checkin}
                 endDate={formData.checkout}
@@ -312,13 +318,18 @@ export default function BookingFormWithCalendar() {
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
-                  const isBooked = bookedDates.some(
-                    (bookedDate) =>
-                      bookedDate.toDateString() === date.toDateString()
-                  );
-                  return isBooked
-                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                    : "hover:bg-blue-50";
+                  try {
+                    const isBooked = bookedDates.some(
+                      (bookedDate) =>
+                        bookedDate.toDateString() === date.toDateString()
+                    );
+                    return isBooked
+                      ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                      : "hover:bg-blue-50";
+                  } catch (error) {
+                    console.error("Error in dayClassName:", error);
+                    return "hover:bg-blue-50";
+                  }
                 }}
               />
               <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
@@ -332,7 +343,13 @@ export default function BookingFormWithCalendar() {
             <div className="relative">
               <DatePicker
                 selected={formData.checkout}
-                onChange={(date) => handleDateChange(date, "checkout")}
+                onChange={(date) => {
+                  try {
+                    handleDateChange(date, "checkout");
+                  } catch (error) {
+                    console.error("Error in checkout date change:", error);
+                  }
+                }}
                 selectsEnd
                 startDate={formData.checkin}
                 endDate={formData.checkout}
@@ -346,13 +363,18 @@ export default function BookingFormWithCalendar() {
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
-                  const isBooked = bookedDates.some(
-                    (bookedDate) =>
-                      bookedDate.toDateString() === date.toDateString()
-                  );
-                  return isBooked
-                    ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
-                    : "hover:bg-blue-50";
+                  try {
+                    const isBooked = bookedDates.some(
+                      (bookedDate) =>
+                        bookedDate.toDateString() === date.toDateString()
+                    );
+                    return isBooked
+                      ? "text-red-400 bg-red-50 line-through cursor-not-allowed"
+                      : "hover:bg-blue-50";
+                  } catch (error) {
+                    console.error("Error in checkout dayClassName:", error);
+                    return "hover:bg-blue-50";
+                  }
                 }}
               />
               <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />

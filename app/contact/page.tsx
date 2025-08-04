@@ -58,10 +58,40 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    // Ultra-defensive event handling to prevent undefined errors
+    try {
+      if (!e || !e.target) {
+        console.warn("Event or target is null/undefined in contact form");
+        return;
+      }
+
+      const target = e.target;
+      
+      if (!("name" in target) || !target.name) {
+        console.warn("Target missing name property in contact form:", target);
+        return;
+      }
+
+      if (!("value" in target)) {
+        console.warn("Target missing value property in contact form:", target);
+        return;
+      }
+
+      const name = target.name;
+      const value = target.value;
+
+      if (typeof name !== "string") {
+        console.warn("Name is not a string in contact form:", name);
+        return;
+      }
+
+      setFormData({
+        ...formData,
+        [name]: value ?? "",
+      });
+    } catch (error) {
+      console.error("Error in contact form handleChange:", error);
+    }
   };
 
   return (
