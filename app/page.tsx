@@ -17,7 +17,6 @@ import {
   BeakerIcon as KitchenIcon,
   ClockIcon,
   BuildingOffice2Icon as BedIcon,
-  CubeIcon as DishwasherIcon,
   CogIcon as WashingMachineIcon,
   CakeIcon as CoffeeMachineIcon,
   FireIcon as MicrowaveIcon,
@@ -59,23 +58,26 @@ export default async function Page({
           <div className="lg:col-span-2 space-y-8">
             <div className="space-y-6">
               <h2 className="text-3xl font-semibold">
-                Entire house hosted by Casa Sueño
+                Modern townhouse in residential complex
               </h2>
               <p className="text-gray-600 text-lg mb-4">
-                4 guests · 2 bedrooms · 2 beds · 2 bathrooms
+                Up to 5 guests · 2 bedrooms · 3 beds · 2 bathrooms
               </p>
               <p className="text-gray-700 leading-relaxed text-lg">
                 Discover your perfect Mediterranean getaway in this stunning,
-                newly renovated house in Orihuela. Casa Sueño features two
-                comfortable bedrooms, two full bathrooms, and a spectacular
-                private roof terrace with panoramic views - perfect for morning
-                coffee or evening cocktails under the Spanish sun. Located in
-                the heart of Costa Blanca, you&apos;re just a short walk from La
-                Zenia Boulevard shopping center with its variety of shops and
-                restaurants, and only minutes from multiple pristine beaches.
-                The house combines modern comfort with traditional Spanish
-                charm, plus access to a private pool shared with friendly
-                neighbors - everything you need for an unforgettable vacation.
+                newly renovated townhouse in Orihuela. Casa Sueño features two
+                comfortable bedrooms (one with a double bed, one with twin
+                beds), a sofa bed for additional guests, and two full bathrooms
+                with both a bathtub and separate shower. Enjoy the spectacular
+                private roof terrace with panoramic views and outdoor BBQ -
+                perfect for morning coffee or evening grilling under the Spanish
+                sun. Located in the heart of Costa Blanca near La Zenia,
+                you&apos;re just 10 minutes from La Zenia Boulevard shopping
+                center and 15 minutes from multiple pristine beaches including
+                Cabo Roig and La Zenia. The townhouse combines modern comfort
+                with traditional Spanish charm, plus access to a communal pool -
+                everything you need for an unforgettable vacation for up to 5
+                guests.
               </p>
               <ul className="space-y-4 text-gray-700">
                 <li className="flex items-start gap-3">
@@ -171,11 +173,19 @@ export default async function Page({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Minimum stay</span>
-                  <span className="font-medium">2 nights</span>
+                  <span className="font-medium">3-7 nights*</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Max guests</span>
-                  <span className="font-medium">4 people</span>
+                  <span className="font-medium">5 people</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Age requirement</span>
+                  <span className="font-medium">Families welcome</span>
+                </div>
+                <div className="pt-2 text-xs text-gray-500">
+                  *Low season: 3 nights, Middle season: 4 nights, High season: 7
+                  nights
                 </div>
               </div>
             </div>
@@ -186,7 +196,9 @@ export default async function Page({
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
-                  <span className="text-gray-600">No smoking indoors</span>
+                  <span className="text-gray-600">
+                    No smoking indoors (outdoor OK)
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
@@ -195,6 +207,18 @@ export default async function Page({
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
                   <span className="text-gray-600">No pets allowed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-600">⏰</span>
+                  <span className="text-gray-600">
+                    Quiet hours: 22:00 - 08:00
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-blue-600">�‍👩‍👧‍👦</span>
+                  <span className="text-gray-600">
+                    Families and children welcome
+                  </span>
                 </div>
 
                 <div className="pt-3">
@@ -224,7 +248,7 @@ export default async function Page({
               </div>
               <div className="flex items-center gap-3">
                 <SnowflakeIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Air conditioning</span>
+                <span className="text-gray-700">AC in living room</span>
               </div>
               <div className="flex items-center gap-3">
                 <KitchenIcon className="h-5 w-5 text-gray-600" />
@@ -232,27 +256,23 @@ export default async function Page({
               </div>
               <div className="flex items-center gap-3">
                 <TvIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Smart TV</span>
+                <span className="text-gray-700">Smart TV (Netflix)</span>
               </div>
               <div className="flex items-center gap-3">
                 <SunIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Roof terrace</span>
+                <span className="text-gray-700">Roof terrace with BBQ</span>
               </div>
               <div className="flex items-center gap-3">
                 <PoolIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Private pool (shared)</span>
+                <span className="text-gray-700">Communal pool</span>
               </div>
               <div className="flex items-center gap-3">
                 <BedIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">2 bedrooms</span>
+                <span className="text-gray-700">3 beds + sofa bed</span>
               </div>
               <div className="flex items-center gap-3">
                 <CoffeeMachineIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Coffee machine</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <DishwasherIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Dishwasher</span>
+                <span className="text-gray-700">Nespresso machine</span>
               </div>
               <div className="flex items-center gap-3">
                 <WashingMachineIcon className="h-5 w-5 text-gray-600" />
@@ -260,11 +280,11 @@ export default async function Page({
               </div>
               <div className="flex items-center gap-3">
                 <TowelsIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Towels & bed linen</span>
+                <span className="text-gray-700">Towels & toiletries</span>
               </div>
               <div className="flex items-center gap-3">
                 <TravelCribIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Travel crib for children</span>
+                <span className="text-gray-700">Baby crib available</span>
               </div>
               <div className="flex items-center gap-3">
                 <MicrowaveIcon className="h-5 w-5 text-gray-600" />
@@ -277,6 +297,10 @@ export default async function Page({
               <div className="flex items-center gap-3">
                 <ClockIcon className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-700">24/7 support</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="h-5 w-5 text-gray-600">🛁</span>
+                <span className="text-gray-700">Bathtub & shower</span>
               </div>
             </div>
 
@@ -312,8 +336,11 @@ export default async function Page({
                   Perfectly positioned in the heart of Costa Blanca, Casa Sueño
                   offers the best of both worlds: peaceful residential charm and
                   easy access to top attractions. La Zenia Boulevard shopping
-                  center is just a short walk away, while pristine beaches like
-                  Playa Flamenca and Cabo Roig are a quick 5-minute drive.
+                  center is just 10 minutes away by car (4.4km), while pristine
+                  beaches like Cabo Roig and La Zenia are within 12-15 minutes
+                  drive. The charming restaurants of Punta Prima are only 3km
+                  away, and Alicante Airport is a convenient 40-minute drive.
+                  Exact address will be provided after booking confirmation.
                 </p>
               </div>
 
@@ -322,25 +349,49 @@ export default async function Page({
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
-                    <strong>La Zenia Boulevard:</strong> 5 min walk
+                    <strong>La Zenia Boulevard:</strong> 4.4km (10 min drive)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
-                    <strong>Playa Flamenca Beach:</strong> 5 min drive
+                    <strong>Cabo Roig Beach:</strong> 7km (15 min drive)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
-                    <strong>Cabo Roig Beach:</strong> 7 min drive
+                    <strong>La Zenia Beach:</strong> 5.8km (12 min drive)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
                   <span>
-                    <strong>Alicante Airport:</strong> 45 min drive
+                    <strong>Punta Prima Restaurants:</strong> 3km
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <span>
+                    <strong>Aldi Supermarket:</strong> 900m
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <span>
+                    <strong>Alicante Airport:</strong> 60km (40 min drive)
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <span>
+                    <strong>Pink Lake:</strong> 9km
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4 text-blue-600" />
+                  <span>
+                    <strong>Aquapolis Water Park:</strong> 8km
                   </span>
                 </div>
               </div>

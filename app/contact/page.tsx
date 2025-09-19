@@ -106,7 +106,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-semibold text-stone-800">
                       Email
                     </h3>
-                    <p className="text-stone-600">info@casasueno.com</p>
+                    <p className="text-stone-600">info@casa-sueno.com</p>
                     <p className="text-sm text-stone-500">
                       We&apos;ll respond within 24 hours
                     </p>
@@ -123,9 +123,9 @@ export default function ContactPage() {
                     <h3 className="text-lg font-semibold text-stone-800">
                       Phone
                     </h3>
-                    <p className="text-stone-600">+34 123 456 789</p>
+                    <p className="text-stone-600">+34 623 545 857</p>
                     <p className="text-sm text-stone-500">
-                      Available 9:00 - 18:00 CET
+                      Available via WhatsApp 24/7
                     </p>
                   </div>
                 </div>
@@ -140,9 +140,9 @@ export default function ContactPage() {
                     <h3 className="text-lg font-semibold text-stone-800">
                       Location
                     </h3>
-                    <p className="text-stone-600">Andalusia, Spain</p>
+                    <p className="text-stone-600">Orihuela, Costa Blanca</p>
                     <p className="text-sm text-stone-500">
-                      Beautiful Spanish countryside
+                      Exact address provided after booking
                     </p>
                   </div>
                 </div>

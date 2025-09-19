@@ -24,10 +24,10 @@ export default function Footer() {
           </p>
           <div className="space-y-1 text-sm text-stone-400">
             <p>
-              <strong>License:</strong> VT-123456-A
+              <strong>License:</strong> VT-PENDING
             </p>
             <p>
-              <strong>Registration:</strong> AT-123456-A
+              <strong>Registration:</strong> AT-PENDING
             </p>
           </div>
         </div>
@@ -107,10 +107,10 @@ export default function Footer() {
           <h3 className="font-semibold text-amber-100">Get in Touch</h3>
           <div className="space-y-2 text-sm text-stone-400">
             <p>
-              <strong>Email:</strong> info@casasueno.com
+              <strong>Email:</strong> info@casa-sueno.com
             </p>
             <p>
-              <strong>Phone:</strong> +34 123 456 789
+              <strong>Phone:</strong> +34 623 545 857
             </p>
             <p>
               <strong>Emergency:</strong> 24/7 Support
@@ -127,6 +127,8 @@ export default function Footer() {
               <Link
                 href="https://www.instagram.com/casasueno.es/"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaInstagram className="h-5 w-5 hover:text-rose-400 transition-colors" />
               </Link>

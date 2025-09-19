@@ -37,23 +37,32 @@ export default function TermsPage() {
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Minimum age:</strong> 18+ to make a booking
+                  • <strong>Minimum age:</strong> 20+ to make a booking
                 </li>
                 <li>
-                  • <strong>Maximum guests:</strong> 4 people
+                  • <strong>Maximum guests:</strong> 5 people
                 </li>
                 <li>
-                  • <strong>Minimum stay:</strong> 2 nights
+                  • <strong>Minimum stay:</strong> 3-7 nights (varies by season)
                 </li>
                 <li>
-                  • <strong>Payment:</strong> 30% deposit at booking, balance 30
-                  days before arrival
+                  • <strong>Payment:</strong> Full payment required at booking
+                  via Stripe
                 </li>
                 <li>
-                  • <strong>Tourist tax:</strong> €2 per person per night (paid
-                  on arrival)
+                  • <strong>Security deposit:</strong> €200 (refunded after
+                  stay)
+                </li>
+                <li>
+                  • <strong>Cleaning fee:</strong> €25 (included in total price)
                 </li>
               </ul>
+              <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+                <p className="text-sm text-amber-800">
+                  <strong>Seasonal minimum stays:</strong> Low season: 3 nights,
+                  Middle season: 4 nights, High season: 7 nights
+                </p>
+              </div>
             </div>
           </div>
 

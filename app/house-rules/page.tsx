@@ -71,10 +71,14 @@ export default function HouseRulesPage() {
                     Not Allowed:
                   </h3>
                   <ul className="space-y-2 text-stone-600">
-                    <li>• No smoking inside the house</li>
+                    <li>• No smoking inside the house (outdoor OK)</li>
                     <li>• No parties or loud gatherings</li>
-                    <li>• No pets (unless pre-approved)</li>
+                    <li>• No pets allowed</li>
                     <li>• No additional guests beyond booking</li>
+                    <li>
+                      • Primary booker must be 18+ (families with children
+                      welcome)
+                    </li>
                   </ul>
                 </div>
                 <div>
@@ -82,7 +86,8 @@ export default function HouseRulesPage() {
                     Please Do:
                   </h3>
                   <ul className="space-y-2 text-stone-600">
-                    <li>• Keep noise levels low after 10 PM</li>
+                    <li>• Keep noise levels low after 22:00 (10 PM)</li>
+                    <li>• Quiet hours: 22:00 - 08:00</li>
                     <li>• Treat the property with respect</li>
                     <li>• Clean up after yourself</li>
                     <li>• Lock doors when leaving</li>
@@ -105,18 +110,18 @@ export default function HouseRulesPage() {
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Maximum occupancy:</strong> 4 guests
+                  • <strong>Maximum occupancy:</strong> 5 guests
                 </li>
                 <li>
-                  • <strong>Visitors:</strong> Day visitors allowed until 10 PM
+                  • <strong>Visitors:</strong> Day visitors allowed until 22:00
                 </li>
                 <li>
                   • <strong>Additional guests:</strong> Must be approved and may
                   incur extra charges
                 </li>
                 <li>
-                  • <strong>Age requirement:</strong> Guests under 25 may
-                  require additional verification
+                  • <strong>Age requirement:</strong> Primary booker must be
+                  18+, families with children of all ages are welcome
                 </li>
               </ul>
             </div>
@@ -142,7 +147,8 @@ export default function HouseRulesPage() {
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
                 <p className="text-blue-800">
                   <strong>Emergency:</strong> For urgent issues, call local
-                  emergency services (112) or contact us immediately.
+                  emergency services (112) or contact us at +34 623 545 857 via
+                  WhatsApp.
                 </p>
               </div>
             </div>
