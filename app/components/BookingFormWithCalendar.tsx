@@ -23,7 +23,8 @@ export default function BookingFormWithCalendar() {
   const [submitted, setSubmitted] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
+  const [pricingBreakdown, setPricingBreakdown] =
+    useState<PricingBreakdown | null>(null);
   const [minimumStayError, setMinimumStayError] = useState<string>("");
 
   // Fetch booked dates from Supabase
@@ -75,27 +76,36 @@ export default function BookingFormWithCalendar() {
   };
 
   // Calculate pricing when dates change
-  const calculatePricing = useCallback(async (checkin: Date, checkout: Date) => {
-    try {
-      setMinimumStayError("");
-      
-      // Validate minimum stay first
-      const validation = await PricingService.validateMinimumStay(checkin, checkout);
-      if (!validation.isValid) {
-        setMinimumStayError(validation.message || "");
-        setPricingBreakdown(null);
-        return;
-      }
+  const calculatePricing = useCallback(
+    async (checkin: Date, checkout: Date) => {
+      try {
+        setMinimumStayError("");
 
-      // Calculate pricing breakdown
-      const breakdown = await PricingService.calculatePricing(checkin, checkout);
-      setPricingBreakdown(breakdown);
-    } catch (error) {
-      console.error("Error calculating pricing:", error);
-      setMinimumStayError("Kunne ikke beregne pris. Prøv igjen.");
-      setPricingBreakdown(null);
-    }
-  }, []);
+        // Validate minimum stay first
+        const validation = await PricingService.validateMinimumStay(
+          checkin,
+          checkout
+        );
+        if (!validation.isValid) {
+          setMinimumStayError(validation.message || "");
+          setPricingBreakdown(null);
+          return;
+        }
+
+        // Calculate pricing breakdown
+        const breakdown = await PricingService.calculatePricing(
+          checkin,
+          checkout
+        );
+        setPricingBreakdown(breakdown);
+      } catch (error) {
+        console.error("Error calculating pricing:", error);
+        setMinimumStayError("Kunne ikke beregne pris. Prøv igjen.");
+        setPricingBreakdown(null);
+      }
+    },
+    []
+  );
 
   // Update pricing when dates change
   useEffect(() => {
@@ -155,7 +165,8 @@ export default function BookingFormWithCalendar() {
           nights: pricingBreakdown.nights,
           pricePerNight: pricingBreakdown.averagePricePerNight,
           cleaningFee: pricingBreakdown.cleaningFee,
-          subtotal: pricingBreakdown.baseTotal - pricingBreakdown.longStayDiscount,
+          subtotal:
+            pricingBreakdown.baseTotal - pricingBreakdown.longStayDiscount,
           totalPrice: pricingBreakdown.totalAmount,
           longStayDiscount: pricingBreakdown.longStayDiscount,
           hasLongStayDiscount: pricingBreakdown.hasLongStayDiscount,
@@ -279,8 +290,6 @@ export default function BookingFormWithCalendar() {
     );
   }
 
-
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Dates - Compact Layout */}
@@ -391,7 +400,9 @@ export default function BookingFormWithCalendar() {
         <div className="bg-gray-50 p-4 rounded-lg text-sm space-y-2">
           <div className="flex justify-between">
             <span>
-              €{pricingBreakdown.averagePricePerNight.toFixed(2)} × {pricingBreakdown.nights} night{pricingBreakdown.nights !== 1 ? "s" : ""}
+              €{pricingBreakdown.averagePricePerNight.toFixed(2)} ×{" "}
+              {pricingBreakdown.nights} night
+              {pricingBreakdown.nights !== 1 ? "s" : ""}
             </span>
             <span>€{pricingBreakdown.baseTotal.toFixed(2)}</span>
           </div>
