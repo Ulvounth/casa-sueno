@@ -54,13 +54,13 @@ export default function TermsPage() {
                   stay)
                 </li>
                 <li>
-                  • <strong>Cleaning fee:</strong> €25 (included in total price)
+                  • <strong>Cleaning fee:</strong> €50 (included in total price)
                 </li>
               </ul>
               <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
                 <p className="text-sm text-amber-800">
                   <strong>Seasonal minimum stays:</strong> Low season: 3 nights,
-                  Middle season: 4 nights, High season: 7 nights
+                  Middle season: 5 nights, High season: 7 nights
                 </p>
               </div>
             </div>

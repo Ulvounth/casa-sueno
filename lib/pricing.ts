@@ -264,7 +264,7 @@ export class PricingService {
           isValid: false,
           requiredNights: breakdown.minimumNights,
           actualNights: breakdown.nights,
-          message: `Minimum opphold er ${breakdown.minimumNights} netter for denne perioden. Du har valgt ${breakdown.nights} netter.`,
+          message: `Minimum stay is ${breakdown.minimumNights} nights for this period. You have selected ${breakdown.nights} nights.`,
         };
       }
 
@@ -279,7 +279,7 @@ export class PricingService {
         isValid: false,
         requiredNights: 3,
         actualNights: 0,
-        message: "Kunne ikke validere minimum opphold. Prøv igjen.",
+        message: "Could not validate minimum stay. Please try again.",
       };
     }
   }

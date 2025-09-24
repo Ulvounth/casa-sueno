@@ -100,7 +100,7 @@ export default function BookingFormWithCalendar() {
         setPricingBreakdown(breakdown);
       } catch (error) {
         console.error("Error calculating pricing:", error);
-        setMinimumStayError("Kunne ikke beregne pris. Prøv igjen.");
+        setMinimumStayError("Could not calculate price. Please try again.");
         setPricingBreakdown(null);
       }
     },
@@ -141,7 +141,7 @@ export default function BookingFormWithCalendar() {
 
     // Ensure we have pricing breakdown
     if (!pricingBreakdown) {
-      alert("Kunne ikke beregne pris. Prøv igjen.");
+      alert("Could not calculate price. Please try again.");
       return;
     }
 
