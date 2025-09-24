@@ -121,7 +121,7 @@ export default function HouseRulesPage() {
                 </li>
                 <li>
                   • <strong>Age requirement:</strong> Primary booker must be
-                  18+, families with children of all ages are welcome
+                  20+, families with children of all ages are welcome
                 </li>
               </ul>
             </div>

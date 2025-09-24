@@ -27,6 +27,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  console.log("Webhook received:", event.type);
+
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
@@ -114,8 +116,9 @@ export async function POST(request: NextRequest) {
             
             <h3 style="color: #374151;">Contact Information</h3>
             <p>If you have any questions or need to make changes to your booking, please contact us:</p>
+            <p><strong>Booking Reference:</strong> CS-${session.id.slice(-8).toUpperCase()}</p>
             <p>Email: info@casasueno.com<br>
-            Phone: +34 123 456 789</p>
+            Phone: +34 623 545 857</p>
             
             <p>We look forward to hosting you at Casa Sueño!</p>
             
@@ -158,12 +161,18 @@ export async function POST(request: NextRequest) {
               ${message ? `<p><strong>Special Requests:</strong> ${message}</p>` : ""}
             </div>
             
+            <p><strong>Booking Reference:</strong> CS-${session.id.slice(-8).toUpperCase()}</p>
             <p>Stripe Session ID: ${session.id}</p>
           </div>
         `,
       };
 
       // Send emails
+      console.log("Sending emails with phone:", "+34 623 545 857");
+      console.log(
+        "Booking reference:",
+        `CS-${session.id.slice(-8).toUpperCase()}`
+      );
       await resend.emails.send(guestEmailOptions);
       await resend.emails.send(ownerEmailOptions);
 

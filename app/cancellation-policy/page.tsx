@@ -99,8 +99,8 @@ export default function CancellationPolicyPage() {
               </ol>
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
                 <p className="text-blue-800">
-                  <strong>Contact:</strong> contact@andreasulvund.no or +47 123
-                  456 789
+                  <strong>Contact:</strong> info@casasueno.com or +34 623 545
+                  857
                 </p>
               </div>
             </div>

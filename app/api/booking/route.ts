@@ -102,8 +102,9 @@ export async function POST(request: NextRequest) {
           
           <h3 style="color: #374151;">Contact Information</h3>
           <p>If you have any questions or need to make changes to your booking, please contact us:</p>
+          <p><strong>Booking Reference:</strong> CS-${booking.id.slice(-8).toUpperCase()}</p>
           <p>Email: info@casasueno.com<br>
-          Phone: +34 123 456 789</p>
+          Phone: +34 623 545 857</p>
           
           <p>We look forward to hosting you at Casa Sueño!</p>
           

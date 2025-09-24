@@ -117,8 +117,8 @@ export default function PrivacyPage() {
                 <li>• Withdraw consent for marketing communications</li>
               </ul>
               <p className="mt-4">
-                <strong>Contact us:</strong> contact@andreasulvund.no to
-                exercise these rights.
+                <strong>Contact us:</strong> info@casasueno.com to exercise
+                these rights.
               </p>
             </div>
           </div>

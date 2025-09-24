@@ -103,7 +103,7 @@ function BookingSuccessContent() {
             </h3>
             <div className="text-sm text-gray-600 space-y-1">
               <p>Email: info@casasueno.com</p>
-              <p>Phone: +34 123 456 789</p>
+              <p>Phone: +34 623 545 857</p>
             </div>
           </div>
 
@@ -127,7 +127,7 @@ function BookingSuccessContent() {
           {sessionId && (
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-xs text-gray-500">
-                Booking reference: {sessionId.slice(-8).toUpperCase()}
+                Booking reference: CS-{sessionId.slice(-8).toUpperCase()}
               </p>
             </div>
           )}

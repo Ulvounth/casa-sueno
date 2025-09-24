@@ -31,6 +31,7 @@ interface Booking {
   special_requests?: string;
   status: "pending" | "confirmed" | "cancelled";
   created_at: string;
+  stripe_session_id?: string;
 }
 
 export default function AdminPageWrapper() {
@@ -49,6 +50,7 @@ function AdminPanel() {
   const [statusFilter, setStatusFilter] = useState<
     "all" | "confirmed" | "pending" | "cancelled"
   >("all");
+  const [bookingToCancel, setBookingToCancel] = useState<Booking | null>(null);
 
   // Check authentication on component mount
   useEffect(() => {
@@ -363,6 +365,24 @@ function AdminPanel() {
                       </button>
                     </div>
 
+                    {/* Booking Reference */}
+                    <div className="bg-amber-50 p-2 rounded-lg mb-3 border border-amber-200">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-amber-800 font-bold">
+                          CS-
+                          {(booking.stripe_session_id || booking.id)
+                            .slice(-8)
+                            .toUpperCase()}
+                        </span>
+                        <span className="text-xs text-amber-600">
+                          {format(
+                            parseISO(booking.created_at),
+                            "dd.MM.yy HH:mm"
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
                     {/* Guest Info */}
                     <div className="space-y-2 mb-3 sm:mb-4">
                       <div className="flex items-center gap-2">
@@ -437,9 +457,7 @@ function AdminPanel() {
                             Confirm
                           </button>
                           <button
-                            onClick={() =>
-                              updateBookingStatus(booking.id, "cancelled")
-                            }
+                            onClick={() => setBookingToCancel(booking)}
                             className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
                           >
                             Decline
@@ -448,9 +466,7 @@ function AdminPanel() {
                       )}
                       {booking.status === "confirmed" && (
                         <button
-                          onClick={() =>
-                            updateBookingStatus(booking.id, "cancelled")
-                          }
+                          onClick={() => setBookingToCancel(booking)}
                           className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
                         >
                           Cancel
@@ -624,6 +640,94 @@ function AdminPanel() {
                     onClick={() => setSelectedBooking(null)}
                   >
                     Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Cancellation Confirmation Modal */}
+        {bookingToCancel && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                onClick={() => setBookingToCancel(null)}
+              />
+
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <XCircleIcon
+                        className="h-6 w-6 text-red-600"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3 className="text-lg font-medium leading-6 text-gray-900">
+                        Cancel Booking
+                      </h3>
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">
+                          Are you sure you want to cancel this booking for{" "}
+                          <span className="font-medium">
+                            {bookingToCancel.guest_name}
+                          </span>
+                          ?
+                        </p>
+                        <div className="mt-3 p-3 bg-gray-50 rounded-md">
+                          <p className="text-xs text-gray-600">
+                            <strong>Reference:</strong> CS-
+                            {(
+                              bookingToCancel.stripe_session_id ||
+                              bookingToCancel.id
+                            )
+                              .slice(-8)
+                              .toUpperCase()}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            <strong>Dates:</strong>{" "}
+                            {format(
+                              parseISO(bookingToCancel.start_date),
+                              "dd.MM.yyyy"
+                            )}{" "}
+                            -{" "}
+                            {format(
+                              parseISO(bookingToCancel.end_date),
+                              "dd.MM.yyyy"
+                            )}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            <strong>Amount:</strong> €
+                            {bookingToCancel.total_price}
+                          </p>
+                        </div>
+                        <p className="text-sm text-red-600 mt-2">
+                          This action cannot be undone.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => {
+                      updateBookingStatus(bookingToCancel.id, "cancelled");
+                      setBookingToCancel(null);
+                    }}
+                  >
+                    Yes, Cancel Booking
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => setBookingToCancel(null)}
+                  >
+                    Keep Booking
                   </button>
                 </div>
               </div>
