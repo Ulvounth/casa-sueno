@@ -22,14 +22,6 @@ export default function Footer() {
             Your dream holiday home in Spain. Experience authentic Spanish charm
             with modern comfort in beautiful Orihuela.
           </p>
-          <div className="space-y-1 text-sm text-stone-400">
-            <p>
-              <strong>License:</strong> VT-PENDING
-            </p>
-            <p>
-              <strong>Registration:</strong> AT-PENDING
-            </p>
-          </div>
         </div>
 
         {/* Quick Links */}
@@ -148,8 +140,7 @@ export default function Footer() {
           </div>
           <div className="text-xs text-stone-500 flex items-center gap-4">
             <span>
-              Licensed vacation rental property in Orihuela, Spain • GDPR
-              Compliant
+              Vacation rental property in Orihuela, Spain • GDPR Compliant
             </span>
             <Link
               href="/admin"

@@ -137,7 +137,7 @@ export default function TermsPage() {
                   arrival
                 </li>
                 <li>
-                  • <strong>50% refund:</strong> 7-14 days before arrival
+                  • <strong>50% refund:</strong> 7-13 days before arrival
                 </li>
                 <li>
                   • <strong>No refund:</strong> Less than 7 days before arrival

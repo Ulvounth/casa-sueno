@@ -540,7 +540,7 @@ export default function BookingFormWithCalendar() {
       </p>
 
       <p className="text-xs text-gray-500 text-center">
-        Free cancellation • No upfront payment
+        Full payment required • Free cancellation up to 14 days before arrival
       </p>
     </form>
   );
