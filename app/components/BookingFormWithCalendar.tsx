@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { supabase } from "../../lib/supabase";
+import { PricingService, PricingBreakdown } from "../../lib/pricing";
 
 export default function BookingFormWithCalendar() {
   // No more Stripe.js environment checks needed
@@ -22,6 +23,8 @@ export default function BookingFormWithCalendar() {
   const [submitted, setSubmitted] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
+  const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
+  const [minimumStayError, setMinimumStayError] = useState<string>("");
 
   // Fetch booked dates from Supabase
   const fetchBookedDates = async () => {
@@ -71,11 +74,50 @@ export default function BookingFormWithCalendar() {
     );
   };
 
+  // Calculate pricing when dates change
+  const calculatePricing = useCallback(async (checkin: Date, checkout: Date) => {
+    try {
+      setMinimumStayError("");
+      
+      // Validate minimum stay first
+      const validation = await PricingService.validateMinimumStay(checkin, checkout);
+      if (!validation.isValid) {
+        setMinimumStayError(validation.message || "");
+        setPricingBreakdown(null);
+        return;
+      }
+
+      // Calculate pricing breakdown
+      const breakdown = await PricingService.calculatePricing(checkin, checkout);
+      setPricingBreakdown(breakdown);
+    } catch (error) {
+      console.error("Error calculating pricing:", error);
+      setMinimumStayError("Kunne ikke beregne pris. Prøv igjen.");
+      setPricingBreakdown(null);
+    }
+  }, []);
+
+  // Update pricing when dates change
+  useEffect(() => {
+    if (formData.checkin && formData.checkout) {
+      calculatePricing(formData.checkin, formData.checkout);
+    } else {
+      setPricingBreakdown(null);
+      setMinimumStayError("");
+    }
+  }, [formData.checkin, formData.checkout, calculatePricing]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.checkin || !formData.checkout) {
       alert("Please select check-in and check-out dates");
+      return;
+    }
+
+    // Check for minimum stay requirements
+    if (minimumStayError) {
+      alert(minimumStayError);
       return;
     }
 
@@ -87,19 +129,13 @@ export default function BookingFormWithCalendar() {
       return;
     }
 
+    // Ensure we have pricing breakdown
+    if (!pricingBreakdown) {
+      alert("Kunne ikke beregne pris. Prøv igjen.");
+      return;
+    }
+
     setIsSubmitting(true);
-
-    // Calculate number of nights and total price
-    const nights = Math.ceil(
-      (formData.checkout.getTime() - formData.checkin.getTime()) /
-        (1000 * 60 * 60 * 24)
-    );
-
-    // Pricing breakdown
-    const pricePerNight = 85; // €85 per night
-    const cleaningFee = 50; // €50 cleaning fee
-    const subtotal = nights * pricePerNight;
-    const totalPrice = subtotal + cleaningFee;
 
     try {
       // Create Stripe checkout session with server-side redirect
@@ -116,11 +152,13 @@ export default function BookingFormWithCalendar() {
           checkout: format(formData.checkout, "yyyy-MM-dd"),
           guests: formData.guests,
           message: formData.message,
-          nights: nights,
-          pricePerNight: pricePerNight,
-          cleaningFee: cleaningFee,
-          subtotal: subtotal,
-          totalPrice: totalPrice,
+          nights: pricingBreakdown.nights,
+          pricePerNight: pricingBreakdown.averagePricePerNight,
+          cleaningFee: pricingBreakdown.cleaningFee,
+          subtotal: pricingBreakdown.baseTotal - pricingBreakdown.longStayDiscount,
+          totalPrice: pricingBreakdown.totalAmount,
+          longStayDiscount: pricingBreakdown.longStayDiscount,
+          hasLongStayDiscount: pricingBreakdown.hasLongStayDiscount,
         }),
       });
 
@@ -241,20 +279,7 @@ export default function BookingFormWithCalendar() {
     );
   }
 
-  // Calculate total if dates are selected
-  const nights =
-    formData.checkin && formData.checkout
-      ? Math.ceil(
-          (formData.checkout.getTime() - formData.checkin.getTime()) /
-            (1000 * 60 * 60 * 24)
-        )
-      : 0;
 
-  // Pricing breakdown
-  const pricePerNight = 85; // €85 per night
-  const cleaningFee = 50; // €50 cleaning fee
-  const subtotal = nights > 0 ? nights * pricePerNight : 0;
-  const totalPrice = subtotal > 0 ? subtotal + cleaningFee : 0;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -354,23 +379,41 @@ export default function BookingFormWithCalendar() {
         </select>
       </div>
 
-      {/* Price Summary - Detailed Breakdown */}
-      {totalPrice > 0 && (
+      {/* Minimum Stay Error */}
+      {minimumStayError && (
+        <div className="bg-red-50 border border-red-200 p-3 rounded-lg">
+          <p className="text-sm text-red-800">{minimumStayError}</p>
+        </div>
+      )}
+
+      {/* Price Summary - Dynamic Breakdown */}
+      {pricingBreakdown && (
         <div className="bg-gray-50 p-4 rounded-lg text-sm space-y-2">
           <div className="flex justify-between">
             <span>
-              €{pricePerNight} × {nights} night{nights !== 1 ? "s" : ""}
+              €{pricingBreakdown.averagePricePerNight.toFixed(2)} × {pricingBreakdown.nights} night{pricingBreakdown.nights !== 1 ? "s" : ""}
             </span>
-            <span>€{subtotal}</span>
+            <span>€{pricingBreakdown.baseTotal.toFixed(2)}</span>
           </div>
+          {pricingBreakdown.hasLongStayDiscount && (
+            <div className="flex justify-between text-green-600">
+              <span>Long stay discount (20%)</span>
+              <span>-€{pricingBreakdown.longStayDiscount.toFixed(2)}</span>
+            </div>
+          )}
           <div className="flex justify-between">
             <span>Cleaning fee</span>
-            <span>€{cleaningFee}</span>
+            <span>€{pricingBreakdown.cleaningFee.toFixed(2)}</span>
           </div>
           <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
             <span>Total</span>
-            <span>€{totalPrice}</span>
+            <span>€{pricingBreakdown.totalAmount.toFixed(2)}</span>
           </div>
+          {pricingBreakdown.nights >= 28 && (
+            <div className="text-xs text-green-600 mt-2">
+              🎉 You qualified for a 20% long stay discount!
+            </div>
+          )}
         </div>
       )}
 
@@ -449,7 +492,9 @@ export default function BookingFormWithCalendar() {
           !formData.checkin ||
           !formData.checkout ||
           !formData.name ||
-          !formData.email
+          !formData.email ||
+          !!minimumStayError ||
+          !pricingBreakdown
         }
         className="w-full bg-amber-600 text-white py-3 px-4 rounded-lg text-sm font-semibold hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
       >
