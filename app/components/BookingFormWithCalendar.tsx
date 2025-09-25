@@ -66,13 +66,97 @@ export default function BookingFormWithCalendar() {
   }, []);
 
   // Check if selected dates overlap with any booked dates
-  const hasDateConflict = (checkin: Date, checkout: Date) => {
-    return bookedDates.some((bookedDate) =>
-      isWithinInterval(bookedDate, {
-        start: checkin,
-        end: addDays(checkout, -1),
-      })
-    );
+  const hasDateConflict = useCallback(
+    (checkin: Date, checkout: Date) => {
+      return bookedDates.some((bookedDate) =>
+        isWithinInterval(bookedDate, {
+          start: checkin,
+          end: addDays(checkout, -1),
+        })
+      );
+    },
+    [bookedDates]
+  );
+
+  // Filter function to prevent selecting dates that would create conflicts
+  const filterAvailableDates = (date: Date) => {
+    // Don't allow past dates
+    if (date < new Date()) {
+      return false;
+    }
+
+    // If this is a booked date, don't allow it
+    if (
+      bookedDates.some(
+        (bookedDate) => bookedDate.toDateString() === date.toDateString()
+      )
+    ) {
+      return false;
+    }
+
+    // If we have a checkin date selected, prevent selecting checkout dates that would create conflicts
+    if (formData.checkin && !formData.checkout) {
+      // For checkout selection, check if this would create a conflict
+      const potentialCheckout = date;
+      if (potentialCheckout <= formData.checkin) {
+        return false;
+      }
+
+      // Check if this range would include any booked dates
+      if (hasDateConflict(formData.checkin, potentialCheckout)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  // Check if booking would create isolated short gaps
+  const wouldCreateIsolatedGap = async (checkin: Date, checkout: Date) => {
+    try {
+      // Get all bookings to analyze gaps
+      const { data: bookings, error } = await supabase
+        .from("bookings")
+        .select("start_date, end_date, status")
+        .in("status", ["confirmed", "pending"]);
+
+      if (error || !bookings) return false;
+
+      // Convert to dates and sort by start date
+      const existingBookings = bookings
+        .map((booking) => ({
+          start: parseISO(booking.start_date),
+          end: parseISO(booking.end_date),
+        }))
+        .sort((a, b) => a.start.getTime() - b.start.getTime());
+
+      // Add the new proposed booking
+      const allBookings = [
+        ...existingBookings,
+        { start: checkin, end: checkout },
+      ].sort((a, b) => a.start.getTime() - b.start.getTime());
+
+      // Check for gaps that would be too short between consecutive bookings
+      for (let i = 0; i < allBookings.length - 1; i++) {
+        const currentEnd = allBookings[i].end;
+        const nextStart = allBookings[i + 1].start;
+
+        // Calculate gap in days
+        const gapDays = Math.ceil(
+          (nextStart.getTime() - currentEnd.getTime()) / (1000 * 60 * 60 * 24)
+        );
+
+        // If gap is 1-2 days (too short for minimum stay), it's problematic
+        if (gapDays > 0 && gapDays < 3) {
+          return true;
+        }
+      }
+
+      return false;
+    } catch (error) {
+      console.error("Error checking gaps:", error);
+      return false;
+    }
   };
 
   // Calculate pricing when dates change
@@ -135,6 +219,18 @@ export default function BookingFormWithCalendar() {
     if (hasDateConflict(formData.checkin, formData.checkout)) {
       alert(
         "Some of your selected dates are already booked. Please choose different dates."
+      );
+      return;
+    }
+
+    // Check if booking would create problematic gaps
+    const wouldCreateGap = await wouldCreateIsolatedGap(
+      formData.checkin,
+      formData.checkout
+    );
+    if (wouldCreateGap) {
+      alert(
+        "This booking would create a gap that is too short between existing bookings. Please choose different dates or extend your stay."
       );
       return;
     }
@@ -223,17 +319,46 @@ export default function BookingFormWithCalendar() {
   const handleDateChange = useCallback(
     (date: Date | null, field: "checkin" | "checkout") => {
       try {
-        if (field === "checkin" || field === "checkout") {
+        if (!date) {
+          setFormData((prev) => ({ ...prev, [field]: null }));
+          return;
+        }
+
+        // If setting checkin, clear checkout if it would create a conflict
+        if (field === "checkin") {
+          let newCheckout = formData.checkout;
+
+          // Clear checkout if it's before or same as new checkin
+          if (newCheckout && newCheckout <= date) {
+            newCheckout = null;
+          }
+
+          // Clear checkout if the range would include booked dates
+          if (newCheckout && hasDateConflict(date, newCheckout)) {
+            newCheckout = null;
+          }
+
           setFormData((prev) => ({
             ...prev,
             [field]: date,
+            checkout: newCheckout,
           }));
+        } else if (field === "checkout") {
+          // For checkout, validate the range
+          if (formData.checkin && hasDateConflict(formData.checkin, date)) {
+            alert(
+              "This date range includes already booked dates. Please select a different checkout date."
+            );
+            return;
+          }
+
+          setFormData((prev) => ({ ...prev, [field]: date }));
         }
       } catch (error) {
         console.error("Error in handleDateChange:", error);
       }
     },
-    []
+    [formData.checkout, formData.checkin, hasDateConflict]
   );
 
   if (loading) {
@@ -309,6 +434,7 @@ export default function BookingFormWithCalendar() {
                 endDate={formData.checkout}
                 minDate={new Date()}
                 excludeDates={bookedDates}
+                filterDate={filterAvailableDates}
                 placeholderText="Select date"
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
@@ -343,6 +469,7 @@ export default function BookingFormWithCalendar() {
                     : addDays(new Date(), 1)
                 }
                 excludeDates={bookedDates}
+                filterDate={filterAvailableDates}
                 placeholderText="Select date"
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"

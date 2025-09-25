@@ -283,4 +283,76 @@ export class PricingService {
       };
     }
   }
+
+  /**
+   * Check if a booking would create an isolated gap that's too short to book
+   * This prevents bookings that would leave 1-2 day gaps that can't be booked due to minimum stay requirements
+   */
+  static async wouldCreateIsolatedGap(
+    checkinDate: Date,
+    checkoutDate: Date,
+    existingBookings: Array<{ checkin_date: string; checkout_date: string }>
+  ): Promise<{ hasGap: boolean; message?: string }> {
+    try {
+      // Convert strings to dates and sort existing bookings
+      const bookings = existingBookings
+        .map((booking) => ({
+          checkin: new Date(booking.checkin_date),
+          checkout: new Date(booking.checkout_date),
+        }))
+        .sort((a, b) => a.checkin.getTime() - b.checkin.getTime());
+
+      const newCheckin = new Date(checkinDate);
+      const newCheckout = new Date(checkoutDate);
+
+      // Check for gaps before the new booking
+      for (const booking of bookings) {
+        if (booking.checkout.getTime() < newCheckin.getTime()) {
+          const gapStart = new Date(booking.checkout);
+          const gapEnd = new Date(newCheckin);
+          const gapDays = Math.ceil(
+            (gapEnd.getTime() - gapStart.getTime()) / (1000 * 60 * 60 * 24)
+          );
+
+          // If there's a gap of 1-2 days, check if it meets minimum stay requirements
+          if (gapDays > 0 && gapDays <= 2) {
+            const validation = await this.validateMinimumStay(gapStart, gapEnd);
+            if (!validation.isValid) {
+              return {
+                hasGap: true,
+                message: `This booking would create a ${gapDays}-day gap that cannot be booked due to minimum stay requirements.`,
+              };
+            }
+          }
+        }
+      }
+
+      // Check for gaps after the new booking
+      for (const booking of bookings) {
+        if (booking.checkin.getTime() > newCheckout.getTime()) {
+          const gapStart = new Date(newCheckout);
+          const gapEnd = new Date(booking.checkin);
+          const gapDays = Math.ceil(
+            (gapEnd.getTime() - gapStart.getTime()) / (1000 * 60 * 60 * 24)
+          );
+
+          // If there's a gap of 1-2 days, check if it meets minimum stay requirements
+          if (gapDays > 0 && gapDays <= 2) {
+            const validation = await this.validateMinimumStay(gapStart, gapEnd);
+            if (!validation.isValid) {
+              return {
+                hasGap: true,
+                message: `This booking would create a ${gapDays}-day gap that cannot be booked due to minimum stay requirements.`,
+              };
+            }
+          }
+        }
+      }
+
+      return { hasGap: false };
+    } catch (error) {
+      console.error("Error checking for isolated gaps:", error);
+      return { hasGap: false };
+    }
+  }
 }
