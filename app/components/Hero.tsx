@@ -10,9 +10,6 @@ const videos = [
   "/videos/placeholder3.mp4",
 ];
 
-// Mobile fallback image (first image from carousel)
-const mobileBackgroundImage = "/carousel/_DSC8475.JPG";
-
 const carouselImages = [
   "/carousel/_DSC8475.JPG",
   "/carousel/_DSC8484.JPG",
@@ -60,45 +57,34 @@ const carouselImages = [
 export default function Hero() {
   const [vidIdx, setVidIdx] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Detect mobile devices, especially iOS
-    const isMobileDevice =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    setIsMobile(isMobileDevice);
-
-    // Only start video carousel on desktop
-    if (!isMobileDevice) {
-      const id = setInterval(() => {
-        setVidIdx((i) => (i + 1) % videos.length);
-      }, 6000);
-      return () => clearInterval(id);
-    }
+    const id = setInterval(() => {
+      setVidIdx((i) => (i + 1) % videos.length);
+    }, 6000);
+    return () => clearInterval(id);
   }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* background video carousel - only on desktop, static image on mobile */}
-      {isMobile ? (
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${mobileBackgroundImage})` }}
-        />
-      ) : (
-        <video
-          key={videos[vidIdx]}
-          src={videos[vidIdx]}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop={false}
-          playsInline
-          style={{ pointerEvents: "none" }}
-        />
-      )}
+      {/* background video carousel with iOS-compatible settings */}
+      <video
+        key={videos[vidIdx]}
+        src={videos[vidIdx]}
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
+        muted
+        loop={false}
+        playsInline
+        webkit-playsinline="true"
+        x-webkit-airplay="deny"
+        disablePictureInPicture
+        preload="auto"
+        style={{
+          pointerEvents: "none",
+          objectPosition: "center center",
+        }}
+      />
 
       {/* Enhanced gradient overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />
