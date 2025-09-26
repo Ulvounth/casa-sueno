@@ -57,12 +57,12 @@ export class PricingService {
         base_price_per_night: 85,
         cleaning_fee: 50,
         seasonal_rates: {
-          high_season: 1.118,
-          middle_season: 1.0,
-          low_season: 0.882,
+          high_season: 1.294,
+          middle_season: 0.941,
+          low_season: 0.706,
         },
         high_season_minimum_nights: 7,
-        middle_season_minimum_nights: 5,
+        middle_season_minimum_nights: 4,
         low_season_minimum_nights: 3,
         long_stay_discount_threshold: 28,
         long_stay_discount_percent: 20,
@@ -75,7 +75,7 @@ export class PricingService {
       cleaning_fee: data.cleaning_fee,
       seasonal_rates: data.seasonal_rates,
       high_season_minimum_nights: data.high_season_minimum_nights || 7,
-      middle_season_minimum_nights: data.middle_season_minimum_nights || 5,
+      middle_season_minimum_nights: data.middle_season_minimum_nights || 4,
       low_season_minimum_nights: data.low_season_minimum_nights || 3,
       long_stay_discount_threshold: data.long_stay_discount_threshold || 28,
       long_stay_discount_percent: data.long_stay_discount_percent || 20,
@@ -91,7 +91,7 @@ export class PricingService {
       return [
         {
           season_type: "high_season",
-          start_month: 5,
+          start_month: 6,
           start_day: 1,
           end_month: 9,
           end_day: 30,
@@ -100,19 +100,19 @@ export class PricingService {
           season_type: "middle_season",
           start_month: 3,
           start_day: 1,
-          end_month: 4,
-          end_day: 30,
+          end_month: 5,
+          end_day: 31,
         },
         {
           season_type: "middle_season",
           start_month: 10,
           start_day: 1,
-          end_month: 11,
-          end_day: 30,
+          end_month: 10,
+          end_day: 31,
         },
         {
           season_type: "low_season",
-          start_month: 12,
+          start_month: 11,
           start_day: 1,
           end_month: 2,
           end_day: 28,
@@ -196,17 +196,7 @@ export class PricingService {
         baseTotal += rate;
       }
 
-      // Calculate long stay discount
-      const hasLongStayDiscount =
-        nights >= pricing.long_stay_discount_threshold;
-      const longStayDiscount = hasLongStayDiscount
-        ? (baseTotal * pricing.long_stay_discount_percent) / 100
-        : 0;
-
-      const subtotal = baseTotal - longStayDiscount;
-      const totalAmount = subtotal + pricing.cleaning_fee;
-
-      // Determine minimum nights based on predominant season
+      // Calculate long stay discount (only applies in low and middle season)
       const seasonCounts = {
         high_season: dailyRates.filter((d) => d.season === "high_season")
           .length,
@@ -214,7 +204,21 @@ export class PricingService {
           .length,
         low_season: dailyRates.filter((d) => d.season === "low_season").length,
       };
+      
+      // Check if stay is predominantly in high season
+      const isHighSeasonStay = seasonCounts.high_season > seasonCounts.middle_season && 
+                               seasonCounts.high_season > seasonCounts.low_season;
+      
+      const hasLongStayDiscount =
+        nights >= pricing.long_stay_discount_threshold && !isHighSeasonStay;
+      const longStayDiscount = hasLongStayDiscount
+        ? (baseTotal * pricing.long_stay_discount_percent) / 100
+        : 0;
 
+      const subtotal = baseTotal - longStayDiscount;
+      const totalAmount = subtotal + pricing.cleaning_fee;
+
+      // Determine minimum nights based on predominant season (reuse seasonCounts)
       let minimumNights = pricing.middle_season_minimum_nights;
       if (
         seasonCounts.high_season > seasonCounts.middle_season &&
