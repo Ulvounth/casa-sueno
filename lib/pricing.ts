@@ -204,11 +204,12 @@ export class PricingService {
           .length,
         low_season: dailyRates.filter((d) => d.season === "low_season").length,
       };
-      
+
       // Check if stay is predominantly in high season
-      const isHighSeasonStay = seasonCounts.high_season > seasonCounts.middle_season && 
-                               seasonCounts.high_season > seasonCounts.low_season;
-      
+      const isHighSeasonStay =
+        seasonCounts.high_season > seasonCounts.middle_season &&
+        seasonCounts.high_season > seasonCounts.low_season;
+
       const hasLongStayDiscount =
         nights >= pricing.long_stay_discount_threshold && !isHighSeasonStay;
       const longStayDiscount = hasLongStayDiscount
