@@ -5,19 +5,25 @@ import {
   ShieldCheckIcon,
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
-import FloatingBookingButton from "../components/FloatingBookingButton";
+import { getTranslations } from "next-intl/server";
 
-export default function TermsPage() {
+export default async function TermsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "terms" });
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50/30 to-orange-50/50">
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-amber-600">Terms & Conditions</span>
+            <span className="text-amber-600">{t("title")}</span>
           </h1>
           <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            Simple and clear terms for your stay at Casa Sueño.
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -31,36 +37,40 @@ export default function TermsPage() {
                 <DocumentTextIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Booking Terms
+                {t("bookingTerms.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Minimum age:</strong> 20+ to make a booking
+                  • <strong>{t("bookingTerms.minimumAge.label")}:</strong>{" "}
+                  {t("bookingTerms.minimumAge.value")}
                 </li>
                 <li>
-                  • <strong>Maximum guests:</strong> 5 people
+                  • <strong>{t("bookingTerms.maxGuests.label")}:</strong>{" "}
+                  {t("bookingTerms.maxGuests.value")}
                 </li>
                 <li>
-                  • <strong>Minimum stay:</strong> 3-7 nights (varies by season)
+                  • <strong>{t("bookingTerms.minimumStay.label")}:</strong>{" "}
+                  {t("bookingTerms.minimumStay.value")}
                 </li>
                 <li>
-                  • <strong>Payment:</strong> Full payment required at booking
-                  via Stripe
+                  • <strong>{t("bookingTerms.payment.label")}:</strong>{" "}
+                  {t("bookingTerms.payment.value")}
                 </li>
                 <li>
-                  • <strong>Security deposit:</strong> €200 (refunded after
-                  stay)
+                  • <strong>{t("bookingTerms.securityDeposit.label")}:</strong>{" "}
+                  {t("bookingTerms.securityDeposit.value")}
                 </li>
                 <li>
-                  • <strong>Cleaning fee:</strong> €50 (included in total price)
+                  • <strong>{t("bookingTerms.cleaningFee.label")}:</strong>{" "}
+                  {t("bookingTerms.cleaningFee.value")}
                 </li>
               </ul>
               <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
                 <p className="text-sm text-amber-800">
-                  <strong>Seasonal minimum stays:</strong> Low season: 3 nights,
-                  Middle season: 5 nights, High season: 7 nights
+                  <strong>{t("bookingTerms.seasonalStays.title")}:</strong>{" "}
+                  {t("bookingTerms.seasonalStays.text")}
                 </p>
               </div>
             </div>
@@ -73,23 +83,26 @@ export default function TermsPage() {
                 <ClockIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Check-in & Check-out
+                {t("checkInOut.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Check-in:</strong> 3:00 PM - 8:00 PM
+                  • <strong>{t("checkInOut.checkIn.label")}:</strong>{" "}
+                  {t("checkInOut.checkIn.time")}
                 </li>
                 <li>
-                  • <strong>Check-out:</strong> 11:00 AM
+                  • <strong>{t("checkInOut.checkOut.label")}:</strong>{" "}
+                  {t("checkInOut.checkOut.time")}
                 </li>
                 <li>
-                  • <strong>Late arrival:</strong> €20 fee after 8:00 PM
+                  • <strong>{t("checkInOut.lateArrival.label")}:</strong>{" "}
+                  {t("checkInOut.lateArrival.fee")}
                 </li>
                 <li>
-                  • <strong>Key collection:</strong> Instructions sent before
-                  arrival
+                  • <strong>{t("checkInOut.keyCollection.label")}:</strong>{" "}
+                  {t("checkInOut.keyCollection.text")}
                 </li>
               </ul>
             </div>
@@ -102,20 +115,15 @@ export default function TermsPage() {
                 <ShieldCheckIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Responsibility & Damages
+                {t("responsibility.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
-                <li>
-                  • Guests are responsible for any damages to the property
-                </li>
-                <li>• Security deposit: €200 (refunded after inspection)</li>
-                <li>
-                  • Additional cleaning fee charged if property left excessively
-                  dirty
-                </li>
-                <li>• Lost keys: €50 replacement fee</li>
+                <li>• {t("responsibility.guestResponsibility")}</li>
+                <li>• {t("responsibility.securityDeposit")}</li>
+                <li>• {t("responsibility.additionalCleaning")}</li>
+                <li>• {t("responsibility.lostKeys")}</li>
               </ul>
             </div>
           </div>
@@ -127,31 +135,29 @@ export default function TermsPage() {
                 <CurrencyEuroIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Cancellation Policy
+                {t("cancellation.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Free cancellation:</strong> Up to 14 days before
-                  arrival
+                  • <strong>{t("cancellation.freeCancellation.label")}:</strong>{" "}
+                  {t("cancellation.freeCancellation.period")}
                 </li>
                 <li>
-                  • <strong>50% refund:</strong> 7-13 days before arrival
+                  • <strong>{t("cancellation.fiftyPercent.label")}:</strong>{" "}
+                  {t("cancellation.fiftyPercent.period")}
                 </li>
                 <li>
-                  • <strong>No refund:</strong> Less than 7 days before arrival
+                  • <strong>{t("cancellation.noRefund.label")}:</strong>{" "}
+                  {t("cancellation.noRefund.period")}
                 </li>
-                <li>
-                  • Deposit is non-refundable for cancellations within 7 days
-                </li>
+                <li>• {t("cancellation.depositNonRefundable")}</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-
-      <FloatingBookingButton />
     </div>
   );
 }

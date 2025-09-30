@@ -5,19 +5,25 @@ import {
   UserGroupIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import FloatingBookingButton from "../components/FloatingBookingButton";
+import { getTranslations } from "next-intl/server";
 
-export default function HouseRulesPage() {
+export default async function HouseRulesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "houseRules" });
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50/30 to-orange-50/50">
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-amber-600">House Rules</span>
+            <span className="text-amber-600">{t("title")}</span>
           </h1>
           <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            Simple rules to ensure everyone has a great stay at Casa Sueño.
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -31,24 +37,26 @@ export default function HouseRulesPage() {
                 <ClockIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Check-in & Check-out
+                {t("checkInOut.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Check-in:</strong> 3:00 PM - 8:00 PM
+                  • <strong>{t("checkInOut.checkIn.label")}:</strong>{" "}
+                  {t("checkInOut.checkIn.time")}
                 </li>
                 <li>
-                  • <strong>Check-out:</strong> 11:00 AM
+                  • <strong>{t("checkInOut.checkOut.label")}:</strong>{" "}
+                  {t("checkInOut.checkOut.time")}
                 </li>
                 <li>
-                  • <strong>Late arrival:</strong> Contact us in advance (€20
-                  fee after 8 PM)
+                  • <strong>{t("checkInOut.lateArrival.label")}:</strong>{" "}
+                  {t("checkInOut.lateArrival.text")}
                 </li>
                 <li>
-                  • <strong>Early departure:</strong> Let us know, no refund for
-                  unused nights
+                  • <strong>{t("checkInOut.earlyDeparture.label")}:</strong>{" "}
+                  {t("checkInOut.earlyDeparture.text")}
                 </li>
               </ul>
             </div>
@@ -61,36 +69,33 @@ export default function HouseRulesPage() {
                 <NoSymbolIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Important Rules
+                {t("importantRules.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-lg font-semibold text-red-600 mb-3">
-                    Not Allowed:
+                    {t("importantRules.notAllowed.title")}
                   </h3>
                   <ul className="space-y-2 text-stone-600">
-                    <li>• No smoking inside the house (outdoor OK)</li>
-                    <li>• No parties or loud gatherings</li>
-                    <li>• No pets allowed</li>
-                    <li>• No additional guests beyond booking</li>
-                    <li>
-                      • Primary booker must be 18+ (families with children
-                      welcome)
-                    </li>
+                    <li>• {t("importantRules.notAllowed.smoking")}</li>
+                    <li>• {t("importantRules.notAllowed.parties")}</li>
+                    <li>• {t("importantRules.notAllowed.pets")}</li>
+                    <li>• {t("importantRules.notAllowed.additionalGuests")}</li>
+                    <li>• {t("importantRules.notAllowed.ageRequirement")}</li>
                   </ul>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-green-600 mb-3">
-                    Please Do:
+                    {t("importantRules.pleaseDo.title")}
                   </h3>
                   <ul className="space-y-2 text-stone-600">
-                    <li>• Keep noise levels low after 22:00 (10 PM)</li>
-                    <li>• Quiet hours: 22:00 - 08:00</li>
-                    <li>• Treat the property with respect</li>
-                    <li>• Clean up after yourself</li>
-                    <li>• Lock doors when leaving</li>
+                    <li>• {t("importantRules.pleaseDo.noiseLevels")}</li>
+                    <li>• {t("importantRules.pleaseDo.quietHours")}</li>
+                    <li>• {t("importantRules.pleaseDo.respectProperty")}</li>
+                    <li>• {t("importantRules.pleaseDo.cleanUp")}</li>
+                    <li>• {t("importantRules.pleaseDo.lockDoors")}</li>
                   </ul>
                 </div>
               </div>
@@ -104,24 +109,27 @@ export default function HouseRulesPage() {
                 <UserGroupIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Guests & Visitors
+                {t("guestsVisitors.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
                 <li>
-                  • <strong>Maximum occupancy:</strong> 5 guests
+                  • <strong>{t("guestsVisitors.maxOccupancy.label")}:</strong>{" "}
+                  {t("guestsVisitors.maxOccupancy.value")}
                 </li>
                 <li>
-                  • <strong>Visitors:</strong> Day visitors allowed until 22:00
+                  • <strong>{t("guestsVisitors.dayVisitors.label")}:</strong>{" "}
+                  {t("guestsVisitors.dayVisitors.text")}
                 </li>
                 <li>
-                  • <strong>Additional guests:</strong> Must be approved and may
-                  incur extra charges
+                  •{" "}
+                  <strong>{t("guestsVisitors.additionalGuests.label")}:</strong>{" "}
+                  {t("guestsVisitors.additionalGuests.text")}
                 </li>
                 <li>
-                  • <strong>Age requirement:</strong> Primary booker must be
-                  20+, families with children of all ages are welcome
+                  • <strong>{t("guestsVisitors.ageRequirement.label")}:</strong>{" "}
+                  {t("guestsVisitors.ageRequirement.text")}
                 </li>
               </ul>
             </div>
@@ -134,29 +142,26 @@ export default function HouseRulesPage() {
                 <ShieldCheckIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Safety & Security
+                {t("safetySecurity.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ul className="space-y-3">
-                <li>• Emergency contact information provided upon check-in</li>
-                <li>• Fire extinguisher and first aid kit available</li>
-                <li>• Please report any damages or issues immediately</li>
-                <li>• Lost or damaged keys: €50 replacement fee</li>
+                <li>• {t("safetySecurity.emergencyContact")}</li>
+                <li>• {t("safetySecurity.safetyEquipment")}</li>
+                <li>• {t("safetySecurity.reportIssues")}</li>
+                <li>• {t("safetySecurity.keyReplacement")}</li>
               </ul>
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
                 <p className="text-blue-800">
-                  <strong>Emergency:</strong> For urgent issues, call local
-                  emergency services (112) or contact us at +34 623 545 857 via
-                  WhatsApp.
+                  <strong>{t("safetySecurity.emergency.title")}:</strong>{" "}
+                  {t("safetySecurity.emergency.text")}
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <FloatingBookingButton />
     </div>
   );
 }

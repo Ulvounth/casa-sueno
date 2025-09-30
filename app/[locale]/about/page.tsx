@@ -1,14 +1,21 @@
-// app/about/page.tsx
+// app/[locale]/about/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
   HeartIcon,
   MapPinIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
-import FloatingBookingButton from "../components/FloatingBookingButton";
+import FloatingBookingButton from "@/app/components/FloatingBookingButton";
 
-export default function AboutPage() {
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "about" });
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
@@ -23,10 +30,9 @@ export default function AboutPage() {
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
-          <h1 className="text-6xl font-bold mb-6">About Casa Sueño</h1>
+          <h1 className="text-6xl font-bold mb-6">{t("hero.title")}</h1>
           <p className="text-2xl max-w-3xl mx-auto leading-relaxed">
-            Discover the story behind your perfect Spanish getaway and what
-            makes our holiday home special.
+            {t("hero.subtitle")}
           </p>
         </div>
       </section>
@@ -36,41 +42,35 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Left Column - About Family */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-semibold text-stone-800">Our Story</h2>
+            <h2 className="text-3xl font-semibold text-stone-800">
+              {t("story.title")}
+            </h2>
             <p className="text-stone-700 leading-relaxed">
-              Welcome to Casa Sueño, your home away from home in beautiful
-              Spain. Our holiday rental was carefully designed to provide guests
-              with an authentic Spanish experience while maintaining all the
-              comforts of modern living.
+              {t("story.paragraph1")}
             </p>
             <p className="text-stone-700 leading-relaxed">
-              Located in one of Spain&apos;s most charming regions, Casa Sueño
-              offers the perfect base for exploring the rich culture, stunning
-              beaches, and vibrant local communities that make this area so
-              special. We&apos;ve thoughtfully curated every detail to ensure
-              your stay is memorable.
+              {t("story.paragraph2")}
             </p>
             <p className="text-stone-700 leading-relaxed">
-              Whether you&apos;re seeking relaxation, adventure, or cultural
-              immersion, Casa Sueño provides the perfect setting for your
-              Spanish holiday. We&apos;re committed to helping you create
-              lasting memories in this beautiful corner of Spain.
+              {t("story.paragraph3")}
             </p>
           </div>
 
           {/* Right Column - Property Facts */}
           <div className="space-y-8">
             <h2 className="text-3xl font-semibold text-stone-800">
-              About Casa Sueño
+              {t("property.title")}
             </h2>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <MapPinIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-stone-800">Location</h3>
+                  <h3 className="font-semibold text-stone-800">
+                    {t("property.location.title")}
+                  </h3>
                   <p className="text-stone-600">
-                    Beautiful Spanish countryside
+                    {t("property.location.description")}
                   </p>
                 </div>
               </div>
@@ -79,19 +79,22 @@ export default function AboutPage() {
                 <AcademicCapIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="font-semibold text-stone-800">
-                    Property Type
+                    {t("property.propertyType.title")}
                   </h3>
-                  <p className="text-stone-600">Modern holiday villa</p>
+                  <p className="text-stone-600">
+                    {t("property.propertyType.description")}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <HeartIcon className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-stone-800">Amenities</h3>
+                  <h3 className="font-semibold text-stone-800">
+                    {t("property.amenities.title")}
+                  </h3>
                   <p className="text-stone-600">
-                    Fully equipped kitchen, comfortable bedrooms, modern
-                    bathrooms.
+                    {t("property.amenities.description")}
                   </p>
                 </div>
               </div>
@@ -100,17 +103,16 @@ export default function AboutPage() {
             {/* Contact CTA */}
             <div className="bg-amber-50 p-6 rounded-lg border border-amber-100">
               <h3 className="text-xl font-semibold text-stone-800 mb-3">
-                Have questions about the area?
+                {t("contactPrompt.title")}
               </h3>
               <p className="text-stone-600 mb-4">
-                Need local recommendations or have questions about Casa Sueño?
-                We&apos;re here to help make your Spanish holiday unforgettable!
+                {t("contactPrompt.description")}
               </p>
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
               >
-                Ask a question
+                {t("contactPrompt.button")}
               </Link>
             </div>
           </div>
@@ -122,7 +124,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-stone-800 mb-4">
-              Why stay at Casa Sueño
+              {t("whyChoose.title")}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full"></div>
           </div>
@@ -134,11 +136,10 @@ export default function AboutPage() {
                   <span className="text-3xl">🏡</span>
                 </div>
                 <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
-                  Premium Experience
+                  {t("whyChoose.premium.title")}
                 </h3>
                 <p className="text-stone-600 leading-relaxed text-center">
-                  As local property managers, we know all the best beaches,
-                  restaurants, and hidden gems in the area
+                  {t("whyChoose.premium.description")}
                 </p>
               </div>
             </div>
@@ -149,11 +150,10 @@ export default function AboutPage() {
                   <span className="text-3xl">❤️</span>
                 </div>
                 <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
-                  Personal Touch
+                  {t("whyChoose.personal.title")}
                 </h3>
                 <p className="text-stone-600 leading-relaxed text-center">
-                  We treat our guests like family and ensure every detail is
-                  perfect for your stay
+                  {t("whyChoose.personal.description")}
                 </p>
               </div>
             </div>
@@ -164,11 +164,10 @@ export default function AboutPage() {
                   <span className="text-3xl">🌟</span>
                 </div>
                 <h3 className="text-2xl font-bold text-stone-800 mb-4 text-center">
-                  Quality Guaranteed
+                  {t("whyChoose.quality.title")}
                 </h3>
                 <p className="text-stone-600 leading-relaxed text-center">
-                  Casa Sueño is our home too - we maintain the highest standards
-                  of cleanliness and comfort
+                  {t("whyChoose.quality.description")}
                 </p>
               </div>
             </div>

@@ -1,0 +1,536 @@
+{
+  "common": {
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "guests",
+    "nights": "nights",
+    "currency": "€",
+    "bookNow": "Book Now",
+    "book": "Book"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "houseRules": "House Rules",
+    "cancellationPolicy": "Cancellation Policy"
+  },
+  "homepage": {
+    "paymentCancelled": "Payment was cancelled. You can try booking again anytime.",
+    "title": "Modern townhouse in residential complex",
+    "guestInfo": "Up to 5 guests · 2 bedrooms · 3 beds · 2 bathrooms",
+    "description": "Discover your perfect Mediterranean getaway in this stunning, newly renovated townhouse in Dream Hills Orihuela. Casa Sueño features two comfortable bedrooms (one with a double bed, one with twin beds), a sofa bed for additional guests, and two full bathrooms with both a bathtub and separate shower. Enjoy the spectacular private roof terrace with panoramic views and outdoor BBQ - perfect for morning coffee or evening grilling under the Spanish sun. Located in the heart of Costa Blanca near La Zenia, you're just 10 minutes from La Zenia Boulevard shopping center and 15 minutes from multiple pristine beaches including Cabo Roig and La Zenia. The townhouse combines modern comfort with traditional Spanish charm, plus access to a communal pool - everything you need for an unforgettable vacation for up to 5 guests.",
+    "features": {
+      "selfCheckIn": "Self check-in with smart lock.",
+      "airConditioning": "Air conditioning & ceiling fan for a comfortable stay.",
+      "walkableNeighborhood": "Walkable neighborhood with restaurants & shops nearby.",
+      "privatePool": "Access to private pool shared with neighbors."
+    },
+    "specialFeatures": {
+      "title": "What makes this place special",
+      "selfCheckIn": {
+        "title": "Self check-in",
+        "description": "Check yourself in with the smart lock for hassle-free arrival."
+      },
+      "sparklingClean": {
+        "title": "Sparkling clean",
+        "description": "Recent guests consistently praise our spotless cleanliness standards."
+      },
+      "primeLocation": {
+        "title": "Prime location",
+        "description": "Walk to La Zenia mall, drive 5 minutes to stunning beaches."
+      },
+      "roofTerrace": {
+        "title": "Private roof terrace",
+        "description": "Enjoy Mediterranean sunsets from your own rooftop space."
+      }
+    },
+    "quickFacts": {
+      "title": "Quick Facts",
+      "checkIn": "3:00 PM",
+      "checkOut": "11:00 AM",
+      "minimumStayLabel": "Minimum stay",
+      "minimumStay": "3-7 nights*",
+      "maxGuestsLabel": "Max guests",
+      "maxGuests": "5 people",
+      "ageRequirementLabel": "Age requirement",
+      "ageRequirement": "Families welcome",
+      "seasonNote": "*Low season: 3 nights, Middle season: 4 nights, High season: 7 nights"
+    },
+    "houseRules": {
+      "title": "House Rules",
+      "noSmokingIndoors": "No smoking indoors (outdoor OK)",
+      "noParties": "No parties or events",
+      "noPets": "No pets allowed",
+      "quietHours": "Quiet hours: 22:00 - 08:00",
+      "familiesWelcome": "Families and children welcome",
+      "viewAll": "View all house rules →"
+    },
+    "amenities": {
+      "title": "What this place offers",
+      "freeWifi": "Free WiFi",
+      "acLivingRoom": "AC in living room",
+      "fullKitchen": "Full kitchen",
+      "smartTv": "Smart TV (Netflix)",
+      "roofTerraceBbq": "Roof terrace with BBQ",
+      "communalPool": "Communal pool",
+      "beds": "3 beds + sofa bed",
+      "nespresso": "Nespresso machine",
+      "washingMachine": "Washing machine",
+      "towelsToiletries": "Towels & toiletries",
+      "babyCrib": "Baby crib available",
+      "kidsAmenities": "Kids amenities (changing pad, potty, toilet seat)",
+      "microwave": "Microwave",
+      "safeArea": "Safe area",
+      "support24": "24/7 support",
+      "bathtubShower": "Bathtub & shower",
+      "everythingIncluded": {
+        "title": "Everything you need for a perfect holiday",
+        "description": "All basic amenities are included - just bring your clothes and enjoy your stay! From kitchen essentials to fresh linens, we've got you covered."
+      }
+    },
+    "familyAmenities": {
+      "title": "Perfect for families with children",
+      "description": "We welcome families and have everything you need for little ones:",
+      "babyCrib": "Baby crib/cot available",
+      "changingPad": "Changing pad for safe diaper changes",
+      "potty": "Training potty for toddlers",
+      "kidsToiletSeat": "Child-friendly toilet seat",
+      "safeEnvironment": "Safe, family-friendly environment"
+    },
+    "location": {
+      "title": "Where you'll be",
+      "cityCountry": "Dream Hills Orihuela, Costa Blanca, Spain",
+      "description": "Perfectly positioned in the heart of Costa Blanca, Casa Sueño offers the best of both worlds: peaceful residential charm and easy access to top attractions. La Zenia Boulevard shopping center is just 10 minutes away by car (4.4km), while pristine beaches like Cabo Roig and La Zenia are within 12-15 minutes drive. The charming restaurants of Punta Prima are only 3km away, and Alicante Airport is a convenient 40-minute drive. Exact address will be provided after booking confirmation.",
+      "features": {
+        "laZeniaBoulevard": "La Zenia Boulevard: 4.4km (10 min drive)",
+        "caboRoigBeach": "Cabo Roig Beach: 7km (15 min drive)",
+        "laZeniaBeach": "La Zenia Beach: 5.8km (12 min drive)",
+        "puntaPrimaRestaurants": "Punta Prima Restaurants: 3km",
+        "aldiSupermarket": "Aldi Supermarket: 900m",
+        "alicanteAirport": "Alicante Airport: 60km (40 min drive)",
+        "pinkLake": "Pink Lake: 9km",
+        "aquapolisWaterPark": "Aquapolis Water Park: 8km"
+      }
+    }
+  },
+  "booking": {
+    "modal": {
+      "title": "Book Casa Sueño",
+      "subtitle": "Reserve your perfect Mediterranean getaway",
+      "noChargeYet": "✓ You won't be charged yet"
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "checkin": "Check-in Date",
+      "checkout": "Check-out Date",
+      "guests": "Number of Guests",
+      "message": "Special Requests (Optional)",
+      "bookNow": "Book Now",
+      "processing": "Processing...",
+      "selectDates": "Please select check-in and check-out dates",
+      "minimumStay": "Minimum stay requirement not met",
+      "thankYou": "Thank you for your booking!",
+      "confirmation": "We'll send you a confirmation email shortly."
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About Casa Sueño",
+      "subtitle": "Discover the story behind your perfect Spanish getaway and what makes our holiday home special."
+    },
+    "story": {
+      "title": "Our Story",
+      "paragraph1": "Welcome to Casa Sueño, your home away from home in beautiful Spain. Our holiday rental was carefully designed to provide guests with an authentic Spanish experience while maintaining all the comforts of modern living.",
+      "paragraph2": "Located in one of Spain's most charming regions, Casa Sueño offers the perfect base for exploring the rich culture, stunning beaches, and vibrant local communities that make this area so special. We've thoughtfully curated every detail to ensure your stay is memorable.",
+      "paragraph3": "Whether you're seeking relaxation, adventure, or cultural immersion, Casa Sueño provides the perfect setting for your Spanish holiday. We're committed to helping you create lasting memories in this beautiful corner of Spain."
+    },
+    "property": {
+      "title": "About Casa Sueño",
+      "location": {
+        "title": "Location",
+        "description": "Beautiful Spanish countryside"
+      },
+      "propertyType": {
+        "title": "Property Type",
+        "description": "Modern holiday villa"
+      },
+      "amenities": {
+        "title": "Amenities",
+        "description": "Fully equipped kitchen, comfortable bedrooms, well-appointed bathrooms."
+      }
+    },
+    "contactPrompt": {
+      "title": "Have questions about the area?",
+      "description": "Need local recommendations or have questions about Casa Sueño? We're here to help make your Spanish holiday unforgettable!",
+      "button": "Ask a question"
+    },
+    "whyChoose": {
+      "title": "Why stay at Casa Sueño",
+      "premium": {
+        "title": "Premium Experience",
+        "description": "As local property managers, we know all the best beaches, restaurants, and hidden gems in the area"
+      },
+      "personal": {
+        "title": "Personal Touch",
+        "description": "We treat our guests like family and ensure every detail is perfect for your stay"
+      },
+      "quality": {
+        "title": "Quality Guaranteed",
+        "description": "Casa Sueño is our home too - we maintain the highest standards of cleanliness and comfort"
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Get in Touch",
+      "subtitle": "Ready to book your dream holiday at Casa Sueño? Have questions about our beautiful Spanish retreat? We'd love to hear from you!"
+    },
+    "information": {
+      "title": "Contact Information",
+      "email": {
+        "title": "Email",
+        "value": "info@casa-sueno.com",
+        "note": "We'll respond within 24 hours"
+      },
+      "phone": {
+        "title": "Phone",
+        "value": "+34 623 545 857",
+        "note": "Available via WhatsApp 24/7"
+      },
+      "location": {
+        "title": "Location",
+        "value": "Dream Hills Orihuela, Costa Blanca, Spain",
+        "note": "Exact address provided after booking"
+      }
+    },
+    "form": {
+      "title": "Send us a message",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number (Optional)",
+      "message": "Message",
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Thank you! We've received your message and will get back to you soon.",
+      "error": "Sorry, there was an error sending your message. Please try again or contact us directly.",
+      "placeholders": {
+        "name": "Your full name",
+        "email": "your.email@example.com",
+        "phone": "+1 (555) 123-4567",
+        "message": "Tell us about your planned stay, any special requirements, or questions you have..."
+      }
+    }
+  },
+  "houseRules": {
+    "title": "House Rules",
+    "subtitle": "Simple rules to ensure everyone has a great stay at Casa Sueño.",
+    "checkInOut": {
+      "title": "Check-in & Check-out",
+      "checkIn": {
+        "label": "Check-in",
+        "time": "3:00 PM - 8:00 PM"
+      },
+      "checkOut": {
+        "label": "Check-out",
+        "time": "11:00 AM"
+      },
+      "lateArrival": {
+        "label": "Late arrival",
+        "text": "Contact us in advance (€20 fee after 8 PM)"
+      },
+      "earlyDeparture": {
+        "label": "Early departure",
+        "text": "Let us know, no refund for unused nights"
+      }
+    },
+    "importantRules": {
+      "title": "Important Rules",
+      "notAllowed": {
+        "title": "Not Allowed:",
+        "smoking": "No smoking inside the house (outdoor OK)",
+        "parties": "No parties or loud gatherings",
+        "pets": "No pets allowed",
+        "additionalGuests": "No additional guests beyond booking",
+        "ageRequirement": "Primary booker must be 20+ (families with children welcome)"
+      },
+      "pleaseDo": {
+        "title": "Please Do:",
+        "noiseLevels": "Keep noise levels low after 22:00 (10 PM)",
+        "quietHours": "Quiet hours: 22:00 - 08:00",
+        "respectProperty": "Treat the property with respect",
+        "cleanUp": "Clean up after yourself",
+        "lockDoors": "Lock doors when leaving"
+      }
+    },
+    "guestsVisitors": {
+      "title": "Guests & Visitors",
+      "maxOccupancy": {
+        "label": "Maximum occupancy",
+        "value": "5 guests"
+      },
+      "dayVisitors": {
+        "label": "Visitors",
+        "text": "Day visitors allowed until 22:00"
+      },
+      "additionalGuests": {
+        "label": "Additional guests",
+        "text": "Must be approved and may incur extra charges"
+      },
+      "ageRequirement": {
+        "label": "Age requirement",
+        "text": "Primary booker must be 20+, families with children of all ages are welcome"
+      }
+    },
+    "safetySecurity": {
+      "title": "Safety & Security",
+      "emergencyContact": "Emergency contact information provided upon check-in",
+      "safetyEquipment": "Fire extinguisher and first aid kit available",
+      "reportIssues": "Please report any damages or issues immediately",
+      "keyReplacement": "Lost or damaged keys: €50 replacement fee",
+      "emergency": {
+        "title": "Emergency",
+        "text": "For urgent issues, call local emergency services (112) or contact us at +34 623 545 857 via WhatsApp."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "subtitle": "Simple and clear terms for your stay at Casa Sueño.",
+    "bookingTerms": {
+      "title": "Booking Terms",
+      "minimumAge": {
+        "label": "Minimum age",
+        "value": "20+ to make a booking"
+      },
+      "maxGuests": {
+        "label": "Maximum guests",
+        "value": "5 people"
+      },
+      "minimumStay": {
+        "label": "Minimum stay",
+        "value": "3-7 nights (varies by season)"
+      },
+      "payment": {
+        "label": "Payment",
+        "value": "Full payment required at booking via Stripe"
+      },
+      "securityDeposit": {
+        "label": "Security deposit",
+        "value": "€200 (refunded after stay)"
+      },
+      "cleaningFee": {
+        "label": "Cleaning fee",
+        "value": "€50 (included in total price)"
+      },
+      "seasonalStays": {
+        "title": "Seasonal minimum stays",
+        "text": "Low season: 3 nights, Middle season: 5 nights, High season: 7 nights"
+      }
+    },
+    "checkInOut": {
+      "title": "Check-in & Check-out",
+      "checkIn": {
+        "label": "Check-in",
+        "time": "3:00 PM - 8:00 PM"
+      },
+      "checkOut": {
+        "label": "Check-out",
+        "time": "11:00 AM"
+      },
+      "lateArrival": {
+        "label": "Late arrival",
+        "fee": "€20 fee after 8:00 PM"
+      },
+      "keyCollection": {
+        "label": "Key collection",
+        "text": "Instructions sent before arrival"
+      }
+    },
+    "responsibility": {
+      "title": "Responsibility & Damages",
+      "guestResponsibility": "Guests are responsible for any damages to the property",
+      "securityDeposit": "Security deposit: €200 (refunded after inspection)",
+      "additionalCleaning": "Additional cleaning fee charged if property left excessively dirty",
+      "lostKeys": "Lost keys: €50 replacement fee"
+    },
+    "cancellation": {
+      "title": "Cancellation Policy",
+      "freeCancellation": {
+        "label": "Free cancellation",
+        "period": "Up to 14 days before arrival"
+      },
+      "fiftyPercent": {
+        "label": "50% refund",
+        "period": "7-13 days before arrival"
+      },
+      "noRefund": {
+        "label": "No refund",
+        "period": "Less than 7 days before arrival"
+      },
+      "depositNonRefundable": "Deposit is non-refundable for cancellations within 7 days"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "How we handle your personal information at Casa Sueño.",
+    "informationCollect": {
+      "title": "Information We Collect",
+      "intro": "When you book or contact us, we collect:",
+      "contactDetails": {
+        "label": "Contact details",
+        "text": "Name, email, phone number"
+      },
+      "bookingInfo": {
+        "label": "Booking info",
+        "text": "Dates, number of guests"
+      },
+      "paymentInfo": {
+        "label": "Payment info",
+        "text": "Processed securely by our payment provider"
+      },
+      "messages": {
+        "label": "Messages",
+        "text": "Any communication with us"
+      }
+    },
+    "howWeUse": {
+      "title": "How We Use Your Information",
+      "intro": "We use your information to:",
+      "processBookings": "Process your booking and payments",
+      "communicate": "Communicate about your stay",
+      "sendInstructions": "Send check-in instructions and important updates",
+      "respondQuestions": "Respond to your questions and requests",
+      "improveServices": "Improve our services"
+    },
+    "informationSharing": {
+      "title": "Information Sharing",
+      "noSelling": "We DO NOT sell or share your personal information with third parties.",
+      "trustedProviders": "Your information is only shared with trusted service providers (like payment processors) who help us provide our services, and only when necessary."
+    },
+    "yourRights": {
+      "title": "Your Rights",
+      "intro": "You have the right to:",
+      "requestCopy": "Request a copy of your personal information",
+      "correctInfo": "Correct any inaccurate information",
+      "requestDeletion": "Request deletion of your information",
+      "withdrawConsent": "Withdraw consent for marketing communications",
+      "contact": {
+        "label": "Contact us",
+        "email": "info@casasueno.com to exercise these rights."
+      }
+    }
+  },
+  "cancellationPolicy": {
+    "title": "Cancellation Policy",
+    "subtitle": "Our flexible cancellation terms for Casa Sueño bookings.",
+    "timeline": {
+      "title": "Cancellation Timeline",
+      "fourteenPlus": {
+        "title": "14+ Days Before",
+        "refund": "100% Refund",
+        "description": "Free cancellation with full refund"
+      },
+      "sevenToThirteen": {
+        "title": "7-13 Days Before",
+        "refund": "50% Refund",
+        "description": "Partial refund of total amount"
+      },
+      "lessThanSeven": {
+        "title": "Less than 7 Days",
+        "refund": "No Refund",
+        "description": "Full payment is non-refundable"
+      }
+    },
+    "howToCancel": {
+      "title": "How to Cancel",
+      "step1": "Contact us as soon as possible via email or phone",
+      "step2": "Provide your booking reference number",
+      "step3": "We'll confirm your cancellation and refund amount",
+      "step4": "Refunds are processed within 5-10 business days",
+      "contact": {
+        "label": "Contact",
+        "details": "info@casasueno.com or +34 623 545 857"
+      }
+    },
+    "specialCircumstances": {
+      "title": "Special Circumstances",
+      "emergency": {
+        "title": "Emergency Situations",
+        "description": "In case of documented medical emergencies, natural disasters, or other extraordinary circumstances, we may offer more flexible cancellation terms. Contact us to discuss your situation."
+      },
+      "hostCancellation": {
+        "title": "Host Cancellation",
+        "description": "If we need to cancel your booking due to property issues or other unforeseen circumstances, you will receive a full refund plus assistance finding alternative accommodation."
+      },
+      "modification": {
+        "title": "Modification vs. Cancellation",
+        "description": "Want to change your dates instead of cancelling? Contact us - we may be able to modify your booking without cancellation fees, subject to availability."
+      }
+    }
+  },
+  "hero": {
+    "title": "Welcome to Casa Sueño",
+    "subtitle": "Your dream holiday home in Spain",
+    "seeAllPhotos": "See all photos"
+  },
+  "availability": {
+    "title": "Available dates",
+    "loading": "Loading availability...",
+    "available": "Available",
+    "booked": "Booked",
+    "notAvailable": "Not available",
+    "pastDate": "Past date",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "days": {
+      "sunday": "S",
+      "monday": "M",
+      "tuesday": "T",
+      "wednesday": "W",
+      "thursday": "T",
+      "friday": "F",
+      "saturday": "S"
+    }
+  },
+  "footer": {
+    "description": "Your dream holiday home in Spain. Experience authentic Spanish charm with modern comfort in beautiful Dream Hills Orihuela.",
+    "quickLinks": "Quick Links",
+    "policiesLegal": "Policies & Legal",
+    "getInTouch": "Get in Touch",
+    "email": "Email",
+    "phone": "Phone",
+    "emergency": "Emergency",
+    "support24": "24/7 Support",
+    "followUs": "Follow Us",
+    "allRightsReserved": "All rights reserved.",
+    "propertyLocation": "Vacation rental property in Dream Hills Orihuela, Spain • GDPR Compliant"
+  },
+  "error": {
+    "title": "Something went wrong!",
+    "description": "We apologize for the inconvenience. Please try again or contact support if the problem persists.",
+    "tryAgain": "Try again",
+    "goHome": "Go back home"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "goHome": "Go back home"
+  }
+}

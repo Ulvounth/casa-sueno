@@ -4,17 +4,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Bars3Icon,
   XMarkIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [policiesOpen, setPoliciesOpen] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLLIElement>(null);
+  const t = useTranslations("navigation");
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -39,16 +42,16 @@ export default function Header() {
   }, []);
 
   const links = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    { href: "/contact", label: t("contact") },
   ];
 
   const policyLinks = [
-    { href: "/house-rules", label: "House Rules" },
-    { href: "/cancellation-policy", label: "Cancellation Policy" },
-    { href: "/terms", label: "Terms & Conditions" },
-    { href: "/privacy", label: "Privacy Policy" },
+    { href: "/house-rules", label: t("houseRules") },
+    { href: "/cancellation-policy", label: t("cancellationPolicy") },
+    { href: "/terms", label: t("terms") },
+    { href: "/privacy", label: t("privacy") },
   ];
 
   return (
@@ -67,63 +70,68 @@ export default function Header() {
           </Link>
 
           {/* Desktop menu */}
-          <ul className="hidden md:flex space-x-8 text-stone-700 items-center text-lg">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className={`hover:text-stone-900 transition-colors relative ${
-                    pathname === l.href ? "text-amber-600 font-medium" : ""
+          <div className="hidden md:flex items-center gap-8">
+            <ul className="flex space-x-8 text-stone-700 items-center text-lg">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className={`hover:text-stone-900 transition-colors relative ${
+                      pathname === l.href ? "text-amber-600 font-medium" : ""
+                    }`}
+                  >
+                    {l.label}
+                    {pathname === l.href && (
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 rounded-full"></span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+
+              {/* Policies Dropdown */}
+              <li className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setPoliciesOpen(!policiesOpen)}
+                  className={`hover:text-stone-900 transition-colors relative flex items-center gap-1 text-lg ${
+                    policyLinks.some((link) => pathname === link.href)
+                      ? "text-amber-600 font-medium"
+                      : ""
                   }`}
                 >
-                  {l.label}
-                  {pathname === l.href && (
+                  Policies
+                  <ChevronDownIcon
+                    className={`h-4 w-4 transition-transform ${policiesOpen ? "rotate-180" : ""}`}
+                  />
+                  {policyLinks.some((link) => pathname === link.href) && (
                     <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 rounded-full"></span>
                   )}
-                </Link>
-              </li>
-            ))}
+                </button>
 
-            {/* Policies Dropdown */}
-            <li className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setPoliciesOpen(!policiesOpen)}
-                className={`hover:text-stone-900 transition-colors relative flex items-center gap-1 text-lg ${
-                  policyLinks.some((link) => pathname === link.href)
-                    ? "text-amber-600 font-medium"
-                    : ""
-                }`}
-              >
-                Policies
-                <ChevronDownIcon
-                  className={`h-4 w-4 transition-transform ${policiesOpen ? "rotate-180" : ""}`}
-                />
-                {policyLinks.some((link) => pathname === link.href) && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 rounded-full"></span>
+                {/* Dropdown Menu */}
+                {policiesOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-stone-200 py-2 z-50">
+                    {policyLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`block px-4 py-2 text-sm hover:bg-amber-50 transition-colors ${
+                          pathname === link.href
+                            ? "text-amber-600 bg-amber-50"
+                            : "text-stone-700"
+                        }`}
+                        onClick={() => setPoliciesOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </button>
+              </li>
+            </ul>
 
-              {/* Dropdown Menu */}
-              {policiesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-stone-200 py-2 z-50">
-                  {policyLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`block px-4 py-2 text-sm hover:bg-amber-50 transition-colors ${
-                        pathname === link.href
-                          ? "text-amber-600 bg-amber-50"
-                          : "text-stone-700"
-                      }`}
-                      onClick={() => setPoliciesOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </li>
-          </ul>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+          </div>
 
           {/* Mobile menu button */}
           <button
@@ -229,8 +237,18 @@ export default function Header() {
               </li>
             </ul>
 
+            {/* Language Switcher */}
+            <div className="mt-8 pt-6 border-t border-stone-200/50">
+              <div className="px-5 mb-4">
+                <div className="text-sm font-semibold text-stone-500 mb-3">
+                  Language
+                </div>
+                <LanguageSwitcher />
+              </div>
+            </div>
+
             {/* Bottom decoration */}
-            <div className="mt-12 pt-6 border-t border-stone-200/50">
+            <div className="mt-6 pt-6 border-t border-stone-200/50">
               <div className="text-center">
                 <div className="w-12 h-1 bg-amber-600 rounded-full mx-auto"></div>
                 <p className="text-xs text-stone-500 mt-3">

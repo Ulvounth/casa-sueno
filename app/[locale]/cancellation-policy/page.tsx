@@ -4,19 +4,25 @@ import {
   CurrencyEuroIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import FloatingBookingButton from "../components/FloatingBookingButton";
+import { getTranslations } from "next-intl/server";
 
-export default function CancellationPolicyPage() {
+export default async function CancellationPolicyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "cancellationPolicy" });
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50/30 to-orange-50/50">
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-amber-600">Cancellation Policy</span>
+            <span className="text-amber-600">{t("title")}</span>
           </h1>
           <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            Our flexible cancellation terms for Casa Sueño bookings.
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -30,39 +36,39 @@ export default function CancellationPolicyPage() {
                 <CalendarIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Cancellation Timeline
+                {t("timeline.title")}
               </h2>
             </div>
             <div className="space-y-6">
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                   <h3 className="text-lg font-semibold text-green-800 mb-2">
-                    14+ Days Before
+                    {t("timeline.fourteenPlus.title")}
                   </h3>
                   <p className="text-green-700">
-                    <strong>100% Refund</strong>
+                    <strong>{t("timeline.fourteenPlus.refund")}</strong>
                     <br />
-                    Free cancellation with full refund
+                    {t("timeline.fourteenPlus.description")}
                   </p>
                 </div>
                 <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                   <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-                    7-13 Days Before
+                    {t("timeline.sevenToThirteen.title")}
                   </h3>
                   <p className="text-yellow-700">
-                    <strong>50% Refund</strong>
+                    <strong>{t("timeline.sevenToThirteen.refund")}</strong>
                     <br />
-                    Partial refund of total amount
+                    {t("timeline.sevenToThirteen.description")}
                   </p>
                 </div>
                 <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                   <h3 className="text-lg font-semibold text-red-800 mb-2">
-                    Less than 7 Days
+                    {t("timeline.lessThanSeven.title")}
                   </h3>
                   <p className="text-red-700">
-                    <strong>No Refund</strong>
+                    <strong>{t("timeline.lessThanSeven.refund")}</strong>
                     <br />
-                    Full payment is non-refundable
+                    {t("timeline.lessThanSeven.description")}
                   </p>
                 </div>
               </div>
@@ -76,31 +82,28 @@ export default function CancellationPolicyPage() {
                 <ClockIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                How to Cancel
+                {t("howToCancel.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <ol className="space-y-3">
                 <li>
-                  <strong>1.</strong> Contact us as soon as possible via email
-                  or phone
+                  <strong>1.</strong> {t("howToCancel.step1")}
                 </li>
                 <li>
-                  <strong>2.</strong> Provide your booking reference number
+                  <strong>2.</strong> {t("howToCancel.step2")}
                 </li>
                 <li>
-                  <strong>3.</strong> We&apos;ll confirm your cancellation and
-                  refund amount
+                  <strong>3.</strong> {t("howToCancel.step3")}
                 </li>
                 <li>
-                  <strong>4.</strong> Refunds are processed within 5-10 business
-                  days
+                  <strong>4.</strong> {t("howToCancel.step4")}
                 </li>
               </ol>
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
                 <p className="text-blue-800">
-                  <strong>Contact:</strong> info@casasueno.com or +34 623 545
-                  857
+                  <strong>{t("howToCancel.contact.label")}:</strong>{" "}
+                  {t("howToCancel.contact.details")}
                 </p>
               </div>
             </div>
@@ -113,49 +116,36 @@ export default function CancellationPolicyPage() {
                 <CurrencyEuroIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Special Circumstances
+                {t("specialCircumstances.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <div className="space-y-4">
                 <div>
                   <h3 className="text-lg font-semibold text-stone-800 mb-2">
-                    Emergency Situations
+                    {t("specialCircumstances.emergency.title")}
+                  </h3>
+                  <p>{t("specialCircumstances.emergency.description")}</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-stone-800 mb-2">
+                    {t("specialCircumstances.hostCancellation.title")}
                   </h3>
                   <p>
-                    In case of documented medical emergencies, natural
-                    disasters, or other extraordinary circumstances, we may
-                    offer more flexible cancellation terms. Contact us to
-                    discuss your situation.
+                    {t("specialCircumstances.hostCancellation.description")}
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-stone-800 mb-2">
-                    Host Cancellation
+                    {t("specialCircumstances.modification.title")}
                   </h3>
-                  <p>
-                    If we need to cancel your booking due to property issues or
-                    other unforeseen circumstances, you will receive a full
-                    refund plus assistance finding alternative accommodation.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-800 mb-2">
-                    Modification vs. Cancellation
-                  </h3>
-                  <p>
-                    Want to change your dates instead of cancelling? Contact us
-                    - we may be able to modify your booking without cancellation
-                    fees, subject to availability.
-                  </p>
+                  <p>{t("specialCircumstances.modification.description")}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <FloatingBookingButton />
     </div>
   );
 }

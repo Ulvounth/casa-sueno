@@ -1,16 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   CalendarDaysIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { parseISO, addDays, isSameDay } from "date-fns";
 import BookingModal from "./BookingModal";
 
 export default function AvailabilityPreview() {
+  const t = useTranslations("availability");
+  const tCommon = useTranslations("common");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,18 +30,18 @@ export default function AvailabilityPreview() {
 
   // Month names
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    t("months.january"),
+    t("months.february"),
+    t("months.march"),
+    t("months.april"),
+    t("months.may"),
+    t("months.june"),
+    t("months.july"),
+    t("months.august"),
+    t("months.september"),
+    t("months.october"),
+    t("months.november"),
+    t("months.december"),
   ];
 
   // Sample booked dates (you would get these from your booking system)
@@ -106,15 +109,13 @@ export default function AvailabilityPreview() {
     <div className="bg-white rounded-xl p-6 border border-gray-200">
       <div className="flex items-center gap-2 mb-4">
         <CalendarDaysIcon className="h-5 w-5 text-amber-600" />
-        <h4 className="font-semibold text-lg">Available dates</h4>
+        <h4 className="font-semibold text-lg">{t("title")}</h4>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-8">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-600"></div>
-          <span className="ml-2 text-sm text-gray-600">
-            Loading availability...
-          </span>
+          <span className="ml-2 text-sm text-gray-600">{t("loading")}</span>
         </div>
       ) : (
         <>
@@ -140,7 +141,15 @@ export default function AvailabilityPreview() {
           {/* Calendar Grid */}
           <div className="grid grid-cols-7 gap-1 mb-4">
             {/* Day headers */}
-            {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
+            {[
+              t("days.sunday"),
+              t("days.monday"),
+              t("days.tuesday"),
+              t("days.wednesday"),
+              t("days.thursday"),
+              t("days.friday"),
+              t("days.saturday"),
+            ].map((day, index) => (
               <div
                 key={`day-header-${index}`}
                 className="text-center text-xs font-medium text-gray-500 py-2"
@@ -172,10 +181,10 @@ export default function AvailabilityPreview() {
                   }`}
                   title={
                     isPast
-                      ? "Past date"
+                      ? t("pastDate")
                       : isBooked
-                        ? "Not available"
-                        : "Available"
+                        ? t("notAvailable")
+                        : t("available")
                   }
                 >
                   {day}
@@ -188,11 +197,11 @@ export default function AvailabilityPreview() {
           <div className="flex items-center justify-between text-xs text-gray-600 mb-4">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-green-50 border border-green-200 rounded"></div>
-              <span>Available</span>
+              <span>{t("available")}</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-red-100 border border-red-200 rounded"></div>
-              <span>Booked</span>
+              <span>{t("booked")}</span>
             </div>
           </div>
 
@@ -202,7 +211,7 @@ export default function AvailabilityPreview() {
             className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
           >
             <CalendarDaysIcon className="h-5 w-5" />
-            Book Now
+            {tCommon("bookNow")}
           </button>
         </>
       )}

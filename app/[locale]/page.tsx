@@ -1,9 +1,10 @@
-// app/page.tsx
+// app/[locale]/page.tsx
 import Link from "next/link";
-import Hero from "./components/Hero";
-import FloatingBookingButton from "./components/FloatingBookingButton";
-import InteractiveMap from "./components/InteractiveMap";
-import AvailabilityPreview from "./components/AvailabilityPreview";
+import { getTranslations } from "next-intl/server";
+import Hero from "@/app/components/Hero";
+import FloatingBookingButton from "@/app/components/FloatingBookingButton";
+import InteractiveMap from "@/app/components/InteractiveMap";
+import AvailabilityPreview from "@/app/components/AvailabilityPreview";
 import {
   CheckIcon,
   KeyIcon,
@@ -26,12 +27,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default async function Page({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams?: Promise<{ cancelled?: string }>;
 }) {
-  const params = await searchParams;
-  const cancelled = params?.cancelled === "true";
+  const { locale } = await params;
+  const searchParamsData = await searchParams;
+  const cancelled = searchParamsData?.cancelled === "true";
+  const t = await getTranslations({ locale, namespace: "homepage" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
 
   return (
     <main className="flex flex-col">
@@ -40,9 +46,7 @@ export default async function Page({
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
           <div className="flex">
             <div className="ml-3">
-              <p className="text-sm text-yellow-700">
-                Payment was cancelled. You can try booking again anytime.
-              </p>
+              <p className="text-sm text-yellow-700">{t("paymentCancelled")}</p>
             </div>
           </div>
         </div>
@@ -57,48 +61,27 @@ export default async function Page({
           {/* LEFT COLUMN: Main content */}
           <div className="lg:col-span-2 space-y-8">
             <div className="space-y-6">
-              <h2 className="text-3xl font-semibold">
-                Modern townhouse in residential complex
-              </h2>
-              <p className="text-gray-600 text-lg mb-4">
-                Up to 5 guests · 2 bedrooms · 3 beds · 2 bathrooms
-              </p>
+              <h2 className="text-3xl font-semibold">{t("title")}</h2>
+              <p className="text-gray-600 text-lg mb-4">{t("guestInfo")}</p>
               <p className="text-gray-700 leading-relaxed text-lg">
-                Discover your perfect Mediterranean getaway in this stunning,
-                newly renovated townhouse in Orihuela. Casa Sueño features two
-                comfortable bedrooms (one with a double bed, one with twin
-                beds), a sofa bed for additional guests, and two full bathrooms
-                with both a bathtub and separate shower. Enjoy the spectacular
-                private roof terrace with panoramic views and outdoor BBQ -
-                perfect for morning coffee or evening grilling under the Spanish
-                sun. Located in the heart of Costa Blanca near La Zenia,
-                you&apos;re just 10 minutes from La Zenia Boulevard shopping
-                center and 15 minutes from multiple pristine beaches including
-                Cabo Roig and La Zenia. The townhouse combines modern comfort
-                with traditional Spanish charm, plus access to a communal pool -
-                everything you need for an unforgettable vacation for up to 5
-                guests.
+                {t("description")}
               </p>
               <ul className="space-y-4 text-gray-700">
                 <li className="flex items-start gap-3">
                   <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                  <span>Self check-in with smart lock.</span>
+                  <span>{t("features.selfCheckIn")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                  <span>
-                    Air conditioning & ceiling fan for a comfortable stay.
-                  </span>
+                  <span>{t("features.airConditioning")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                  <span>
-                    Walkable neighborhood with restaurants & shops nearby.
-                  </span>
+                  <span>{t("features.walkableNeighborhood")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon className="h-6 w-6 text-green-600 mt-1" />
-                  <span>Access to private pool shared with neighbors.</span>
+                  <span>{t("features.privatePool")}</span>
                 </li>
               </ul>
             </div>
@@ -106,36 +89,39 @@ export default async function Page({
             {/* Enhanced Key Features */}
             <div className="space-y-6 mt-8">
               <h3 className="text-2xl font-semibold">
-                What makes this place special
+                {t("specialFeatures.title")}
               </h3>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
                   <KeyIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-lg">Self check-in</h4>
+                    <h4 className="font-semibold text-lg">
+                      {t("specialFeatures.selfCheckIn.title")}
+                    </h4>
                     <p className="text-gray-600">
-                      Check yourself in with the smart lock for hassle-free
-                      arrival.
+                      {t("specialFeatures.selfCheckIn.description")}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <SparklesIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-lg">Sparkling clean</h4>
+                    <h4 className="font-semibold text-lg">
+                      {t("specialFeatures.sparklingClean.title")}
+                    </h4>
                     <p className="text-gray-600">
-                      Recent guests consistently praise our spotless cleanliness
-                      standards.
+                      {t("specialFeatures.sparklingClean.description")}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <MapPinIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-lg">Prime location</h4>
+                    <h4 className="font-semibold text-lg">
+                      {t("specialFeatures.primeLocation.title")}
+                    </h4>
                     <p className="text-gray-600">
-                      Walk to La Zenia mall, drive 5 minutes to stunning
-                      beaches.
+                      {t("specialFeatures.primeLocation.description")}
                     </p>
                   </div>
                 </div>
@@ -143,10 +129,10 @@ export default async function Page({
                   <SunIcon className="h-6 w-6 text-gray-600 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-lg">
-                      Private roof terrace
+                      {t("specialFeatures.roofTerrace.title")}
                     </h4>
                     <p className="text-gray-600">
-                      Enjoy Mediterranean sunsets from your own rooftop space.
+                      {t("specialFeatures.roofTerrace.description")}
                     </p>
                   </div>
                 </div>
@@ -161,63 +147,84 @@ export default async function Page({
 
             {/* Quick Facts */}
             <div className="bg-amber-50 rounded-xl p-6">
-              <h4 className="font-semibold text-lg mb-4">Quick Facts</h4>
+              <h4 className="font-semibold text-lg mb-4">
+                {t("quickFacts.title")}
+              </h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Check-in</span>
-                  <span className="font-medium">3:00 PM</span>
+                  <span className="text-gray-600">{tCommon("checkIn")}</span>
+                  <span className="font-medium">{t("quickFacts.checkIn")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Check-out</span>
-                  <span className="font-medium">11:00 AM</span>
+                  <span className="text-gray-600">{tCommon("checkOut")}</span>
+                  <span className="font-medium">
+                    {t("quickFacts.checkOut")}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Minimum stay</span>
-                  <span className="font-medium">3-7 nights*</span>
+                  <span className="text-gray-600">
+                    {t("quickFacts.minimumStayLabel")}
+                  </span>
+                  <span className="font-medium">
+                    {t("quickFacts.minimumStay")}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Max guests</span>
-                  <span className="font-medium">5 people</span>
+                  <span className="text-gray-600">
+                    {t("quickFacts.maxGuestsLabel")}
+                  </span>
+                  <span className="font-medium">
+                    {t("quickFacts.maxGuests")}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Age requirement</span>
-                  <span className="font-medium">Families welcome</span>
+                  <span className="text-gray-600">
+                    {t("quickFacts.ageRequirementLabel")}
+                  </span>
+                  <span className="font-medium">
+                    {t("quickFacts.ageRequirement")}
+                  </span>
                 </div>
                 <div className="pt-2 text-xs text-gray-500">
-                  *Low season: 3 nights, Middle season: 4 nights, High season: 7
-                  nights
+                  {t("quickFacts.seasonNote")}
                 </div>
               </div>
             </div>
 
             {/* House Rules Summary */}
             <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-lg mb-4">House Rules</h4>
+              <h4 className="font-semibold text-lg mb-4">
+                {t("houseRules.title")}
+              </h4>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
                   <span className="text-gray-600">
-                    No smoking indoors (outdoor OK)
+                    {t("houseRules.noSmokingIndoors")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
-                  <span className="text-gray-600">No parties or events</span>
+                  <span className="text-gray-600">
+                    {t("houseRules.noParties")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-red-500">✗</span>
-                  <span className="text-gray-600">No pets allowed</span>
+                  <span className="text-gray-600">
+                    {t("houseRules.noPets")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-amber-600">⏰</span>
                   <span className="text-gray-600">
-                    Quiet hours: 22:00 - 08:00
+                    {t("houseRules.quietHours")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-blue-600">�‍👩‍👧‍👦</span>
+                  <span className="text-blue-600">�</span>
                   <span className="text-gray-600">
-                    Families and children welcome
+                    {t("houseRules.familiesWelcome")}
                   </span>
                 </div>
 
@@ -226,7 +233,7 @@ export default async function Page({
                     href="/house-rules"
                     className="text-amber-600 hover:text-amber-700 font-medium text-sm"
                   >
-                    View all house rules →
+                    {t("houseRules.viewAll")}
                   </Link>
                 </div>
               </div>
@@ -239,52 +246,66 @@ export default async function Page({
           {/* Amenities */}
           <div className="border-t border-gray-200 pt-8">
             <h3 className="text-2xl font-semibold mb-6">
-              What this place offers
+              {t("amenities.title")}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="flex items-center gap-3">
                 <WifiIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Free WiFi</span>
+                <span className="text-gray-700">{t("amenities.freeWifi")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <SnowflakeIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">AC in living room</span>
+                <span className="text-gray-700">
+                  {t("amenities.acLivingRoom")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <KitchenIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Full kitchen</span>
+                <span className="text-gray-700">
+                  {t("amenities.fullKitchen")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <TvIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Smart TV (Netflix)</span>
+                <span className="text-gray-700">{t("amenities.smartTv")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <SunIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Roof terrace with BBQ</span>
+                <span className="text-gray-700">
+                  {t("amenities.roofTerraceBbq")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <PoolIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Communal pool</span>
+                <span className="text-gray-700">
+                  {t("amenities.communalPool")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <BedIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">3 beds + sofa bed</span>
+                <span className="text-gray-700">{t("amenities.beds")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <CoffeeMachineIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Nespresso machine</span>
+                <span className="text-gray-700">
+                  {t("amenities.nespresso")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <WashingMachineIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Washing machine</span>
+                <span className="text-gray-700">
+                  {t("amenities.washingMachine")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <TowelsIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Towels & toiletries</span>
+                <span className="text-gray-700">
+                  {t("amenities.towelsToiletries")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <TravelCribIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">Baby crib available</span>
+                <span className="text-gray-700">{t("amenities.babyCrib")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <MicrowaveIcon className="h-5 w-5 text-gray-600" />
@@ -296,11 +317,15 @@ export default async function Page({
               </div>
               <div className="flex items-center gap-3">
                 <ClockIcon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700">24/7 support</span>
+                <span className="text-gray-700">
+                  {t("amenities.support24")}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <span className="h-5 w-5 text-gray-600">🛁</span>
-                <span className="text-gray-700">Bathtub & shower</span>
+                <span className="text-gray-700">
+                  {t("amenities.bathtubShower")}
+                </span>
               </div>
             </div>
 
@@ -310,12 +335,10 @@ export default async function Page({
                 <SparklesIcon className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-amber-800 font-medium">
-                    Everything you need for a perfect holiday
+                    {t("amenities.everythingIncluded.title")}
                   </p>
                   <p className="text-amber-700 text-sm mt-1">
-                    All basic amenities are included - just bring your clothes
-                    and enjoy your stay! From kitchen essentials to fresh
-                    linens, we&apos;ve got you covered.
+                    {t("amenities.everythingIncluded.description")}
                   </p>
                 </div>
               </div>
@@ -325,22 +348,15 @@ export default async function Page({
           {/* Location Highlights */}
           <div className="border-t border-gray-200 pt-8">
             <h3 className="text-2xl font-semibold mb-4">
-              Where you&apos;ll be
+              {t("location.title")}
             </h3>
             <div className="grid lg:grid-cols-2 gap-8">
               <div>
                 <p className="text-gray-700 mb-4 font-medium text-lg">
-                  Orihuela, Costa Blanca, Spain
+                  {t("location.cityCountry")}
                 </p>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  Perfectly positioned in the heart of Costa Blanca, Casa Sueño
-                  offers the best of both worlds: peaceful residential charm and
-                  easy access to top attractions. La Zenia Boulevard shopping
-                  center is just 10 minutes away by car (4.4km), while pristine
-                  beaches like Cabo Roig and La Zenia are within 12-15 minutes
-                  drive. The charming restaurants of Punta Prima are only 3km
-                  away, and Alicante Airport is a convenient 40-minute drive.
-                  Exact address will be provided after booking confirmation.
+                  {t("location.description")}
                 </p>
               </div>
 
@@ -348,51 +364,35 @@ export default async function Page({
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>La Zenia Boulevard:</strong> 4.4km (10 min drive)
-                  </span>
+                  <span>{t("location.features.laZeniaBoulevard")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Cabo Roig Beach:</strong> 7km (15 min drive)
-                  </span>
+                  <span>{t("location.features.caboRoigBeach")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>La Zenia Beach:</strong> 5.8km (12 min drive)
-                  </span>
+                  <span>{t("location.features.laZeniaBeach")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Punta Prima Restaurants:</strong> 3km
-                  </span>
+                  <span>{t("location.features.puntaPrimaRestaurants")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Aldi Supermarket:</strong> 900m
-                  </span>
+                  <span>{t("location.features.aldiSupermarket")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Alicante Airport:</strong> 60km (40 min drive)
-                  </span>
+                  <span>{t("location.features.alicanteAirport")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Pink Lake:</strong> 9km
-                  </span>
+                  <span>{t("location.features.pinkLake")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="h-4 w-4 text-blue-600" />
-                  <span>
-                    <strong>Aquapolis Water Park:</strong> 8km
-                  </span>
+                  <span>{t("location.features.aquapolisWaterPark")}</span>
                 </div>
               </div>
             </div>

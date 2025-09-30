@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import ImageModal from "./ImageModal";
 
 const videos = [
@@ -55,6 +56,7 @@ const carouselImages = [
 ];
 
 export default function Hero() {
+  const t = useTranslations("hero");
   const [vidIdx, setVidIdx] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -93,10 +95,10 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto relative z-10 px-4 pt-24 md:pt-28">
         <div className="max-w-lg">
           <h1 className="text-2xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg">
-            Welcome to Casa Sueño
+            {t("title")}
           </h1>
           <p className="mt-4 text-lg md:text-xl lg:text-2xl text-white drop-shadow">
-            Your dream holiday home in Spain
+            {t("subtitle")}
           </p>
           <button
             onClick={() => setModalOpen(true)}
@@ -115,7 +117,7 @@ export default function Hero() {
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            See all photos
+            {t("seeAllPhotos")}
           </button>
         </div>
       </div>

@@ -4,19 +4,25 @@ import {
   DocumentTextIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import FloatingBookingButton from "../components/FloatingBookingButton";
+import { getTranslations } from "next-intl/server";
 
-export default function PrivacyPage() {
+export default async function PrivacyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "privacy" });
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50/30 to-orange-50/50">
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-amber-600">Privacy Policy</span>
+            <span className="text-amber-600">{t("title")}</span>
           </h1>
           <p className="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
-            How we handle your personal information at Casa Sueño.
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -30,24 +36,32 @@ export default function PrivacyPage() {
                 <DocumentTextIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Information We Collect
+                {t("informationCollect.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
-              <p>When you book or contact us, we collect:</p>
+              <p>{t("informationCollect.intro")}</p>
               <ul className="space-y-3">
                 <li>
-                  • <strong>Contact details:</strong> Name, email, phone number
+                  •{" "}
+                  <strong>
+                    {t("informationCollect.contactDetails.label")}:
+                  </strong>{" "}
+                  {t("informationCollect.contactDetails.text")}
                 </li>
                 <li>
-                  • <strong>Booking info:</strong> Dates, number of guests
+                  •{" "}
+                  <strong>{t("informationCollect.bookingInfo.label")}:</strong>{" "}
+                  {t("informationCollect.bookingInfo.text")}
                 </li>
                 <li>
-                  • <strong>Payment info:</strong> Processed securely by our
-                  payment provider
+                  •{" "}
+                  <strong>{t("informationCollect.paymentInfo.label")}:</strong>{" "}
+                  {t("informationCollect.paymentInfo.text")}
                 </li>
                 <li>
-                  • <strong>Messages:</strong> Any communication with us
+                  • <strong>{t("informationCollect.messages.label")}:</strong>{" "}
+                  {t("informationCollect.messages.text")}
                 </li>
               </ul>
             </div>
@@ -60,17 +74,17 @@ export default function PrivacyPage() {
                 <ShieldCheckIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                How We Use Your Information
+                {t("howWeUse.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
-              <p>We use your information to:</p>
+              <p>{t("howWeUse.intro")}</p>
               <ul className="space-y-3">
-                <li>• Process your booking and payments</li>
-                <li>• Communicate about your stay</li>
-                <li>• Send check-in instructions and important updates</li>
-                <li>• Respond to your questions and requests</li>
-                <li>• Improve our services</li>
+                <li>• {t("howWeUse.processBookings")}</li>
+                <li>• {t("howWeUse.communicate")}</li>
+                <li>• {t("howWeUse.sendInstructions")}</li>
+                <li>• {t("howWeUse.respondQuestions")}</li>
+                <li>• {t("howWeUse.improveServices")}</li>
               </ul>
             </div>
           </div>
@@ -82,19 +96,16 @@ export default function PrivacyPage() {
                 <EnvelopeIcon className="h-6 w-6 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-stone-800">
-                Information Sharing
+                {t("informationSharing.title")}
               </h2>
             </div>
             <div className="space-y-4 text-stone-700">
               <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                 <p className="text-green-800 font-semibold mb-2">
-                  We DO NOT sell or share your personal information with third
-                  parties.
+                  {t("informationSharing.noSelling")}
                 </p>
                 <p className="text-green-700">
-                  Your information is only shared with trusted service providers
-                  (like payment processors) who help us provide our services,
-                  and only when necessary.
+                  {t("informationSharing.trustedProviders")}
                 </p>
               </div>
             </div>
@@ -106,26 +117,26 @@ export default function PrivacyPage() {
               <div className="w-12 h-12 bg-amber-600 rounded-lg flex items-center justify-center">
                 <ShieldCheckIcon className="h-6 w-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-stone-800">Your Rights</h2>
+              <h2 className="text-2xl font-bold text-stone-800">
+                {t("yourRights.title")}
+              </h2>
             </div>
             <div className="space-y-4 text-stone-700">
-              <p>You have the right to:</p>
+              <p>{t("yourRights.intro")}</p>
               <ul className="space-y-3">
-                <li>• Request a copy of your personal information</li>
-                <li>• Correct any inaccurate information</li>
-                <li>• Request deletion of your information</li>
-                <li>• Withdraw consent for marketing communications</li>
+                <li>• {t("yourRights.requestCopy")}</li>
+                <li>• {t("yourRights.correctInfo")}</li>
+                <li>• {t("yourRights.requestDeletion")}</li>
+                <li>• {t("yourRights.withdrawConsent")}</li>
               </ul>
               <p className="mt-4">
-                <strong>Contact us:</strong> info@casasueno.com to exercise
-                these rights.
+                <strong>{t("yourRights.contact.label")}:</strong>{" "}
+                {t("yourRights.contact.email")}
               </p>
             </div>
           </div>
         </div>
       </div>
-
-      <FloatingBookingButton />
     </div>
   );
 }

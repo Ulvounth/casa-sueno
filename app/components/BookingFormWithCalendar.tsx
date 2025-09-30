@@ -5,8 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
 import { CalendarIcon } from "@heroicons/react/24/outline";
-import { supabase } from "../../lib/supabase";
-import { PricingService, PricingBreakdown } from "../../lib/pricing";
+import { supabase } from "@/lib/supabase";
+import { PricingService, PricingBreakdown } from "@/lib/pricing";
 
 export default function BookingFormWithCalendar() {
   // No more Stripe.js environment checks needed

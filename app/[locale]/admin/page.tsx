@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { format, parseISO } from "date-fns";
 import {
   CalendarIcon,
@@ -16,8 +16,8 @@ import {
   EyeIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import AdminLogin from "../components/AdminLogin";
-import ErrorBoundary from "../components/ErrorBoundary";
+import AdminLogin from "@/app/components/AdminLogin";
+import ErrorBoundary from "@/app/components/ErrorBoundary";
 
 interface Booking {
   id: string;

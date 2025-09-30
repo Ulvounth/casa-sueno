@@ -1,0 +1,536 @@
+{
+  "common": {
+    "checkIn": "Inchecken",
+    "checkOut": "Uitchecken",
+    "guests": "gasten",
+    "nights": "nachten",
+    "currency": "€",
+    "bookNow": "Boek Nu",
+    "book": "Boek"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "Over ons",
+    "contact": "Contact",
+    "terms": "Voorwaarden",
+    "privacy": "Privacy",
+    "houseRules": "Huisregels",
+    "cancellationPolicy": "Annuleringsbeleid"
+  },
+  "homepage": {
+    "paymentCancelled": "Betaling is geannuleerd. U kunt altijd opnieuw proberen te boeken.",
+    "title": "Modern herenhuis in residentieel complex",
+    "guestInfo": "Tot 5 gasten · 2 slaapkamers · 3 bedden · 2 badkamers",
+    "description": "Ontdek je perfecte mediterrane uitje in dit prachtige, nieuw gerenoveerde herenhuis in Dream Hills Orihuela. Casa Sueño beschikt over twee comfortabele slaapkamers (een met een tweepersoonsbed, een met twee eenpersoonsbedden), een slaapbank voor extra gasten, en twee complete badkamers met zowel een bad als aparte douche. Geniet van het spectaculaire privé dakterras met panoramisch uitzicht en buitenbbq - perfect voor ochtendkoffie of avond grillen onder de Spaanse zon. Gelegen in het hart van Costa Blanca nabij La Zenia, ben je slechts 10 minuten van La Zenia Boulevard winkelcentrum en 15 minuten van meerdere ongerepte stranden waaronder Cabo Roig en La Zenia. Het herenhuis combineert modern comfort met traditionele Spaanse charme, plus toegang tot een gemeenschappelijk zwembad - alles wat je nodig hebt voor een onvergetelijke vakantie voor maximaal 5 gasten.",
+    "features": {
+      "selfCheckIn": "Zelf inchecken met slimme slot.",
+      "airConditioning": "Airconditioning & plafondventilator voor een comfortabel verblijf.",
+      "walkableNeighborhood": "Wandelbare buurt met restaurants & winkels in de buurt.",
+      "privatePool": "Toegang tot privé zwembad gedeeld met buren."
+    },
+    "specialFeatures": {
+      "title": "Wat deze plek speciaal maakt",
+      "selfCheckIn": {
+        "title": "Zelf inchecken",
+        "description": "Check jezelf in met het slimme slot voor een probleemloze aankomst."
+      },
+      "sparklingClean": {
+        "title": "Sprankelend schoon",
+        "description": "Recente gasten prijzen consequent onze vlekkeloze reinigingsnormen."
+      },
+      "primeLocation": {
+        "title": "Toplocatie",
+        "description": "Loop naar La Zenia mall, rijd 5 minuten naar prachtige stranden."
+      },
+      "roofTerrace": {
+        "title": "Privé dakterras",
+        "description": "Geniet van mediterrane zonsondergangen vanaf je eigen dakterras."
+      }
+    },
+    "quickFacts": {
+      "title": "Snelle feiten",
+      "checkIn": "15:00",
+      "checkOut": "11:00",
+      "minimumStayLabel": "Minimum verblijf",
+      "minimumStay": "3-7 nachten*",
+      "maxGuestsLabel": "Max gasten",
+      "maxGuests": "5 personen",
+      "ageRequirementLabel": "Leeftijdsvereiste",
+      "ageRequirement": "Families welkom",
+      "seasonNote": "*Laag seizoen: 3 nachten, Middenseizoen: 4 nachten, Hoog seizoen: 7 nachten"
+    },
+    "houseRules": {
+      "title": "Huisregels",
+      "noSmokingIndoors": "Niet roken binnen (buiten wel)",
+      "noParties": "Geen feesten of evenementen",
+      "noPets": "Geen huisdieren toegestaan",
+      "quietHours": "Rustige uren: 22:00 - 08:00",
+      "familiesWelcome": "Families en kinderen welkom",
+      "viewAll": "Bekijk alle huisregels"
+    },
+    "amenities": {
+      "title": "Wat deze plek biedt",
+      "freeWifi": "Gratis WiFi",
+      "acLivingRoom": "AC in woonkamer",
+      "fullKitchen": "Complete keuken",
+      "smartTv": "Smart TV (Netflix)",
+      "roofTerraceBbq": "Dakterras met BBQ",
+      "communalPool": "Gemeenschappelijk zwembad",
+      "beds": "3 bedden + slaapbank",
+      "nespresso": "Nespresso machine",
+      "washingMachine": "Wasmachine",
+      "towelsToiletries": "Handdoeken & toiletartikelen",
+      "babyCrib": "Baby bedje beschikbaar",
+      "kidsAmenities": "Kindervoorzieningen (verschoonkussen, potje, toiletbril)",
+      "microwave": "Magnetron",
+      "safeArea": "Veilige omgeving",
+      "support24": "24/7 ondersteuning",
+      "bathtubShower": "Bad & douche",
+      "everythingIncluded": {
+        "title": "Alles wat je nodig hebt voor een perfecte vakantie",
+        "description": "Alle basisvoorzieningen zijn inbegrepen - neem gewoon je kleding mee en geniet van je verblijf! Van keukenbenodigdheden tot verse lakens, wij zorgen voor je."
+      }
+    },
+    "familyAmenities": {
+      "title": "Perfect voor families met kinderen",
+      "description": "We verwelkomen families en hebben alles wat je nodig hebt voor de kleintjes:",
+      "babyCrib": "Baby bedje/ledikantje beschikbaar",
+      "changingPad": "Verschoonkussen voor veilige luierwisselingen",
+      "potty": "Oefenpotje voor peuters",
+      "kidsToiletSeat": "Kindvriendelijke toiletbril",
+      "safeEnvironment": "Veilige, gezinsvriendelijke omgeving"
+    },
+    "location": {
+      "title": "Waar je zult zijn",
+      "cityCountry": "Dream Hills Orihuela, Costa Blanca, Spanje",
+      "description": "Perfect gepositioneerd in het hart van Costa Blanca, biedt Casa Sueño het beste van beide werelden: rustige residentiële charme en gemakkelijke toegang tot topattracties. La Zenia Boulevard winkelcentrum ligt op slechts 10 minuten rijden (4,4km), terwijl ongerepte stranden zoals Cabo Roig en La Zenia binnen 12-15 minuten rijden liggen. De charmante restaurants van Punta Prima liggen op slechts 3km afstand, en Alicante Airport is een gemakkelijke 40 minuten rijden. Het exacte adres wordt verstrekt na boekingsbevestiging.",
+      "features": {
+        "laZeniaBoulevard": "La Zenia Boulevard: 4,4km (10 min rijden)",
+        "caboRoigBeach": "Cabo Roig Strand: 7km (15 min rijden)",
+        "laZeniaBeach": "La Zenia Strand: 5,8km (12 min rijden)",
+        "puntaPrimaRestaurants": "Punta Prima Restaurants: 3km",
+        "aldiSupermarket": "Aldi Supermarkt: 900m",
+        "alicanteAirport": "Alicante Luchthaven: 60km (40 min rijden)",
+        "pinkLake": "Roze Meer: 9km",
+        "aquapolisWaterPark": "Aquapolis Waterpark: 8km"
+      }
+    }
+  },
+  "booking": {
+    "modal": {
+      "title": "Boek Casa Sueño",
+      "subtitle": "Reserveer je perfecte mediterrane uitje",
+      "noChargeYet": "✓ Je wordt nog niet afgeschreven"
+    },
+    "form": {
+      "name": "Volledige Naam",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer",
+      "checkin": "Incheckdatum",
+      "checkout": "Uitcheckdatum",
+      "guests": "Aantal Gasten",
+      "message": "Speciale Verzoeken (Optioneel)",
+      "bookNow": "Boek Nu",
+      "processing": "Verwerken...",
+      "selectDates": "Selecteer alsjeblieft incheck- en uitcheckdatums",
+      "minimumStay": "Minimum verblijfvereiste niet voldaan",
+      "thankYou": "Bedankt voor je boeking!",
+      "confirmation": "We sturen je binnenkort een bevestigingsmail."
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Over Casa Sueño",
+      "subtitle": "Ontdek het verhaal achter je perfecte Spaanse uitje en wat ons vakantiehuis zo bijzonder maakt."
+    },
+    "story": {
+      "title": "Ons Verhaal",
+      "paragraph1": "Welkom bij Casa Sueño, je thuis ver van huis in het prachtige Spanje. Onze vakantieverhuur is zorgvuldig ontworpen om gasten een authentieke Spaanse ervaring te bieden terwijl alle comfort van het moderne leven behouden blijft.",
+      "paragraph2": "Gelegen in een van Spanje's meest charmante regio's, biedt Casa Sueño de perfecte uitvalsbasis voor het verkennen van de rijke cultuur, prachtige stranden en levendige lokale gemeenschappen die dit gebied zo speciaal maken. We hebben elke detail doordacht samengesteld om ervoor te zorgen dat je verblijf onvergetelijk wordt.",
+      "paragraph3": "Of je nu op zoek bent naar ontspanning, avontuur of culturele onderdompeling, Casa Sueño biedt de perfecte setting voor je Spaanse vakantie. We zijn toegewijd om je te helpen bij het creëren van blijvende herinneringen in dit prachtige hoekje van Spanje."
+    },
+    "property": {
+      "title": "Over Casa Sueño",
+      "location": {
+        "title": "Locatie",
+        "description": "Prachtig Spaans platteland"
+      },
+      "propertyType": {
+        "title": "Type Eigendom",
+        "description": "Moderne vakantievilla"
+      },
+      "amenities": {
+        "title": "Voorzieningen",
+        "description": "Volledig uitgeruste keuken, comfortabele slaapkamers, goed ingerichte badkamers."
+      }
+    },
+    "contactPrompt": {
+      "title": "Heb je vragen over de omgeving?",
+      "description": "Heb je lokale aanbevelingen nodig of vragen over Casa Sueño? We helpen je graag om je Spaanse vakantie onvergetelijk te maken!",
+      "button": "Stel een vraag"
+    },
+    "whyChoose": {
+      "title": "Waarom verblijven bij Casa Sueño",
+      "premium": {
+        "title": "Premium Ervaring",
+        "description": "Als lokale property managers kennen we alle beste stranden, restaurants en verborgen pareltjes in de omgeving"
+      },
+      "personal": {
+        "title": "Persoonlijke Touch",
+        "description": "We behandelen onze gasten als familie en zorgen ervoor dat elk detail perfect is voor je verblijf"
+      },
+      "quality": {
+        "title": "Kwaliteit Gegarandeerd",
+        "description": "Casa Sueño is ook ons thuis - we handhaven de hoogste normen van netheid en comfort"
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Neem Contact Op",
+      "subtitle": "Klaar om je droomvakantie bij Casa Sueño te boeken? Heb je vragen over ons prachtige Spaanse toevluchtsoord? We horen graag van je!"
+    },
+    "information": {
+      "title": "Contactinformatie",
+      "email": {
+        "title": "Email",
+        "value": "info@casa-sueno.com",
+        "note": "We reageren binnen 24 uur"
+      },
+      "phone": {
+        "title": "Telefoon",
+        "value": "+34 623 545 857",
+        "note": "24/7 beschikbaar via WhatsApp"
+      },
+      "location": {
+        "title": "Locatie",
+        "value": "Dream Hills Orihuela, Costa Blanca, Spanje",
+        "note": "Exacte adres verstrekt na boeking"
+      }
+    },
+    "form": {
+      "title": "Stuur ons een bericht",
+      "name": "Volledige Naam",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer (Optioneel)",
+      "message": "Bericht",
+      "submit": "Verstuur Bericht",
+      "submitting": "Versturen...",
+      "success": "Bedankt! We hebben je bericht ontvangen en nemen binnenkort contact met je op.",
+      "error": "Sorry, er is een fout opgetreden bij het versturen van je bericht. Probeer het opnieuw of neem direct contact met ons op.",
+      "placeholders": {
+        "name": "Je volledige naam",
+        "email": "jouw.email@example.com",
+        "phone": "+31 6 12345678",
+        "message": "Vertel ons over je geplande verblijf, speciale wensen of vragen..."
+      }
+    }
+  },
+  "houseRules": {
+    "title": "Huisregels",
+    "subtitle": "Eenvoudige regels om ervoor te zorgen dat iedereen een geweldig verblijf heeft bij Casa Sueño.",
+    "checkInOut": {
+      "title": "Inchecken & Uitchecken",
+      "checkIn": {
+        "label": "Inchecken",
+        "time": "15:00 - 20:00"
+      },
+      "checkOut": {
+        "label": "Uitchecken",
+        "time": "11:00"
+      },
+      "lateArrival": {
+        "label": "Late aankomst",
+        "text": "Neem vooraf contact met ons op (€20 toeslag na 20:00)"
+      },
+      "earlyDeparture": {
+        "label": "Vroeg vertrek",
+        "text": "Laat het ons weten, geen terugbetaling voor ongebruikte nachten"
+      }
+    },
+    "importantRules": {
+      "title": "Belangrijke Regels",
+      "notAllowed": {
+        "title": "Niet Toegestaan:",
+        "smoking": "Niet roken in huis (buiten wel toegestaan)",
+        "parties": "Geen feesten of luide bijeenkomsten",
+        "pets": "Geen huisdieren toegestaan",
+        "additionalGuests": "Geen extra gasten buiten de boeking",
+        "ageRequirement": "Hoofdboeker moet 20+ zijn (gezinnen met kinderen welkom)"
+      },
+      "pleaseDo": {
+        "title": "Graag Doen:",
+        "noiseLevels": "Houd geluidsniveau laag na 22:00",
+        "quietHours": "Rustige uren: 22:00 - 08:00",
+        "respectProperty": "Behandel het eigendom met respect",
+        "cleanUp": "Ruim achter jezelf op",
+        "lockDoors": "Sluit deuren af bij vertrek"
+      }
+    },
+    "guestsVisitors": {
+      "title": "Gasten & Bezoekers",
+      "maxOccupancy": {
+        "label": "Maximum bezetting",
+        "value": "5 gasten"
+      },
+      "dayVisitors": {
+        "label": "Bezoekers",
+        "text": "Dagbezoekers toegestaan tot 22:00"
+      },
+      "additionalGuests": {
+        "label": "Extra gasten",
+        "text": "Moeten goedgekeurd worden en kunnen extra kosten met zich meebrengen"
+      },
+      "ageRequirement": {
+        "label": "Leeftijdsvereiste",
+        "text": "Hoofdboeker moet 20+ zijn, gezinnen met kinderen van alle leeftijden zijn welkom"
+      }
+    },
+    "safetySecurity": {
+      "title": "Veiligheid & Beveiliging",
+      "emergencyContact": "Noodcontactinformatie verstrekt bij inchecken",
+      "safetyEquipment": "Brandblusser en EHBO-kit beschikbaar",
+      "reportIssues": "Meld eventuele schade of problemen onmiddellijk",
+      "keyReplacement": "Verloren of beschadigde sleutels: €50 vervangingskosten",
+      "emergency": {
+        "title": "Noodgeval",
+        "text": "Voor urgente problemen, bel lokale hulpdiensten (112) of neem contact met ons op via +34 623 545 857 via WhatsApp."
+      }
+    }
+  },
+  "terms": {
+    "title": "Voorwaarden",
+    "subtitle": "Eenvoudige en duidelijke voorwaarden voor uw verblijf in Casa Sueño.",
+    "bookingTerms": {
+      "title": "Boekingsvoorwaarden",
+      "minimumAge": {
+        "label": "Minimumleeftijd",
+        "value": "20+ om een boeking te maken"
+      },
+      "maxGuests": {
+        "label": "Maximum gasten",
+        "value": "5 personen"
+      },
+      "minimumStay": {
+        "label": "Minimum verblijf",
+        "value": "3-7 nachten (varieert per seizoen)"
+      },
+      "payment": {
+        "label": "Betaling",
+        "value": "Volledige betaling vereist bij boeking via Stripe"
+      },
+      "securityDeposit": {
+        "label": "Borg",
+        "value": "€200 (terugbetaald na verblijf)"
+      },
+      "cleaningFee": {
+        "label": "Schoonmaakkosten",
+        "value": "€50 (inbegrepen in totaalprijs)"
+      },
+      "seasonalStays": {
+        "title": "Seizoensgebonden minimum verblijf",
+        "text": "Laagseizoen: 3 nachten, Middenseizoen: 5 nachten, Hoogseizoen: 7 nachten"
+      }
+    },
+    "checkInOut": {
+      "title": "Inchecken & Uitchecken",
+      "checkIn": {
+        "label": "Inchecken",
+        "time": "15:00 - 20:00"
+      },
+      "checkOut": {
+        "label": "Uitchecken",
+        "time": "11:00"
+      },
+      "lateArrival": {
+        "label": "Late aankomst",
+        "fee": "€20 toeslag na 20:00"
+      },
+      "keyCollection": {
+        "label": "Sleuteloverdracht",
+        "text": "Instructies verzonden voor aankomst"
+      }
+    },
+    "responsibility": {
+      "title": "Verantwoordelijkheid & Schade",
+      "guestResponsibility": "Gasten zijn verantwoordelijk voor eventuele schade aan het eigendom",
+      "securityDeposit": "Borg: €200 (terugbetaald na inspectie)",
+      "additionalCleaning": "Extra schoonmaakkosten in rekening gebracht als eigendom excessief vuil wordt achtergelaten",
+      "lostKeys": "Verloren sleutels: €50 vervangingskosten"
+    },
+    "cancellation": {
+      "title": "Annuleringsbeleid",
+      "freeCancellation": {
+        "label": "Gratis annulering",
+        "period": "Tot 14 dagen voor aankomst"
+      },
+      "fiftyPercent": {
+        "label": "50% terugbetaling",
+        "period": "7-13 dagen voor aankomst"
+      },
+      "noRefund": {
+        "label": "Geen terugbetaling",
+        "period": "Minder dan 7 dagen voor aankomst"
+      },
+      "depositNonRefundable": "Borg is niet terugbetaalbaar bij annuleringen binnen 7 dagen"
+    }
+  },
+  "privacy": {
+    "title": "Privacybeleid",
+    "subtitle": "Hoe wij omgaan met uw persoonlijke informatie bij Casa Sueño.",
+    "informationCollect": {
+      "title": "Informatie die wij verzamelen",
+      "intro": "Wanneer u boekt of contact met ons opneemt, verzamelen wij:",
+      "contactDetails": {
+        "label": "Contactgegevens",
+        "text": "Naam, e-mail, telefoonnummer"
+      },
+      "bookingInfo": {
+        "label": "Boekingsinformatie",
+        "text": "Datums, aantal gasten"
+      },
+      "paymentInfo": {
+        "label": "Betalingsinformatie",
+        "text": "Veilig verwerkt door onze betalingsprovider"
+      },
+      "messages": {
+        "label": "Berichten",
+        "text": "Elke communicatie met ons"
+      }
+    },
+    "howWeUse": {
+      "title": "Hoe wij uw informatie gebruiken",
+      "intro": "Wij gebruiken uw informatie om:",
+      "processBookings": "Uw boeking en betalingen te verwerken",
+      "communicate": "Te communiceren over uw verblijf",
+      "sendInstructions": "Check-in instructies en belangrijke updates te verzenden",
+      "respondQuestions": "Te reageren op uw vragen en verzoeken",
+      "improveServices": "Onze diensten te verbeteren"
+    },
+    "informationSharing": {
+      "title": "Informatie delen",
+      "noSelling": "Wij verkopen of delen uw persoonlijke informatie NIET met derden.",
+      "trustedProviders": "Uw informatie wordt alleen gedeeld met vertrouwde serviceproviders (zoals betalingsverwerkers) die ons helpen onze diensten te leveren, en alleen wanneer nodig."
+    },
+    "yourRights": {
+      "title": "Uw rechten",
+      "intro": "U heeft het recht om:",
+      "requestCopy": "Een kopie van uw persoonlijke informatie aan te vragen",
+      "correctInfo": "Onjuiste informatie te corrigeren",
+      "requestDeletion": "Verwijdering van uw informatie aan te vragen",
+      "withdrawConsent": "Toestemming voor marketingcommunicatie in te trekken",
+      "contact": {
+        "label": "Neem contact met ons op",
+        "email": "info@casasueno.com om deze rechten uit te oefenen."
+      }
+    }
+  },
+  "cancellationPolicy": {
+    "title": "Annuleringsbeleid",
+    "subtitle": "Onze flexibele annuleringsvoorwaarden voor Casa Sueño boekingen.",
+    "timeline": {
+      "title": "Annuleringstijdlijn",
+      "fourteenPlus": {
+        "title": "14+ Dagen Van Tevoren",
+        "refund": "100% Terugbetaling",
+        "description": "Gratis annulering met volledige terugbetaling"
+      },
+      "sevenToThirteen": {
+        "title": "7-13 Dagen Van Tevoren",
+        "refund": "50% Terugbetaling",
+        "description": "gedeeltelijke terugbetaling van totaalbedrag"
+      },
+      "lessThanSeven": {
+        "title": "Minder Dan 7 Dagen",
+        "refund": "Geen Terugbetaling",
+        "description": "Volledige betaling is niet terugbetaalbaar"
+      }
+    },
+    "howToCancel": {
+      "title": "Hoe te Annuleren",
+      "step1": "Neem zo snel mogelijk contact met ons op via e-mail of telefoon",
+      "step2": "Verstrek uw boekingsreferentienummer",
+      "step3": "Wij bevestigen uw annulering en terugbetalingsbedrag",
+      "step4": "Terugbetalingen worden binnen 5-10 werkdagen verwerkt",
+      "contact": {
+        "label": "Contact",
+        "details": "info@casasueno.com of +34 623 545 857"
+      }
+    },
+    "specialCircumstances": {
+      "title": "Bijzondere Omstandigheden",
+      "emergency": {
+        "title": "Noodsituaties",
+        "description": "In geval van gedocumenteerde medische noodgevallen, natuurrampen of andere buitengewone omstandigheden kunnen wij flexibelere annuleringsvoorwaarden aanbieden. Neem contact met ons op om uw situatie te bespreken."
+      },
+      "hostCancellation": {
+        "title": "Annulering door Verhuurder",
+        "description": "Als wij uw boeking moeten annuleren vanwege eigendomsproblemen of andere onvoorziene omstandigheden, ontvangt u een volledige terugbetaling plus hulp bij het vinden van alternatieve accommodatie."
+      },
+      "modification": {
+        "title": "Wijziging vs. Annulering",
+        "description": "Wilt u uw datums wijzigen in plaats van annuleren? Neem contact met ons op - mogelijk kunnen wij uw boeking wijzigen zonder annuleringskosten, afhankelijk van beschikbaarheid."
+      }
+    }
+  },
+  "hero": {
+    "title": "Welkom bij Casa Sueño",
+    "subtitle": "Uw droomvakantiehuis in Spanje",
+    "seeAllPhotos": "Bekijk alle foto's"
+  },
+  "availability": {
+    "title": "Beschikbare datums",
+    "loading": "Beschikbaarheid laden...",
+    "available": "Beschikbaar",
+    "booked": "Geboekt",
+    "notAvailable": "Niet beschikbaar",
+    "pastDate": "Verleden datum",
+    "months": {
+      "january": "Januari",
+      "february": "Februari",
+      "march": "Maart",
+      "april": "April",
+      "may": "Mei",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "Augustus",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "December"
+    },
+    "days": {
+      "sunday": "Z",
+      "monday": "M",
+      "tuesday": "D",
+      "wednesday": "W",
+      "thursday": "D",
+      "friday": "V",
+      "saturday": "Z"
+    }
+  },
+  "footer": {
+    "description": "Uw droomvakantiehuis in Spanje. Ervaar authentieke Spaanse charme met modern comfort in het prachtige Dream Hills Orihuela.",
+    "quickLinks": "Snelle Links",
+    "policiesLegal": "Beleid & Juridisch",
+    "getInTouch": "Neem Contact Op",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "emergency": "Noodgeval",
+    "support24": "24/7 Ondersteuning",
+    "followUs": "Volg Ons",
+    "allRightsReserved": "Alle rechten voorbehouden.",
+    "propertyLocation": "Vakantieverhuur eigendom in Dream Hills Orihuela, Spanje • AVG Conform"
+  },
+  "error": {
+    "title": "Er is iets misgegaan!",
+    "description": "Onze excuses voor het ongemak. Probeer het opnieuw of neem contact op met de klantenservice als het probleem aanhoudt.",
+    "tryAgain": "Probeer opnieuw",
+    "goHome": "Ga terug naar home"
+  },
+  "notFound": {
+    "title": "Pagina Niet Gevonden",
+    "description": "De pagina die u zoekt is mogelijk verwijderd, heeft een andere naam gekregen, of is tijdelijk niet beschikbaar.",
+    "goHome": "Ga terug naar home"
+  }
+}

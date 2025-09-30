@@ -2,10 +2,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalendarIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import BookingModal from "./BookingModal";
 
 export default function FloatingBookingButton() {
+  const t = useTranslations("common");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -35,8 +37,8 @@ export default function FloatingBookingButton() {
           "
         >
           <CalendarIcon className="h-5 w-5" />
-          <span className="hidden sm:inline">Book Now</span>
-          <span className="sm:hidden">Book</span>
+          <span className="hidden sm:inline">{t("bookNow")}</span>
+          <span className="sm:hidden">{t("book")}</span>
           <ChevronUpIcon className="h-4 w-4" />
         </button>
       </div>
