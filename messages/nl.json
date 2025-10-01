@@ -136,7 +136,38 @@
       "minimumStay": "Minimum verblijfvereiste niet voldaan",
       "thankYou": "Bedankt voor je boeking!",
       "confirmation": "We sturen je binnenkort een bevestigingsmail."
-    }
+    },
+    "loadingAvailability": "Beschikbaarheid laden...",
+    "bookingConfirmed": "Boeking Bevestigd!",
+    "confirmationMessage": "Je datums zijn bevestigd. Je ontvangt binnenkort een e-mail.",
+    "makeAnotherBooking": "Maak een nieuwe boeking",
+    "selectDates": "Selecteer Datums",
+    "checkIn": "Inchecken",
+    "checkOut": "Uitchecken",
+    "selectDate": "Selecteer datum",
+    "unavailableDates": "Niet-beschikbare datums zijn rood gemarkeerd",
+    "guests": "Gasten",
+    "guest": "gast",
+    "contactDetails": "Contactgegevens",
+    "nameLabel": "Naam",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Telefoon (optioneel)",
+    "specialRequests": "Speciale verzoeken (optioneel)",
+    "yourName": "Je naam",
+    "yourEmail": "jouw@email.com",
+    "phoneExample": "+31 123 456 789",
+    "anySpecialRequests": "Eventuele speciale verzoeken...",
+    "night": "nacht",
+    "nights": "nachten",
+    "longStayDiscount": "Lange verblijf korting (20%)",
+    "cleaningFee": "Schoonmaakkosten",
+    "securityDeposit": "Borg",
+    "total": "Totaal",
+    "longStayQualified": "🎉 Je komt in aanmerking voor 20% lange verblijf korting!",
+    "securityDepositInfo": "💡 Borg (€200) wordt bij je boeking afgeschreven en terugbetaald na inspectie van de accommodatie",
+    "proceedToPayment": "Doorgaan naar Betaling",
+    "stripeRedirect": "Je wordt doorgestuurd naar Stripe om je veilige betaling te voltooien",
+    "paymentInfo": "Volledige betaling vereist • Gratis annulering tot 14 dagen voor aankomst"
   },
   "about": {
     "hero": {
@@ -321,7 +352,7 @@
       },
       "securityDeposit": {
         "label": "Borg",
-        "value": "€200 (terugbetaald na verblijf)"
+        "value": "€200 (afgerekend bij boeking, terugbetaald na verblijf)"
       },
       "cleaningFee": {
         "label": "Schoonmaakkosten",
@@ -354,7 +385,7 @@
     "responsibility": {
       "title": "Verantwoordelijkheid & Schade",
       "guestResponsibility": "Gasten zijn verantwoordelijk voor eventuele schade aan het eigendom",
-      "securityDeposit": "Borg: €200 (terugbetaald na inspectie)",
+      "securityDeposit": "Borg: €200 (direct afgerekend, terugbetaald na eigendomsinspectie)",
       "additionalCleaning": "Extra schoonmaakkosten in rekening gebracht als eigendom excessief vuil wordt achtergelaten",
       "lostKeys": "Verloren sleutels: €50 vervangingskosten"
     },

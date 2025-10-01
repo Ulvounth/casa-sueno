@@ -41,6 +41,10 @@ interface Season {
   start_day: number;
   end_month: number;
   end_day: number;
+  start_year?: number;
+  end_year?: number;
+  name?: string;
+  is_holiday_period?: boolean;
 }
 
 export class PricingService {
@@ -89,12 +93,15 @@ export class PricingService {
     if (error || !data) {
       // Fallback seasons if database is unavailable
       return [
+        // General seasons
         {
           season_type: "high_season",
           start_month: 6,
           start_day: 1,
           end_month: 9,
           end_day: 30,
+          name: "Summer High Season",
+          is_holiday_period: false,
         },
         {
           season_type: "middle_season",
@@ -102,6 +109,8 @@ export class PricingService {
           start_day: 1,
           end_month: 5,
           end_day: 31,
+          name: "Spring Middle Season",
+          is_holiday_period: false,
         },
         {
           season_type: "middle_season",
@@ -109,6 +118,8 @@ export class PricingService {
           start_day: 1,
           end_month: 10,
           end_day: 31,
+          name: "Autumn Middle Season",
+          is_holiday_period: false,
         },
         {
           season_type: "low_season",
@@ -116,6 +127,120 @@ export class PricingService {
           start_day: 1,
           end_month: 2,
           end_day: 28,
+          name: "Winter Low Season",
+          is_holiday_period: false,
+        },
+        // Holiday high season periods for 2025
+        {
+          season_type: "high_season",
+          start_month: 10,
+          start_day: 27,
+          end_month: 11,
+          end_day: 2,
+          start_year: 2025,
+          end_year: 2025,
+          name: "Belgium Vlaanderen Oct-Nov 2025",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 12,
+          start_day: 20,
+          end_month: 12,
+          end_day: 31,
+          start_year: 2025,
+          end_year: 2025,
+          name: "Netherlands Dec 2025",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 12,
+          start_day: 22,
+          end_month: 12,
+          end_day: 31,
+          start_year: 2025,
+          end_year: 2025,
+          name: "Belgium Vlaanderen Dec 2025",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 12,
+          start_day: 23,
+          end_month: 12,
+          end_day: 31,
+          start_year: 2025,
+          end_year: 2025,
+          name: "Spain Andalusia Dec 2025",
+          is_holiday_period: true,
+        },
+        // Holiday high season periods for 2026
+        {
+          season_type: "high_season",
+          start_month: 1,
+          start_day: 1,
+          end_month: 1,
+          end_day: 4,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Netherlands/Belgium Jan 2026",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 1,
+          start_day: 1,
+          end_month: 1,
+          end_day: 7,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Spain Jan 2026",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 2,
+          start_day: 14,
+          end_month: 2,
+          end_day: 22,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Netherlands Midden & Zuid Feb 2026",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 2,
+          start_day: 16,
+          end_month: 2,
+          end_day: 22,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Belgium Vlaanderen Feb 2026",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 2,
+          start_day: 21,
+          end_month: 3,
+          end_day: 1,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Netherlands Noord Feb-Mar 2026",
+          is_holiday_period: true,
+        },
+        {
+          season_type: "high_season",
+          start_month: 4,
+          start_day: 6,
+          end_month: 4,
+          end_day: 19,
+          start_year: 2026,
+          end_year: 2026,
+          name: "Belgium Vlaanderen Apr 2026",
+          is_holiday_period: true,
         },
       ];
     }
@@ -126,6 +251,10 @@ export class PricingService {
       start_day: season.start_day,
       end_month: season.end_month,
       end_day: season.end_day,
+      start_year: season.start_year,
+      end_year: season.end_year,
+      name: season.name,
+      is_holiday_period: season.is_holiday_period,
     }));
   }
 
@@ -135,25 +264,63 @@ export class PricingService {
   ): "high_season" | "middle_season" | "low_season" {
     const month = date.getMonth() + 1; // getMonth() returns 0-11
     const day = date.getDate();
+    const year = date.getFullYear();
 
+    // First, check for year-specific holiday periods
     for (const season of seasons) {
-      // Handle seasons that cross year boundary (like December-February)
-      if (season.start_month > season.end_month) {
-        if (
-          (month >= season.start_month && day >= season.start_day) ||
-          (month <= season.end_month && day <= season.end_day)
-        ) {
-          return season.season_type;
+      if (season.is_holiday_period && season.start_year && season.end_year) {
+        // Check if date falls within specific year range
+        if (year >= season.start_year && year <= season.end_year) {
+          // Handle periods that might cross year boundary
+          if (season.start_year !== season.end_year) {
+            // Multi-year period (like Dec 2025 to Jan 2026)
+            if (
+              (year === season.start_year &&
+                (month > season.start_month ||
+                  (month === season.start_month && day >= season.start_day))) ||
+              (year === season.end_year &&
+                (month < season.end_month ||
+                  (month === season.end_month && day <= season.end_day))) ||
+              (year > season.start_year && year < season.end_year)
+            ) {
+              return season.season_type;
+            }
+          } else {
+            // Same year period
+            if (
+              (month > season.start_month ||
+                (month === season.start_month && day >= season.start_day)) &&
+              (month < season.end_month ||
+                (month === season.end_month && day <= season.end_day))
+            ) {
+              return season.season_type;
+            }
+          }
         }
-      } else {
-        // Normal seasons within same year
-        if (
-          (month > season.start_month ||
-            (month === season.start_month && day >= season.start_day)) &&
-          (month < season.end_month ||
-            (month === season.end_month && day <= season.end_day))
-        ) {
-          return season.season_type;
+      }
+    }
+
+    // If no holiday period matches, check general seasonal periods
+    for (const season of seasons) {
+      if (!season.is_holiday_period) {
+        // Handle seasons that cross year boundary (like December-February)
+        if (season.start_month > season.end_month) {
+          if (
+            (month >= season.start_month && day >= season.start_day) ||
+            (month <= season.end_month && day <= season.end_day)
+          ) {
+            return season.season_type;
+          }
+        } else {
+          // Normal seasons within same year
+          if (
+            (month > season.start_month ||
+              (month === season.start_month && day >= season.start_day)) &&
+            (month < season.end_month ||
+              (month === season.end_month && day <= season.end_day))
+          ) {
+            return season.season_type;
+          }
         }
       }
     }

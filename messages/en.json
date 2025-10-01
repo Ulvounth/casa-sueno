@@ -136,7 +136,38 @@
       "minimumStay": "Minimum stay requirement not met",
       "thankYou": "Thank you for your booking!",
       "confirmation": "We'll send you a confirmation email shortly."
-    }
+    },
+    "loadingAvailability": "Loading availability...",
+    "bookingConfirmed": "Booking Confirmed!",
+    "confirmationMessage": "Your dates have been confirmed. You'll receive an email shortly.",
+    "makeAnotherBooking": "Make another booking",
+    "selectDates": "Select Dates",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "selectDate": "Select date",
+    "unavailableDates": "Unavailable dates are marked in red",
+    "guests": "Guests",
+    "guest": "guest",
+    "contactDetails": "Contact Details",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone (optional)",
+    "specialRequests": "Special requests (optional)",
+    "yourName": "Your name",
+    "yourEmail": "your@email.com",
+    "phoneExample": "+32 123 456 789",
+    "anySpecialRequests": "Any special requests...",
+    "night": "night",
+    "nights": "nights",
+    "longStayDiscount": "Long stay discount (20%)",
+    "cleaningFee": "Cleaning fee",
+    "securityDeposit": "Security deposit",
+    "total": "Total",
+    "longStayQualified": "🎉 You qualified for a 20% long stay discount!",
+    "securityDepositInfo": "💡 Security deposit (€200) is charged with your booking and refunded after property inspection",
+    "proceedToPayment": "Proceed to Payment",
+    "stripeRedirect": "You'll be redirected to Stripe to complete your secure payment",
+    "paymentInfo": "Full payment required • Free cancellation up to 14 days before arrival"
   },
   "about": {
     "hero": {
@@ -321,7 +352,7 @@
       },
       "securityDeposit": {
         "label": "Security deposit",
-        "value": "€200 (refunded after stay)"
+        "value": "€200 (charged with booking, refunded after stay)"
       },
       "cleaningFee": {
         "label": "Cleaning fee",
@@ -354,7 +385,7 @@
     "responsibility": {
       "title": "Responsibility & Damages",
       "guestResponsibility": "Guests are responsible for any damages to the property",
-      "securityDeposit": "Security deposit: €200 (refunded after inspection)",
+      "securityDeposit": "Security deposit: €200 (charged immediately, refunded after property inspection)",
       "additionalCleaning": "Additional cleaning fee charged if property left excessively dirty",
       "lostKeys": "Lost keys: €50 replacement fee"
     },

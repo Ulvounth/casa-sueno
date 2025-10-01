@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
       cleaningFee,
       subtotal,
       totalPrice,
+      depositAmount,
     } = await request.json();
 
     // Validate required fields
@@ -56,6 +57,18 @@ export async function POST(request: NextRequest) {
           },
           quantity: 1,
         },
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: "Security Deposit",
+              description:
+                "Refundable security deposit (charged immediately, refunded after inspection)",
+            },
+            unit_amount: (depositAmount || 200) * 100, // Stripe expects amount in cents
+          },
+          quantity: 1,
+        },
       ],
       mode: "payment",
       success_url: `${request.headers.get("origin")}/booking-success?session_id={CHECKOUT_SESSION_ID}`,
@@ -72,12 +85,16 @@ export async function POST(request: NextRequest) {
         nights: nights.toString(),
         pricePerNight: pricePerNight.toString(),
         cleaningFee: cleaningFee.toString(),
+        depositAmount: (depositAmount || 200).toString(),
         subtotal: subtotal.toString(),
         totalPrice: totalPrice.toString(),
       },
     });
 
-    return NextResponse.json({ sessionId: session.id });
+    return NextResponse.json({
+      sessionId: session.id,
+      redirectUrl: session.url,
+    });
   } catch (error) {
     console.error("Error creating checkout session:", error);
     return NextResponse.json(

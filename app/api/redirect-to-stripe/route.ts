@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
       cleaningFee,
       subtotal,
       totalPrice,
+      depositAmount,
       longStayDiscount = 0,
       hasLongStayDiscount = false,
     } = body;
@@ -51,6 +52,18 @@ export async function POST(request: NextRequest) {
         },
         quantity: 1,
       },
+      {
+        price_data: {
+          currency: "eur",
+          product_data: {
+            name: "Security Deposit",
+            description:
+              "Refundable security deposit (charged immediately, refunded after inspection)",
+          },
+          unit_amount: (depositAmount || 200) * 100, // Convert to cents
+        },
+        quantity: 1,
+      },
     ];
 
     // Create checkout session
@@ -70,6 +83,7 @@ export async function POST(request: NextRequest) {
         nights: nights.toString(),
         pricePerNight: pricePerNight.toString(),
         cleaningFee: cleaningFee.toString(),
+        depositAmount: (depositAmount || 200).toString(),
         subtotal: subtotal.toString(),
         totalPrice: totalPrice.toString(),
         longStayDiscount: longStayDiscount.toString(),

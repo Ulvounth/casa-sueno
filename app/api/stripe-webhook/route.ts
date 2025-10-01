@@ -27,8 +27,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  console.log("Webhook received:", event.type);
-
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
@@ -47,6 +45,12 @@ export async function POST(request: NextRequest) {
       subtotal,
       totalPrice,
     } = session.metadata!;
+
+    // Calculate deposit amount dynamically from the price breakdown
+    // totalPrice = subtotal + cleaningFee + deposit
+    const calculatedDepositAmount =
+      parseFloat(totalPrice) - parseFloat(subtotal) - parseFloat(cleaningFee);
+    const depositAmount = Math.round(calculatedDepositAmount);
 
     try {
       // Insert booking into Supabase
@@ -103,6 +107,7 @@ export async function POST(request: NextRequest) {
               <div style="margin-left: 10px;">
                 <p>€${pricePerNight} × ${nights} night${parseInt(nights) !== 1 ? "s" : ""}: <strong>€${subtotal}</strong></p>
                 <p>Cleaning fee: <strong>€${cleaningFee}</strong></p>
+                <p>Security deposit: <strong>€${depositAmount}</strong></p>
                 <hr style="border: 1px solid #e5e7eb; margin: 10px 0;">
                 <p style="font-size: 18px;"><strong>Total: €${totalPrice}</strong></p>
                 <p style="color: #10b981; font-weight: bold;">✓ Payment Confirmed</p>
@@ -153,6 +158,7 @@ export async function POST(request: NextRequest) {
               <div style="margin-left: 10px;">
                 <p>€${pricePerNight} × ${nights} night${parseInt(nights) !== 1 ? "s" : ""}: <strong>€${subtotal}</strong></p>
                 <p>Cleaning fee: <strong>€${cleaningFee}</strong></p>
+                <p>Security deposit: <strong>€${depositAmount}</strong></p>
                 <hr style="border: 1px solid #e5e7eb; margin: 10px 0;">
                 <p style="font-size: 18px;"><strong>Total: €${totalPrice}</strong></p>
                 <p style="color: #10b981; font-weight: bold;">✓ Payment Confirmed via Stripe</p>
@@ -168,15 +174,6 @@ export async function POST(request: NextRequest) {
       };
 
       // Send emails
-      console.log("Sending emails with phone:", "+34 623 545 857");
-      console.log(
-        "Booking reference:",
-        `CS-${session.id.slice(-8).toUpperCase()}`
-      );
-      await resend.emails.send(guestEmailOptions);
-      await resend.emails.send(ownerEmailOptions);
-
-      // Create booking and send emails
       await resend.emails.send(guestEmailOptions);
       await resend.emails.send(ownerEmailOptions);
     } catch (error) {

@@ -1,15 +1,12 @@
 // app/components/Hero.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import ImageModal from "./ImageModal";
 
-const videos = [
-  "/videos/placeholder1.mp4",
-  "/videos/placeholder2.mp4",
-  "/videos/placeholder3.mp4",
-];
+// Temporarily using a single image instead of video
+const heroImage = "/carousel/_DSC9168.JPG";
 
 const carouselImages = [
   "/carousel/_DSC8475.JPG",
@@ -57,34 +54,15 @@ const carouselImages = [
 
 export default function Hero() {
   const t = useTranslations("hero");
-  const [vidIdx, setVidIdx] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setVidIdx((i) => (i + 1) % videos.length);
-    }, 6000);
-    return () => clearInterval(id);
-  }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* background video carousel with iOS-compatible settings */}
-      <video
-        key={videos[vidIdx]}
-        src={videos[vidIdx]}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop={false}
-        playsInline
-        webkit-playsinline="true"
-        x-webkit-airplay="deny"
-        disablePictureInPicture
-        preload="auto"
+      {/* background image instead of video */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          pointerEvents: "none",
-          objectPosition: "center center",
+          backgroundImage: `url('${heroImage}')`,
         }}
       />
 

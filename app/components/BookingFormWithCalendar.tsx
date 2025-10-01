@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, addDays, isWithinInterval, parseISO } from "date-fns";
@@ -9,6 +10,7 @@ import { supabase } from "@/lib/supabase";
 import { PricingService, PricingBreakdown } from "@/lib/pricing";
 
 export default function BookingFormWithCalendar() {
+  const t = useTranslations("booking");
   // No more Stripe.js environment checks needed
   const [formData, setFormData] = useState({
     name: "",
@@ -111,10 +113,10 @@ export default function BookingFormWithCalendar() {
     return true;
   };
 
-  // Check if booking would create isolated short gaps
-  const wouldCreateIsolatedGap = async (checkin: Date, checkout: Date) => {
+  // Simple overlap check - prevents booking if dates conflict with existing bookings
+  const checkBookingOverlap = async (checkin: Date, checkout: Date) => {
     try {
-      // Get all bookings to analyze gaps
+      // Get all confirmed/pending bookings
       const { data: bookings, error } = await supabase
         .from("bookings")
         .select("start_date, end_date, status")
@@ -122,39 +124,22 @@ export default function BookingFormWithCalendar() {
 
       if (error || !bookings) return false;
 
-      // Convert to dates and sort by start date
-      const existingBookings = bookings
-        .map((booking) => ({
-          start: parseISO(booking.start_date),
-          end: parseISO(booking.end_date),
-        }))
-        .sort((a, b) => a.start.getTime() - b.start.getTime());
+      // Check if our proposed booking overlaps with any existing booking
+      for (const booking of bookings) {
+        const existingStart = parseISO(booking.start_date);
+        const existingEnd = parseISO(booking.end_date);
 
-      // Add the new proposed booking
-      const allBookings = [
-        ...existingBookings,
-        { start: checkin, end: checkout },
-      ].sort((a, b) => a.start.getTime() - b.start.getTime());
+        // Check for overlap: new booking starts before existing ends AND new booking ends after existing starts
+        const overlaps = checkin < existingEnd && checkout > existingStart;
 
-      // Check for gaps that would be too short between consecutive bookings
-      for (let i = 0; i < allBookings.length - 1; i++) {
-        const currentEnd = allBookings[i].end;
-        const nextStart = allBookings[i + 1].start;
-
-        // Calculate gap in days
-        const gapDays = Math.ceil(
-          (nextStart.getTime() - currentEnd.getTime()) / (1000 * 60 * 60 * 24)
-        );
-
-        // If gap is 1-2 days (too short for minimum stay), it's problematic
-        if (gapDays > 0 && gapDays < 3) {
+        if (overlaps) {
           return true;
         }
       }
 
       return false;
     } catch (error) {
-      console.error("Error checking gaps:", error);
+      console.error("Error checking booking overlap:", error);
       return false;
     }
   };
@@ -223,14 +208,14 @@ export default function BookingFormWithCalendar() {
       return;
     }
 
-    // Check if booking would create problematic gaps
-    const wouldCreateGap = await wouldCreateIsolatedGap(
+    // Check if booking overlaps with existing bookings
+    const hasOverlap = await checkBookingOverlap(
       formData.checkin,
       formData.checkout
     );
-    if (wouldCreateGap) {
+    if (hasOverlap) {
       alert(
-        "This booking would create a gap that is too short between existing bookings. Please choose different dates or extend your stay."
+        "Your selected dates overlap with existing bookings. Please choose different dates."
       );
       return;
     }
@@ -263,7 +248,8 @@ export default function BookingFormWithCalendar() {
           cleaningFee: pricingBreakdown.cleaningFee,
           subtotal:
             pricingBreakdown.baseTotal - pricingBreakdown.longStayDiscount,
-          totalPrice: pricingBreakdown.totalAmount,
+          totalPrice: pricingBreakdown.totalAmount + 200, // Include deposit
+          depositAmount: 200,
           longStayDiscount: pricingBreakdown.longStayDiscount,
           hasLongStayDiscount: pricingBreakdown.hasLongStayDiscount,
         }),
@@ -365,7 +351,7 @@ export default function BookingFormWithCalendar() {
     return (
       <div className="text-center py-6">
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-600 mx-auto"></div>
-        <p className="mt-2 text-sm text-gray-600">Loading availability...</p>
+        <p className="mt-2 text-sm text-gray-600">{t("loadingAvailability")}</p>
       </div>
     );
   }
@@ -389,10 +375,10 @@ export default function BookingFormWithCalendar() {
           </svg>
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          Booking Confirmed!
+          {t("bookingConfirmed")}
         </h3>
         <p className="text-sm text-gray-600 mb-4">
-          Your dates have been confirmed. You&apos;ll receive an email shortly.
+          {t("confirmationMessage")}
         </p>
         <button
           onClick={() => {
@@ -409,7 +395,7 @@ export default function BookingFormWithCalendar() {
           }}
           className="text-sm text-amber-600 hover:text-amber-700 font-medium"
         >
-          Make another booking
+          {t("makeAnotherBooking")}
         </button>
       </div>
     );
@@ -419,11 +405,11 @@ export default function BookingFormWithCalendar() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Dates - Compact Layout */}
       <div>
-        <h4 className="font-medium text-gray-900 mb-3 text-sm">Select Dates</h4>
+        <h4 className="font-medium text-gray-900 mb-3 text-sm">{t("selectDates")}</h4>
         <div className="space-y-3">
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
-              Check-in
+              {t("checkIn")}
             </label>
             <div className="relative">
               <DatePicker
@@ -435,7 +421,7 @@ export default function BookingFormWithCalendar() {
                 minDate={new Date()}
                 excludeDates={bookedDates}
                 filterDate={filterAvailableDates}
-                placeholderText="Select date"
+                placeholderText={t("selectDate")}
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
@@ -454,7 +440,7 @@ export default function BookingFormWithCalendar() {
 
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
-              Check-out
+              {t("checkOut")}
             </label>
             <div className="relative">
               <DatePicker
@@ -470,7 +456,7 @@ export default function BookingFormWithCalendar() {
                 }
                 excludeDates={bookedDates}
                 filterDate={filterAvailableDates}
-                placeholderText="Select date"
+                placeholderText={t("selectDate")}
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 calendarClassName="text-sm"
                 dayClassName={(date) => {
@@ -499,7 +485,7 @@ export default function BookingFormWithCalendar() {
       {/* Guests - Compact */}
       <div>
         <label className="block text-xs font-medium text-gray-700 mb-1">
-          Guests
+          {t("guests")}
         </label>
         <select
           name="guests"
@@ -507,11 +493,11 @@ export default function BookingFormWithCalendar() {
           onChange={handleChange}
           className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
         >
-          <option value={1}>1 guest</option>
-          <option value={2}>2 guests</option>
-          <option value={3}>3 guests</option>
-          <option value={4}>4 guests</option>
-          <option value={5}>5 guests</option>
+          <option value={1}>1 {t("guest")}</option>
+          <option value={2}>2 {t("guests")}</option>
+          <option value={3}>3 {t("guests")}</option>
+          <option value={4}>4 {t("guests")}</option>
+          <option value={5}>5 {t("guests")}</option>
         </select>
       </div>
 
@@ -543,28 +529,37 @@ export default function BookingFormWithCalendar() {
             <span>Cleaning fee</span>
             <span>€{pricingBreakdown.cleaningFee.toFixed(2)}</span>
           </div>
+          <div className="flex justify-between">
+            <span>Security deposit</span>
+            <span>€200.00</span>
+          </div>
           <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
             <span>Total</span>
-            <span>€{pricingBreakdown.totalAmount.toFixed(2)}</span>
+            <span>€{(pricingBreakdown.totalAmount + 200).toFixed(2)}</span>
           </div>
           {pricingBreakdown.nights >= 28 && (
             <div className="text-xs text-green-600 mt-2">
               🎉 You qualified for a 20% long stay discount!
             </div>
           )}
+
+          <div className="text-xs text-gray-600 mt-2 pt-2 border-t border-gray-200">
+            💡 Security deposit (€200) is charged with your booking and refunded
+            after property inspection
+          </div>
         </div>
       )}
 
       {/* Contact Information - Compact */}
       <div className="border-t border-gray-200 pt-4">
         <h4 className="font-medium text-gray-900 mb-3 text-sm">
-          Contact Details
+          {t("contactDetails")}
         </h4>
 
         <div className="space-y-3">
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
-              Name *
+              {t("nameLabel")} *
             </label>
             <input
               type="text"
@@ -572,14 +567,14 @@ export default function BookingFormWithCalendar() {
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Your name"
+              placeholder={t("yourName")}
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
-              Email *
+              {t("emailLabel")} *
             </label>
             <input
               type="email"
@@ -587,7 +582,7 @@ export default function BookingFormWithCalendar() {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="your@email.com"
+              placeholder={t("yourEmail")}
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -639,7 +634,7 @@ export default function BookingFormWithCalendar() {
         {isSubmitting ? (
           <>
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            Processing...
+            {t("form.processing")}
           </>
         ) : (
           <>
@@ -656,18 +651,18 @@ export default function BookingFormWithCalendar() {
                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
               />
             </svg>
-            Proceed to Payment
+            {t("proceedToPayment")}
           </>
         )}
       </button>
 
       {/* Payment info text */}
       <p className="text-xs text-gray-500 text-center">
-        You&apos;ll be redirected to Stripe to complete your secure payment
+        {t("stripeRedirect")}
       </p>
 
       <p className="text-xs text-gray-500 text-center">
-        Full payment required • Free cancellation up to 14 days before arrival
+        {t("paymentInfo")}
       </p>
     </form>
   );
