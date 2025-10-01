@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import ImageModal from "./ImageModal";
 
 // Temporarily using a single image instead of video
@@ -58,13 +59,16 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* background image instead of video */}
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('${heroImage}')`,
-        }}
-      />
+      {/* background image instead of video - responsive positioning */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src={heroImage}
+          alt="Casa Sueño"
+          fill
+          className="object-cover object-[center_25%] md:object-center"
+          priority
+        />
+      </div>
 
       {/* Enhanced gradient overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />
