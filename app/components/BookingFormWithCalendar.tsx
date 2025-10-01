@@ -377,9 +377,7 @@ export default function BookingFormWithCalendar() {
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           {t("bookingConfirmed")}
         </h3>
-        <p className="text-sm text-gray-600 mb-4">
-          {t("confirmationMessage")}
-        </p>
+        <p className="text-sm text-gray-600 mb-4">{t("confirmationMessage")}</p>
         <button
           onClick={() => {
             setSubmitted(false);
@@ -405,7 +403,9 @@ export default function BookingFormWithCalendar() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Dates - Compact Layout */}
       <div>
-        <h4 className="font-medium text-gray-900 mb-3 text-sm">{t("selectDates")}</h4>
+        <h4 className="font-medium text-gray-900 mb-3 text-sm">
+          {t("selectDates")}
+        </h4>
         <div className="space-y-3">
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
@@ -657,13 +657,9 @@ export default function BookingFormWithCalendar() {
       </button>
 
       {/* Payment info text */}
-      <p className="text-xs text-gray-500 text-center">
-        {t("stripeRedirect")}
-      </p>
+      <p className="text-xs text-gray-500 text-center">{t("stripeRedirect")}</p>
 
-      <p className="text-xs text-gray-500 text-center">
-        {t("paymentInfo")}
-      </p>
+      <p className="text-xs text-gray-500 text-center">{t("paymentInfo")}</p>
     </form>
   );
 }
