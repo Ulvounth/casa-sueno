@@ -178,9 +178,14 @@ export default function Header() {
             </button>
 
             {/* Welcome text */}
-            <div className="mb-8">
+            <div className="mb-6">
               <h3 className="text-xl font-bold text-stone-800">Casa Sueño</h3>
               <p className="text-sm text-stone-500 mt-1">Navigation</p>
+            </div>
+
+            {/* Language Switcher - Mobile */}
+            <div className="mb-6 pb-4 border-b border-stone-200/50">
+              <LanguageSwitcher />
             </div>
 
             {/* Menu items */}
@@ -236,16 +241,6 @@ export default function Header() {
                 ))}
               </li>
             </ul>
-
-            {/* Language Switcher */}
-            <div className="mt-8 pt-6 border-t border-stone-200/50">
-              <div className="px-5 mb-4">
-                <div className="text-sm font-semibold text-stone-500 mb-3">
-                  Language
-                </div>
-                <LanguageSwitcher />
-              </div>
-            </div>
 
             {/* Bottom decoration */}
             <div className="mt-6 pt-6 border-t border-stone-200/50">
