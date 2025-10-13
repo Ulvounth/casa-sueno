@@ -229,8 +229,8 @@ export default function BookingFormWithCalendar() {
     setIsSubmitting(true);
 
     try {
-      // Create Stripe checkout session with server-side redirect
-      const response = await fetch("/api/redirect-to-stripe", {
+      // Submit booking request (no payment processing)
+      const response = await fetch("/api/booking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -248,8 +248,7 @@ export default function BookingFormWithCalendar() {
           cleaningFee: pricingBreakdown.cleaningFee,
           subtotal:
             pricingBreakdown.baseTotal - pricingBreakdown.longStayDiscount,
-          totalPrice: pricingBreakdown.totalAmount + 200, // Include deposit
-          depositAmount: 200,
+          totalPrice: pricingBreakdown.totalAmount, // No deposit, just total amount
           longStayDiscount: pricingBreakdown.longStayDiscount,
           hasLongStayDiscount: pricingBreakdown.hasLongStayDiscount,
         }),
@@ -258,23 +257,26 @@ export default function BookingFormWithCalendar() {
       const result = await response.json();
 
       if (!response.ok) {
-        console.error("Checkout session error:", result);
+        console.error("Booking error:", result);
         alert(
           result.error ||
-            "There was an error creating the checkout session. Please try again."
+            "There was an error creating your booking request. Please try again."
         );
         return;
       }
 
-      // Direct redirect without Stripe.js - This avoids all client-side JS errors
-      if (result.redirectUrl) {
-        window.location.href = result.redirectUrl;
+      // Redirect to success page with payment instructions
+      if (result.success) {
+        // Redirect directly to success page with payment reference
+        window.location.href = `/booking-success?ref=${result.booking.payment_reference}`;
       } else {
-        throw new Error("No redirect URL received");
+        throw new Error("Booking submission failed");
       }
     } catch (error) {
       console.error("Booking error:", error);
-      alert("There was an error processing your booking. Please try again.");
+      alert(
+        "There was an error processing your booking request. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -657,7 +659,9 @@ export default function BookingFormWithCalendar() {
       </button>
 
       {/* Payment info text */}
-      <p className="text-xs text-gray-500 text-center">{t("stripeRedirect")}</p>
+      <p className="text-xs text-gray-500 text-center">
+        {t("paymentInstructions")}
+      </p>
 
       <p className="text-xs text-gray-500 text-center">{t("paymentInfo")}</p>
     </form>

@@ -3,24 +3,23 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { CreditCardIcon } from "@heroicons/react/24/outline";
 
 function BookingSuccessContent() {
   const searchParams = useSearchParams();
-  const sessionId = searchParams?.get("session_id");
+  const paymentRef = searchParams?.get("ref"); // Changed from session_id to ref
   const [loading, setLoading] = useState(true);
   const [verified, setVerified] = useState(false);
 
   useEffect(() => {
-    if (sessionId) {
-      // Here you could verify the session with your backend if needed
-      // For now, we'll just set verified to true
+    if (paymentRef) {
+      // Payment reference exists, booking request was successful
       setVerified(true);
       setLoading(false);
     } else {
       setLoading(false);
     }
-  }, [sessionId]);
+  }, [paymentRef]);
 
   if (loading) {
     return (
@@ -30,7 +29,7 @@ function BookingSuccessContent() {
     );
   }
 
-  if (!sessionId || !verified) {
+  if (!paymentRef || !verified) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="max-w-md mx-auto text-center">
@@ -58,40 +57,67 @@ function BookingSuccessContent() {
 
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-          {/* Success Icon */}
-          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-            <CheckCircleIcon className="h-8 w-8 text-green-600" />
+          {/* Pending Payment Icon */}
+          <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+            <CreditCardIcon className="h-8 w-8 text-blue-600" />
           </div>
 
           {/* Success Message */}
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Booking Confirmed!
+            Booking Request Submitted!
           </h1>
 
           <p className="text-lg text-gray-600 mb-6">
-            Thank you for your payment. Your booking at Casa Sueño has been
-            confirmed and you should receive a confirmation email shortly.
+            Thank you for your booking request. We&apos;ve sent payment
+            instructions to your email. Please complete the payment within 24
+            hours to confirm your reservation.
           </p>
 
-          {/* What happens next */}
+          {/* Payment Instructions */}
+          <div className="bg-blue-50 rounded-lg p-6 mb-8 text-left border border-blue-200">
+            <h3 className="font-semibold text-blue-800 mb-3">
+              💳 Payment Instructions
+            </h3>
+            <ul className="space-y-2 text-sm text-blue-700">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">1.</span>
+                Check your email for detailed payment instructions including our
+                Revolut bank details
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">2.</span>
+                Transfer the total amount using your payment reference:{" "}
+                <strong>{paymentRef}</strong>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">3.</span>
+                Complete payment within 24 hours to secure your booking
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">4.</span>
+                You&apos;ll receive booking confirmation once payment is
+                received
+              </li>
+            </ul>
+          </div>
+
+          {/* What happens after payment */}
           <div className="bg-amber-50 rounded-lg p-6 mb-8 text-left">
             <h3 className="font-semibold text-amber-800 mb-3">
-              What happens next?
+              After payment confirmation:
             </h3>
             <ul className="space-y-2 text-sm text-amber-700">
               <li className="flex items-start gap-2">
                 <span className="text-amber-600 mt-0.5">•</span>
-                You&apos;ll receive a detailed confirmation email with your
-                booking information
+                You&apos;ll receive a detailed booking confirmation email
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-600 mt-0.5">•</span>
-                We&apos;ll send you check-in instructions 24-48 hours before
-                your arrival
+                Check-in instructions will be sent 24-48 hours before arrival
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-600 mt-0.5">•</span>
-                If you have any questions, feel free to contact us directly
+                Feel free to contact us with any questions
               </li>
             </ul>
           </div>
@@ -124,10 +150,10 @@ function BookingSuccessContent() {
           </div>
 
           {/* Session ID for reference */}
-          {sessionId && (
+          {paymentRef && (
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-xs text-gray-500">
-                Booking reference: CS-{sessionId.slice(-8).toUpperCase()}
+                Payment reference: {paymentRef}
               </p>
             </div>
           )}

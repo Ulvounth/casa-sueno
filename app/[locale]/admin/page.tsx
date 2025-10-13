@@ -30,6 +30,9 @@ interface Booking {
   total_price?: number;
   special_requests?: string;
   status: "pending" | "confirmed" | "cancelled";
+  booking_status?: "pending" | "paid" | "expired"; // New payment status
+  payment_reference?: string; // Payment reference for bank transfer
+  booking_expires_at?: string; // When booking expires if not paid
   created_at: string;
   stripe_session_id?: string;
 }
@@ -154,6 +157,58 @@ function AdminPanel() {
     }
   };
 
+  const markAsPaid = async (bookingId: string) => {
+    if (
+      !confirm(
+        "Mark this booking as paid? This will confirm the payment has been received and send a confirmation email to the guest."
+      )
+    ) {
+      return;
+    }
+
+    try {
+      // Update booking status
+      const { error } = await supabase
+        .from("bookings")
+        .update({
+          booking_status: "paid",
+          status: "confirmed", // Also confirm the booking
+        })
+        .eq("id", bookingId);
+
+      if (error) {
+        console.error("Error marking as paid:", error);
+        alert("Error marking booking as paid: " + error.message);
+        return;
+      }
+
+      // Send confirmation email to guest
+      try {
+        const emailResponse = await fetch("/api/booking/confirm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bookingId }),
+        });
+
+        if (!emailResponse.ok) {
+          console.warn(
+            "Failed to send confirmation email, but booking was marked as paid"
+          );
+        }
+      } catch (emailError) {
+        console.error("Email error:", emailError);
+        // Continue even if email fails
+      }
+
+      // Refresh bookings to get updated data
+      await fetchBookings();
+      alert("Booking marked as paid and confirmation email sent to guest!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error marking booking as paid");
+    }
+  };
+
   const deleteBooking = async (bookingId: string) => {
     if (!confirm("Are you sure you want to delete this booking?")) {
       return;
@@ -184,19 +239,6 @@ function AdminPanel() {
     (booking) => statusFilter === "all" || booking.status === statusFilter
   );
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return <CheckCircleIcon className="h-5 w-5 text-green-600" />;
-      case "cancelled":
-        return <XCircleIcon className="h-5 w-5 text-red-600" />;
-      case "pending":
-        return <ClockIcon className="h-5 w-5 text-yellow-600" />;
-      default:
-        return <ClockIcon className="h-5 w-5 text-gray-600" />;
-    }
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case "confirmed":
@@ -207,6 +249,31 @@ function AdminPanel() {
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "confirmed":
+        return <CheckCircleIcon className="h-3 w-3 sm:h-4 sm:w-4" />;
+      case "cancelled":
+        return <XCircleIcon className="h-3 w-3 sm:h-4 sm:w-4" />;
+      case "pending":
+        return <ClockIcon className="h-3 w-3 sm:h-4 sm:w-4" />;
+      default:
+        return <ClockIcon className="h-3 w-3 sm:h-4 sm:w-4" />;
+    }
+  };
+
+  const getPaymentStatusColor = (bookingStatus?: string) => {
+    switch (bookingStatus) {
+      case "paid":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "expired":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "pending":
+      default:
+        return "bg-orange-100 text-orange-800 border-orange-200";
     }
   };
 
@@ -369,10 +436,8 @@ function AdminPanel() {
                     <div className="bg-amber-50 p-2 rounded-lg mb-3 border border-amber-200">
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-mono text-amber-800 font-bold">
-                          CS-
-                          {(booking.stripe_session_id || booking.id)
-                            .slice(-8)
-                            .toUpperCase()}
+                          {booking.payment_reference ||
+                            `CS-${(booking.stripe_session_id || booking.id).slice(-8).toUpperCase()}`}
                         </span>
                         <span className="text-xs text-amber-600">
                           {format(
@@ -381,6 +446,20 @@ function AdminPanel() {
                           )}
                         </span>
                       </div>
+                      {booking.booking_status && (
+                        <div className="mt-1">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusColor(booking.booking_status)}`}
+                          >
+                            💳{" "}
+                            {booking.booking_status === "paid"
+                              ? "Paid"
+                              : booking.booking_status === "expired"
+                                ? "Expired"
+                                : "Payment Pending"}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Guest Info */}
@@ -446,6 +525,14 @@ function AdminPanel() {
 
                     {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-2">
+                      {booking.booking_status === "pending" && (
+                        <button
+                          onClick={() => markAsPaid(booking.id)}
+                          className="flex-1 bg-blue-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-blue-700 transition-colors touch-manipulation"
+                        >
+                          Mark as Paid
+                        </button>
+                      )}
                       {booking.status === "pending" && (
                         <>
                           <button

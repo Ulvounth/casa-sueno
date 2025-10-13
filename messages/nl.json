@@ -120,7 +120,7 @@
     "modal": {
       "title": "Boek Casa Sueño",
       "subtitle": "Reserveer je perfecte mediterrane uitje",
-      "noChargeYet": "✓ Je wordt nog niet afgeschreven"
+      "noChargeYet": "✓ Betaalinstructies worden per e-mail verzonden"
     },
     "form": {
       "name": "Volledige Naam",
@@ -160,14 +160,13 @@
     "night": "nacht",
     "nights": "nachten",
     "longStayDiscount": "Lange verblijf korting (20%)",
-    "cleaningFee": "Schoonmaakkosten",
-    "securityDeposit": "Borg",
+    "cleaningFee": "Nutsvoorzieningen & Schoonmaak",
     "total": "Totaal",
     "longStayQualified": "🎉 Je komt in aanmerking voor 20% lange verblijf korting!",
-    "securityDepositInfo": "💡 Borg (€200) wordt bij je boeking afgeschreven en terugbetaald na inspectie van de accommodatie",
-    "proceedToPayment": "Doorgaan naar Betaling",
-    "stripeRedirect": "Je wordt doorgestuurd naar Stripe om je veilige betaling te voltooien",
-    "paymentInfo": "Volledige betaling vereist • Gratis annulering tot 14 dagen voor aankomst"
+    "securityDepositInfo": "💡 Totaalbedrag inclusief €90 nutsvoorzieningen & schoonmaak",
+    "proceedToPayment": "Boekingsverzoek Indienen",
+    "paymentInstructions": "Je ontvangt binnen 24 uur betaalinstructies per e-mail",
+    "paymentInfo": "Bankoverschrijving vereist • Gratis annulering tot 14 dagen voor aankomst"
   },
   "about": {
     "hero": {

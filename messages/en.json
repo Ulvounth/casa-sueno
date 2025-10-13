@@ -120,7 +120,7 @@
     "modal": {
       "title": "Book Casa Sueño",
       "subtitle": "Reserve your perfect Mediterranean getaway",
-      "noChargeYet": "✓ You won't be charged yet"
+      "noChargeYet": "✓ Payment instructions will be sent via email"
     },
     "form": {
       "name": "Full Name",
@@ -160,14 +160,13 @@
     "night": "night",
     "nights": "nights",
     "longStayDiscount": "Long stay discount (20%)",
-    "cleaningFee": "Cleaning fee",
-    "securityDeposit": "Security deposit",
+    "cleaningFee": "Utilities & Cleaning",
     "total": "Total",
     "longStayQualified": "🎉 You qualified for a 20% long stay discount!",
-    "securityDepositInfo": "💡 Security deposit (€200) is charged with your booking and refunded after property inspection",
-    "proceedToPayment": "Proceed to Payment",
-    "stripeRedirect": "You'll be redirected to Stripe to complete your secure payment",
-    "paymentInfo": "Full payment required • Free cancellation up to 14 days before arrival"
+    "securityDepositInfo": "💡 Total amount includes €90 utilities & cleaning fee",
+    "proceedToPayment": "Submit Booking Request",
+    "paymentInstructions": "You'll receive payment instructions via email within 24 hours",
+    "paymentInfo": "Bank transfer required • Free cancellation up to 14 days before arrival"
   },
   "about": {
     "hero": {
