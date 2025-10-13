@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Check-in:</strong> ${format(parseISO(booking.start_date), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Check-out:</strong> ${format(parseISO(booking.end_date), "EEEE, MMMM d, yyyy")}</p>
             <p><strong>Guests:</strong> ${booking.guests}</p>
-            <p><strong>Booking Reference:</strong> <span style="background: #dcfce7; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${booking.payment_reference}</span></p>
+            <p><strong>Booking Reference:</strong> <span style="background: #dcfce7; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${booking.payment_reference || `CS-${booking.id.slice(-8).toUpperCase()}`}</span></p>
           </div>
 
           <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
             <ul style="margin: 10px 0; padding-left: 20px;">
               <li>Please arrive during check-in hours (3:00 PM - 8:00 PM)</li>
               <li>If arriving late, please notify us in advance</li>
-              <li>Bring a valid ID for all guests</li>
               <li>Review our house rules before arrival</li>
             </ul>
           </div>
