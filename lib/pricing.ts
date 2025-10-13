@@ -21,7 +21,7 @@ export interface PricingBreakdown {
 
 interface PropertyPricing {
   base_price_per_night: number;
-  cleaning_fee: number;
+  utilities_and_cleaning_fee: number;
   seasonal_rates: {
     high_season: number;
     middle_season: number;
@@ -59,7 +59,7 @@ export class PricingService {
       // Fallback pricing if database is unavailable
       return {
         base_price_per_night: 85,
-        cleaning_fee: 50,
+        utilities_and_cleaning_fee: 90,
         seasonal_rates: {
           high_season: 1.294,
           middle_season: 0.941,
@@ -76,7 +76,7 @@ export class PricingService {
 
     return {
       base_price_per_night: data.base_price_per_night,
-      cleaning_fee: data.cleaning_fee,
+      utilities_and_cleaning_fee: data.utilities_and_cleaning_fee || 90,
       seasonal_rates: data.seasonal_rates,
       high_season_minimum_nights: data.high_season_minimum_nights || 7,
       middle_season_minimum_nights: data.middle_season_minimum_nights || 4,
@@ -384,7 +384,7 @@ export class PricingService {
         : 0;
 
       const subtotal = baseTotal - longStayDiscount;
-      const totalAmount = subtotal + pricing.cleaning_fee;
+      const totalAmount = subtotal + pricing.utilities_and_cleaning_fee;
 
       // Determine minimum nights based on predominant season (reuse seasonCounts)
       let minimumNights = pricing.middle_season_minimum_nights;
@@ -405,7 +405,7 @@ export class PricingService {
         baseTotal: Math.round(baseTotal * 100) / 100,
         seasonalRate: Math.round((baseTotal / nights) * 100) / 100,
         longStayDiscount: Math.round(longStayDiscount * 100) / 100,
-        cleaningFee: pricing.cleaning_fee,
+        cleaningFee: pricing.utilities_and_cleaning_fee,
         totalAmount: Math.round(totalAmount * 100) / 100,
         currency: pricing.currency,
         averagePricePerNight: Math.round((baseTotal / nights) * 100) / 100,

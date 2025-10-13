@@ -528,7 +528,7 @@ export default function BookingFormWithCalendar() {
             </div>
           )}
           <div className="flex justify-between">
-            <span>Cleaning fee</span>
+            <span>Utilities & Cleaning</span>
             <span>€{pricingBreakdown.cleaningFee.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">

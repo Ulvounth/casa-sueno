@@ -354,8 +354,8 @@
         "value": "€200 (charged with booking, refunded after stay)"
       },
       "cleaningFee": {
-        "label": "Cleaning fee",
-        "value": "€50 (included in total price)"
+        "label": "Utilities & Cleaning",
+        "value": "€90 (included in total price)"
       },
       "seasonalStays": {
         "title": "Seasonal minimum stays",
