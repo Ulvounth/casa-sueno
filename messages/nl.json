@@ -347,7 +347,7 @@
       },
       "payment": {
         "label": "Betaling",
-        "value": "Volledige betaling vereist bij boeking via Stripe"
+        "value": "Volledige betaling vereist bij boeking via bankoverschrijving"
       },
       "securityDeposit": {
         "label": "Borg",

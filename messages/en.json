@@ -347,7 +347,7 @@
       },
       "payment": {
         "label": "Payment",
-        "value": "Full payment required at booking via Stripe"
+        "value": "Full payment required at booking via bank transfer"
       },
       "securityDeposit": {
         "label": "Security deposit",

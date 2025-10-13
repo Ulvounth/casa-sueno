@@ -11,7 +11,7 @@ import { PricingService, PricingBreakdown } from "@/lib/pricing";
 
 export default function BookingFormWithCalendar() {
   const t = useTranslations("booking");
-  // No more Stripe.js environment checks needed
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

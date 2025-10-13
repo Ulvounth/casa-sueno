@@ -30,11 +30,10 @@ interface Booking {
   total_price?: number;
   special_requests?: string;
   status: "pending" | "confirmed" | "cancelled";
-  booking_status?: "pending" | "paid" | "expired"; // New payment status
+  booking_status?: "pending" | "paid" | "expired"; // Payment status
   payment_reference?: string; // Payment reference for bank transfer
   booking_expires_at?: string; // When booking expires if not paid
   created_at: string;
-  stripe_session_id?: string;
 }
 
 export default function AdminPageWrapper() {
@@ -437,7 +436,7 @@ function AdminPanel() {
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-mono text-amber-800 font-bold">
                           {booking.payment_reference ||
-                            `CS-${(booking.stripe_session_id || booking.id).slice(-8).toUpperCase()}`}
+                            `CS-${booking.id.slice(-8).toUpperCase()}`}
                         </span>
                         <span className="text-xs text-amber-600">
                           {format(
@@ -766,13 +765,9 @@ function AdminPanel() {
                         </p>
                         <div className="mt-3 p-3 bg-gray-50 rounded-md">
                           <p className="text-xs text-gray-600">
-                            <strong>Reference:</strong> CS-
-                            {(
-                              bookingToCancel.stripe_session_id ||
-                              bookingToCancel.id
-                            )
-                              .slice(-8)
-                              .toUpperCase()}
+                            <strong>Reference:</strong>{" "}
+                            {bookingToCancel.payment_reference ||
+                              `CS-${bookingToCancel.id.slice(-8).toUpperCase()}`}
                           </p>
                           <p className="text-xs text-gray-600">
                             <strong>Dates:</strong>{" "}

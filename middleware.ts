@@ -19,18 +19,6 @@ const intlMiddleware = createIntlMiddleware({
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow Stripe webhook to pass through without CSP restrictions and intl routing
-  if (pathname.startsWith("/api/stripe-webhook")) {
-    const response = NextResponse.next();
-    response.headers.delete("Content-Security-Policy");
-    return response;
-  }
-
-  // Allow Stripe checkout APIs to pass through without CSP restrictions and intl routing
-  if (pathname.startsWith("/api/create-checkout-session")) {
-    return NextResponse.next();
-  }
-
   // Skip internationalization for API routes
   if (pathname.startsWith("/api")) {
     return NextResponse.next();
@@ -93,13 +81,13 @@ export async function middleware(request: NextRequest) {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Content-Security-Policy": [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://*.stripe.com",
-      "connect-src 'self' https://vrsaehlthpojsdgwaxtk.supabase.co https://api.stripe.com https://checkout.stripe.com https://*.stripe.com wss://*.supabase.co",
-      "frame-src 'self' https://www.google.com https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://*.stripe.com",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      "connect-src 'self' https://vrsaehlthpojsdgwaxtk.supabase.co wss://*.supabase.co",
+      "frame-src 'self' https://www.google.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
       "font-src 'self' data:",
-      "form-action 'self' https://*.stripe.com",
+      "form-action 'self'",
     ].join("; "),
   };
 
