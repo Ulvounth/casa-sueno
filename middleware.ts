@@ -19,8 +19,8 @@ const intlMiddleware = createIntlMiddleware({
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip internationalization for API routes
-  if (pathname.startsWith("/api")) {
+  // Skip internationalization for API routes, sitemap, and robots.txt
+  if (pathname.startsWith("/api") || pathname === "/sitemap.xml" || pathname === "/robots.txt") {
     return NextResponse.next();
   }
 
@@ -108,7 +108,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - logo, images, videos, carousel (public static assets)
+     * - sitemap.xml, robots.txt (SEO files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|logo|images|videos|carousel).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|logo|images|videos|carousel|sitemap.xml|robots.txt).*)",
   ],
 };
