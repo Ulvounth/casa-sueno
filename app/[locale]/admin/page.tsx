@@ -360,6 +360,8 @@ function AdminPanel() {
   const getTimeUntilExpiry = (expiresAt: string) => {
     const now = new Date();
     const expiry = new Date(expiresAt);
+    
+    // Calculate difference in milliseconds
     const diff = expiry.getTime() - now.getTime();
 
     if (diff <= 0) return "Expired";

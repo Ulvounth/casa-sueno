@@ -140,8 +140,10 @@ export async function POST(request: NextRequest) {
     // Generate unique payment reference
     const paymentReference = `CS-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
 
-    // Set booking expiry to 24 hours from now (using explicit UTC to avoid timezone issues)
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // Add exactly 24 hours in milliseconds
+    // Set booking expiry to exactly 24 hours from now
+    const nowTimestamp = Date.now();
+    const expiresAtTimestamp = nowTimestamp + 24 * 60 * 60 * 1000;
+    const expiresAt = new Date(expiresAtTimestamp);
 
     // Insert booking into Supabase with pending payment status
     const { data: booking, error: bookingError } = await supabase
