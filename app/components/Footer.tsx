@@ -3,18 +3,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const t = useTranslations("footer");
   const tNav = useTranslations("navigation");
+  const locale = useLocale();
+
   return (
     <footer className="bg-stone-800 text-stone-300">
       <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & beskrivelse */}
         <div className="space-y-4">
-          <Link href="/" className="inline-block">
+          <Link href={`/${locale}`} className="inline-block">
             <Image
               src="/logo/CasaSueño.png"
               alt="Casa Sueño"
@@ -32,7 +34,7 @@ export default function Footer() {
           <ul className="space-y-1">
             <li>
               <Link
-                href="/"
+                href={`/${locale}`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("home")}
@@ -40,7 +42,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/about"
+                href={`/${locale}/about`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("about")}
@@ -48,7 +50,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("contact")}
@@ -63,7 +65,7 @@ export default function Footer() {
           <ul className="space-y-1">
             <li>
               <Link
-                href="/house-rules"
+                href={`/${locale}/house-rules`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("houseRules")}
@@ -71,7 +73,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/cancellation-policy"
+                href={`/${locale}/cancellation-policy`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("cancellationPolicy")}
@@ -79,7 +81,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/terms"
+                href={`/${locale}/terms`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("terms")}
@@ -87,7 +89,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/privacy"
+                href={`/${locale}/privacy`}
                 className="hover:text-amber-200 transition-colors text-sm"
               >
                 {tNav("privacy")}

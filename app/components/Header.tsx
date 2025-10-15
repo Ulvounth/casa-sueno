@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -16,6 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [policiesOpen, setPoliciesOpen] = useState(false);
   const pathname = usePathname();
+  const locale = useLocale();
   const dropdownRef = useRef<HTMLLIElement>(null);
   const t = useTranslations("navigation");
 
@@ -42,23 +43,23 @@ export default function Header() {
   }, []);
 
   const links = [
-    { href: "/", label: t("home") },
-    { href: "/about", label: t("about") },
-    { href: "/contact", label: t("contact") },
+    { href: `/${locale}`, label: t("home") },
+    { href: `/${locale}/about`, label: t("about") },
+    { href: `/${locale}/contact`, label: t("contact") },
   ];
 
   const policyLinks = [
-    { href: "/house-rules", label: t("houseRules") },
-    { href: "/cancellation-policy", label: t("cancellationPolicy") },
-    { href: "/terms", label: t("terms") },
-    { href: "/privacy", label: t("privacy") },
+    { href: `/${locale}/house-rules`, label: t("houseRules") },
+    { href: `/${locale}/cancellation-policy`, label: t("cancellationPolicy") },
+    { href: `/${locale}/terms`, label: t("terms") },
+    { href: `/${locale}/privacy`, label: t("privacy") },
   ];
 
   return (
     <>
       <header className="fixed w-full bg-stone-50/90 backdrop-blur z-20">
         <nav className="max-w-7xl mx-auto flex items-center justify-between p-2">
-          <Link href="/" className="flex items-center">
+          <Link href={`/${locale}`} className="flex items-center">
             <Image
               src="/logo/CasaSueño.png"
               alt="Casa Sueño"
