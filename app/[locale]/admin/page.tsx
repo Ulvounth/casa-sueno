@@ -230,7 +230,7 @@ function AdminPanel() {
   };
 
   const now = new Date();
-  now.setHours(0, 0, 0, 0); // Set to start of today for accurate date comparison
+  now.setHours(0, 0, 0, 0);
 
   // Filter bookings based on active tab
   const filteredBookings = bookings.filter((booking) => {
