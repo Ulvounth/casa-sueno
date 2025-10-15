@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
           <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
             <h4 style="color: #374151; margin-top: 0;">Need Help?</h4>
             <p>If you have any questions or need assistance, don't hesitate to contact us:</p>
-            <p><strong>Email:</strong> info@casasueno.com<br>
+            <p><strong>Email:</strong> info@casa-sueno.com<br>
             <strong>Phone:</strong> +34 623 545 857</p>
           </div>
 

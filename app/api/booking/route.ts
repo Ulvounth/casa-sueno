@@ -102,10 +102,10 @@ export async function POST(request: NextRequest) {
           <div style="background: #fef3c7; border: 2px solid #f59e0b; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #92400e; margin-top: 0;">💳 Payment Instructions</h3>
             <p><strong>Amount to transfer:</strong> €${totalPrice}</p>
-            <p><strong>Bank:</strong> Revolut</p>
-            <p><strong>Account Name:</strong> Casa Sueño</p>
-            <p><strong>IBAN:</strong> [TO BE PROVIDED BY LANDLORD]</p>
-            <p><strong>BIC/SWIFT:</strong> REVOLT21</p>
+            <p><strong>Beneficiary:</strong> AMBER VAN GEERT</p>
+            <p><strong>IBAN:</strong> ES44 1583 0001 1290 9729 5996</p>
+            <p><strong>BIC/SWIFT:</strong> REVOESM2</p>
+            <p><strong>Bank:</strong> Revolut Bank UAB</p>
             <p><strong>Reference:</strong> <span style="background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">${paymentReference}</span></p>
             
             <p style="color: #dc2626; font-weight: bold; margin-top: 15px;">⏰ Please transfer within 24 hours to secure your booking.</p>

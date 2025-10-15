@@ -128,7 +128,7 @@ function BookingSuccessContent() {
               Need to contact us?
             </h3>
             <div className="text-sm text-gray-600 space-y-1">
-              <p>Email: info@casasueno.com</p>
+              <p>Email: info@casa-sueno.com</p>
               <p>Phone: +34 623 545 857</p>
             </div>
           </div>
