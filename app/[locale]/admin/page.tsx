@@ -49,7 +49,7 @@ function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  const [activeTab, setActiveTab] = useState<"upcoming" | "past" | "pending">(
+  const [activeTab, setActiveTab] = useState<"upcoming" | "active" | "past">(
     "upcoming"
   );
   const [bookingToCancel, setBookingToCancel] = useState<Booking | null>(null);
@@ -130,29 +130,24 @@ function AdminPanel() {
     return <AdminLogin onLogin={handleLogin} />;
   }
 
-  const updateBookingStatus = async (
-    bookingId: string,
-    newStatus: "confirmed" | "cancelled"
-  ) => {
+  const cancelBooking = async (bookingId: string) => {
     try {
-      // Update without trying to select the result (RLS issue)
       const { error } = await supabase
         .from("bookings")
-        .update({ status: newStatus })
+        .update({ status: "cancelled" })
         .eq("id", bookingId);
 
       if (error) {
-        console.error("Error updating booking:", error);
-        alert("Error updating booking: " + error.message);
+        console.error("Error cancelling booking:", error);
+        alert("Error cancelling booking: " + error.message);
         return;
       }
 
-      // Refresh bookings to get updated data
       await fetchBookings();
-      alert(`Booking ${newStatus === "confirmed" ? "confirmed" : "cancelled"}`);
+      alert("Booking cancelled");
     } catch (error) {
       console.error("Error:", error);
-      alert("Error updating booking");
+      alert("Error cancelling booking");
     }
   };
 
@@ -235,36 +230,88 @@ function AdminPanel() {
   };
 
   const now = new Date();
+  now.setHours(0, 0, 0, 0); // Set to start of today for accurate date comparison
 
   // Filter bookings based on active tab
   const filteredBookings = bookings.filter((booking) => {
+    const checkinDate = new Date(booking.start_date);
     const checkoutDate = new Date(booking.end_date);
+    checkinDate.setHours(0, 0, 0, 0);
+    checkoutDate.setHours(0, 0, 0, 0);
 
     if (activeTab === "upcoming") {
-      // Future bookings (checkout date hasn't passed yet)
-      return checkoutDate >= now && booking.status !== "cancelled";
+      // Future paid bookings + pending payments (check-in hasn't started yet)
+      // Exclude cancelled bookings
+      return (
+        booking.status !== "cancelled" &&
+        checkinDate > now &&
+        (booking.booking_status === "paid" ||
+          booking.booking_status === "pending")
+      );
+    } else if (activeTab === "active") {
+      // Currently ongoing paid bookings (check-in <= today <= check-out)
+      // Only show confirmed/paid, not cancelled
+      return (
+        booking.status !== "cancelled" &&
+        booking.booking_status === "paid" &&
+        checkinDate <= now &&
+        checkoutDate >= now
+      );
     } else if (activeTab === "past") {
-      // Past bookings (checkout date has passed)
-      return checkoutDate < now && booking.status !== "cancelled";
-    } else if (activeTab === "pending") {
-      // Bookings waiting for payment
-      return booking.booking_status === "pending";
+      // All completed bookings (check-out has passed) OR cancelled bookings
+      return checkoutDate < now || booking.status === "cancelled";
     }
     return true;
   });
 
+  // Sort bookings based on active tab
+  const sortedBookings = [...filteredBookings].sort((a, b) => {
+    if (activeTab === "upcoming") {
+      // Upcoming: Nearest check-in first
+      return (
+        new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
+      );
+    } else if (activeTab === "active") {
+      // Active: Most recent check-in first
+      return (
+        new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
+      );
+    } else if (activeTab === "past") {
+      // Past: Most recent check-out first
+      return new Date(b.end_date).getTime() - new Date(a.end_date).getTime();
+    }
+    return 0;
+  });
+
   // Calculate counts for each tab
-  const upcomingCount = bookings.filter(
-    (b) => new Date(b.end_date) >= now && b.status !== "cancelled"
-  ).length;
+  const upcomingCount = bookings.filter((b) => {
+    const checkinDate = new Date(b.start_date);
+    checkinDate.setHours(0, 0, 0, 0);
+    return (
+      b.status !== "cancelled" &&
+      checkinDate > now &&
+      (b.booking_status === "paid" || b.booking_status === "pending")
+    );
+  }).length;
 
-  const pastCount = bookings.filter(
-    (b) => new Date(b.end_date) < now && b.status !== "cancelled"
-  ).length;
+  const activeCount = bookings.filter((b) => {
+    const checkinDate = new Date(b.start_date);
+    const checkoutDate = new Date(b.end_date);
+    checkinDate.setHours(0, 0, 0, 0);
+    checkoutDate.setHours(0, 0, 0, 0);
+    return (
+      b.status !== "cancelled" &&
+      b.booking_status === "paid" &&
+      checkinDate <= now &&
+      checkoutDate >= now
+    );
+  }).length;
 
-  const pendingCount = bookings.filter(
-    (b) => b.booking_status === "pending"
-  ).length;
+  const pastCount = bookings.filter((b) => {
+    const checkoutDate = new Date(b.end_date);
+    checkoutDate.setHours(0, 0, 0, 0);
+    return checkoutDate < now || b.status === "cancelled";
+  }).length;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -308,6 +355,23 @@ function AdminPanel() {
     const start = parseISO(startDate);
     const end = parseISO(endDate);
     return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+  };
+
+  const getTimeUntilExpiry = (expiresAt: string) => {
+    const now = new Date();
+    const expiry = new Date(expiresAt);
+    const diff = expiry.getTime() - now.getTime();
+
+    if (diff <= 0) return "Expired";
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (hours > 0) {
+      return `${hours}h ${minutes}m left`;
+    } else {
+      return `${minutes}m left`;
+    }
   };
 
   if (loading) {
@@ -384,6 +448,28 @@ function AdminPanel() {
                 </button>
 
                 <button
+                  onClick={() => setActiveTab("active")}
+                  className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === "active"
+                      ? "border-amber-600 text-amber-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Active
+                  {activeCount > 0 && (
+                    <span
+                      className={`ml-2 py-0.5 px-2 rounded-full text-xs ${
+                        activeTab === "active"
+                          ? "bg-amber-100 text-amber-600"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {activeCount}
+                    </span>
+                  )}
+                </button>
+
+                <button
                   onClick={() => setActiveTab("past")}
                   className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
                     activeTab === "past"
@@ -404,33 +490,11 @@ function AdminPanel() {
                     </span>
                   )}
                 </button>
-
-                <button
-                  onClick={() => setActiveTab("pending")}
-                  className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
-                    activeTab === "pending"
-                      ? "border-amber-600 text-amber-600"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  }`}
-                >
-                  Pending Payment
-                  {pendingCount > 0 && (
-                    <span
-                      className={`ml-2 py-0.5 px-2 rounded-full text-xs font-semibold ${
-                        activeTab === "pending"
-                          ? "bg-amber-100 text-amber-600"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {pendingCount}
-                    </span>
-                  )}
-                </button>
               </nav>
             </div>
           </div>
           {/* Bookings Grid */}
-          {filteredBookings.length === 0 ? (
+          {sortedBookings.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm border p-6 sm:p-12 text-center">
               <CalendarIcon className="h-8 sm:h-12 w-8 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
               <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-2">
@@ -438,13 +502,13 @@ function AdminPanel() {
               </h3>
               <p className="text-xs sm:text-base text-gray-600">
                 {activeTab === "upcoming" && "No upcoming bookings."}
+                {activeTab === "active" && "No active bookings right now."}
                 {activeTab === "past" && "No past bookings."}
-                {activeTab === "pending" && "No pending payments."}
               </p>
             </div>
           ) : (
             <div className="grid gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredBookings.map((booking) => (
+              {sortedBookings.map((booking) => (
                 <div
                   key={booking.id}
                   className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow"
@@ -498,12 +562,22 @@ function AdminPanel() {
                           <span
                             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusColor(booking.booking_status)}`}
                           >
-                            💳{" "}
-                            {booking.booking_status === "paid"
-                              ? "Paid"
-                              : booking.booking_status === "expired"
-                                ? "Expired"
-                                : "Payment Pending"}
+                            {booking.booking_status === "paid" && "💰 Paid"}
+                            {booking.booking_status === "expired" &&
+                              "⌛ Expired"}
+                            {booking.booking_status === "pending" && (
+                              <>
+                                ⏳ Awaiting Payment
+                                {booking.booking_expires_at && (
+                                  <span className="ml-1 font-semibold">
+                                    •{" "}
+                                    {getTimeUntilExpiry(
+                                      booking.booking_expires_at
+                                    )}
+                                  </span>
+                                )}
+                              </>
+                            )}
                           </span>
                         </div>
                       )}
@@ -575,35 +649,17 @@ function AdminPanel() {
                       {booking.booking_status === "pending" && (
                         <button
                           onClick={() => markAsPaid(booking.id)}
-                          className="flex-1 bg-blue-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-blue-700 transition-colors touch-manipulation"
+                          className="flex-1 bg-green-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-green-700 transition-colors touch-manipulation font-medium"
                         >
-                          Mark as Paid
+                          💰 Mark as Paid
                         </button>
                       )}
-                      {booking.status === "pending" && (
-                        <>
-                          <button
-                            onClick={() =>
-                              updateBookingStatus(booking.id, "confirmed")
-                            }
-                            className="flex-1 bg-green-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-green-700 transition-colors touch-manipulation"
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => setBookingToCancel(booking)}
-                            className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
-                          >
-                            Decline
-                          </button>
-                        </>
-                      )}
-                      {booking.status === "confirmed" && (
+                      {booking.status !== "cancelled" && (
                         <button
                           onClick={() => setBookingToCancel(booking)}
                           className="flex-1 bg-red-600 text-white text-xs py-2.5 sm:py-2 px-3 rounded-md hover:bg-red-700 transition-colors touch-manipulation"
                         >
-                          Cancel
+                          Cancel Booking
                         </button>
                       )}
                     </div>
@@ -846,7 +902,7 @@ function AdminPanel() {
                     type="button"
                     className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      updateBookingStatus(bookingToCancel.id, "cancelled");
+                      cancelBooking(bookingToCancel.id);
                       setBookingToCancel(null);
                     }}
                   >
