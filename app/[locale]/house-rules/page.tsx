@@ -6,6 +6,13 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "House Rules",
+  description:
+    "Review the house rules for Casa Sueño vacation rental in Orihuela, Alicante. Check-in times, guest policies, and important guidelines for your stay.",
+};
 
 export default async function HouseRulesPage({
   params,

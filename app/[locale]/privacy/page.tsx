@@ -5,6 +5,13 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read Casa Sueño's privacy policy. Learn how we collect, use, and protect your personal information when you book our vacation rental.",
+};
 
 export default async function PrivacyPage({
   params,

@@ -5,6 +5,13 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cancellation Policy",
+  description:
+    "Review Casa Sueño's cancellation policy. Understand refund terms, cancellation deadlines, and booking modification policies.",
+};
 
 export default async function CancellationPolicyPage({
   params,

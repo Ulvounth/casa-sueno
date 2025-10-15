@@ -6,6 +6,13 @@ import {
   CurrencyEuroIcon,
 } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+  description:
+    "Read the terms and conditions for booking Casa Sueño vacation rental. Booking policies, payment terms, and rental agreement details.",
+};
 
 export default async function TermsPage({
   params,

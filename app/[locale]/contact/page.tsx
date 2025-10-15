@@ -6,6 +6,13 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 import ContactForm from "@/app/components/ContactForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with Casa Sueño. Contact us for booking inquiries, questions about our vacation rental in Orihuela, Alicante, or general information.",
+};
 
 export default async function ContactPage({
   params,

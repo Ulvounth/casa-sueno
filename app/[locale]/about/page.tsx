@@ -8,6 +8,13 @@ import {
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import FloatingBookingButton from "@/app/components/FloatingBookingButton";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Meet the family behind Casa Sueño. Learn about our passion for hospitality and why we created this beautiful vacation rental in Orihuela, Alicante.",
+};
 
 export default async function AboutPage({
   params,
