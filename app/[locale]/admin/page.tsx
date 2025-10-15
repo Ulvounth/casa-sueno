@@ -49,9 +49,9 @@ function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  const [statusFilter, setStatusFilter] = useState<
-    "all" | "confirmed" | "pending" | "cancelled"
-  >("all");
+  const [activeTab, setActiveTab] = useState<"upcoming" | "past" | "pending">(
+    "upcoming"
+  );
   const [bookingToCancel, setBookingToCancel] = useState<Booking | null>(null);
 
   // Check authentication on component mount
@@ -234,9 +234,37 @@ function AdminPanel() {
     }
   };
 
-  const filteredBookings = bookings.filter(
-    (booking) => statusFilter === "all" || booking.status === statusFilter
-  );
+  const now = new Date();
+
+  // Filter bookings based on active tab
+  const filteredBookings = bookings.filter((booking) => {
+    const checkoutDate = new Date(booking.end_date);
+
+    if (activeTab === "upcoming") {
+      // Future bookings (checkout date hasn't passed yet)
+      return checkoutDate >= now && booking.status !== "cancelled";
+    } else if (activeTab === "past") {
+      // Past bookings (checkout date has passed)
+      return checkoutDate < now && booking.status !== "cancelled";
+    } else if (activeTab === "pending") {
+      // Bookings waiting for payment
+      return booking.booking_status === "pending";
+    }
+    return true;
+  });
+
+  // Calculate counts for each tab
+  const upcomingCount = bookings.filter(
+    (b) => new Date(b.end_date) >= now && b.status !== "cancelled"
+  ).length;
+
+  const pastCount = bookings.filter(
+    (b) => new Date(b.end_date) < now && b.status !== "cancelled"
+  ).length;
+
+  const pendingCount = bookings.filter(
+    (b) => b.booking_status === "pending"
+  ).length;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -329,58 +357,78 @@ function AdminPanel() {
       {/* Main content with top padding to account for fixed header */}
       <div className="pt-40 sm:pt-36">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8">
-          {/* Filters */}
-          <div className="bg-white rounded-lg shadow-sm border p-3 sm:p-6 mb-4 sm:mb-8">
-            <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
-              Filter bookings
-            </h2>
-            <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-4">
-              {[
-                { key: "all", label: "All", count: bookings.length },
-                {
-                  key: "confirmed",
-                  label: "Confirmed",
-                  count: bookings.filter((b) => b.status === "confirmed")
-                    .length,
-                },
-                {
-                  key: "pending",
-                  label: "Pending",
-                  count: bookings.filter((b) => b.status === "pending").length,
-                },
-                {
-                  key: "cancelled",
-                  label: "Cancelled",
-                  count: bookings.filter((b) => b.status === "cancelled")
-                    .length,
-                },
-              ].map((filter) => (
+          {/* Tabs */}
+          <div className="bg-white rounded-lg shadow-sm border mb-4 sm:mb-8">
+            <div className="border-b border-gray-200">
+              <nav className="flex -mb-px" aria-label="Tabs">
                 <button
-                  key={filter.key}
-                  onClick={() =>
-                    setStatusFilter(
-                      filter.key as
-                        | "all"
-                        | "confirmed"
-                        | "pending"
-                        | "cancelled"
-                    )
-                  }
-                  className={`px-2 sm:px-4 py-2 rounded-lg border text-xs sm:text-sm font-medium transition-colors ${
-                    statusFilter === filter.key
-                      ? "bg-amber-600 text-white border-amber-600"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                  onClick={() => setActiveTab("upcoming")}
+                  className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === "upcoming"
+                      ? "border-amber-600 text-amber-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  <span className="block sm:hidden">{filter.label}</span>
-                  <span className="hidden sm:block">
-                    {filter.label} ({filter.count})
-                  </span>
+                  Upcoming
+                  {upcomingCount > 0 && (
+                    <span
+                      className={`ml-2 py-0.5 px-2 rounded-full text-xs ${
+                        activeTab === "upcoming"
+                          ? "bg-amber-100 text-amber-600"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {upcomingCount}
+                    </span>
+                  )}
                 </button>
-              ))}
+
+                <button
+                  onClick={() => setActiveTab("past")}
+                  className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === "past"
+                      ? "border-amber-600 text-amber-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Past
+                  {pastCount > 0 && (
+                    <span
+                      className={`ml-2 py-0.5 px-2 rounded-full text-xs ${
+                        activeTab === "past"
+                          ? "bg-amber-100 text-amber-600"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {pastCount}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("pending")}
+                  className={`flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === "pending"
+                      ? "border-amber-600 text-amber-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Pending Payment
+                  {pendingCount > 0 && (
+                    <span
+                      className={`ml-2 py-0.5 px-2 rounded-full text-xs font-semibold ${
+                        activeTab === "pending"
+                          ? "bg-amber-100 text-amber-600"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {pendingCount}
+                    </span>
+                  )}
+                </button>
+              </nav>
             </div>
           </div>
-
           {/* Bookings Grid */}
           {filteredBookings.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm border p-6 sm:p-12 text-center">
@@ -389,9 +437,9 @@ function AdminPanel() {
                 No bookings
               </h3>
               <p className="text-xs sm:text-base text-gray-600">
-                {statusFilter === "all"
-                  ? "There are no bookings to show."
-                  : `No bookings with status "${statusFilter}".`}
+                {activeTab === "upcoming" && "No upcoming bookings."}
+                {activeTab === "past" && "No past bookings."}
+                {activeTab === "pending" && "No pending payments."}
               </p>
             </div>
           ) : (
