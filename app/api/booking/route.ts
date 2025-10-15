@@ -5,8 +5,56 @@ import { format } from "date-fns";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Rate limiting: Track booking attempts per IP
+const bookingAttempts = new Map<
+  string,
+  { count: number; firstAttempt: number }
+>();
+const MAX_BOOKINGS_PER_HOUR = 3;
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour in milliseconds
+
+// Email validation regex (more strict than basic check)
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+  // Check basic format
+  if (!emailRegex.test(email)) return false;
+  
+  // Check for common fake patterns
+  const fakeDomains = ['test.com', 'example.com', 'fake.com', 'temp.com'];
+  const domain = email.split('@')[1]?.toLowerCase();
+  if (fakeDomains.includes(domain)) return false;
+  
+  // Check length constraints
+  if (email.length < 5 || email.length > 254) return false;
+  
+  return true;
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Get client IP for rate limiting
+    const ip = request.headers.get('x-forwarded-for') || 
+                request.headers.get('x-real-ip') || 
+                'unknown';
+    
+    // Check rate limit
+    const now = Date.now();
+    const attempts = bookingAttempts.get(ip);
+    
+    if (attempts) {
+      // Clean up old attempts (older than 1 hour)
+      if (now - attempts.firstAttempt > RATE_LIMIT_WINDOW) {
+        bookingAttempts.delete(ip);
+      } else if (attempts.count >= MAX_BOOKINGS_PER_HOUR) {
+        const timeLeft = Math.ceil((RATE_LIMIT_WINDOW - (now - attempts.firstAttempt)) / 60000);
+        return NextResponse.json(
+          { error: `Too many booking attempts. Please try again in ${timeLeft} minutes.` },
+          { status: 429 }
+        );
+      }
+    }
+    
     const {
       name,
       email,
@@ -28,6 +76,46 @@ export async function POST(request: NextRequest) {
         { error: "Missing required booking information" },
         { status: 400 }
       );
+    }
+    
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Please provide a valid email address" },
+        { status: 400 }
+      );
+    }
+    
+    // Validate name (no numbers or special chars except spaces, hyphens, apostrophes)
+    if (!/^[a-zA-ZÀ-ÿ\s'-]+$/.test(name) || name.length < 2) {
+      return NextResponse.json(
+        { error: "Please provide a valid name" },
+        { status: 400 }
+      );
+    }
+    
+    // Validate guests (1-5 people - casa capacity)
+    if (guests < 1 || guests > 5) {
+      return NextResponse.json(
+        { error: "Number of guests must be between 1 and 5" },
+        { status: 400 }
+      );
+    }
+    
+    // Record this booking attempt
+    if (attempts) {
+      attempts.count++;
+    } else {
+      bookingAttempts.set(ip, { count: 1, firstAttempt: now });
+    }
+    
+    // Clean up old rate limit entries periodically (every 100 requests)
+    if (bookingAttempts.size > 100) {
+      for (const [key, value] of bookingAttempts.entries()) {
+        if (now - value.firstAttempt > RATE_LIMIT_WINDOW) {
+          bookingAttempts.delete(key);
+        }
+      }
     }
 
     // Check if Resend API key is available
