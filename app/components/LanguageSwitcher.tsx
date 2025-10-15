@@ -3,6 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { useLocale } from "next-intl";
 
 const languages = [
   {
@@ -38,10 +39,9 @@ const languages = [
 export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale(); // Use next-intl's useLocale hook instead of parsing pathname
   const [isOpen, setIsOpen] = useState(false);
 
-  // Extract locale from pathname
-  const locale = pathname.startsWith("/nl") ? "nl" : "en";
   const currentLanguage = languages.find((lang) => lang.code === locale);
 
   const handleLanguageChange = (newLocale: string) => {
