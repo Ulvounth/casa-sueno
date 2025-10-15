@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Set booking expiry to 24 hours from now
     const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 24);
+    expiresAt.setTime(expiresAt.getTime() + 24 * 60 * 60 * 1000); // Add 24 hours in milliseconds
 
     // Insert booking into Supabase with pending payment status
     const { data: booking, error: bookingError } = await supabase
