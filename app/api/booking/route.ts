@@ -5,6 +5,15 @@ import { format } from "date-fns";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Helper function to format date in Europe/Madrid timezone
+function formatInSpainTimezone(date: Date, formatStr: string): string {
+  // Convert to Spain timezone (UTC+1 or UTC+2 depending on DST)
+  const spainDate = new Date(
+    date.toLocaleString("en-US", { timeZone: "Europe/Madrid" })
+  );
+  return format(spainDate, formatStr);
+}
+
 // Rate limiting: Track booking attempts per IP
 const bookingAttempts = new Map<
   string,
@@ -131,9 +140,8 @@ export async function POST(request: NextRequest) {
     // Generate unique payment reference
     const paymentReference = `CS-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
 
-    // Set booking expiry to 24 hours from now
-    const expiresAt = new Date();
-    expiresAt.setTime(expiresAt.getTime() + 24 * 60 * 60 * 1000); // Add 24 hours in milliseconds
+    // Set booking expiry to 24 hours from now (using explicit UTC to avoid timezone issues)
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // Add exactly 24 hours in milliseconds
 
     // Insert booking into Supabase with pending payment status
     const { data: booking, error: bookingError } = await supabase
@@ -202,7 +210,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Reference:</strong> <span style="background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">${paymentReference}</span></p>
             
             <p style="color: #dc2626; font-weight: bold; margin-top: 15px;">⏰ Please transfer within 24 hours to secure your booking.</p>
-            <p style="font-size: 14px; color: #6b7280;">Your booking expires on ${format(expiresAt, "MMMM d, yyyy 'at' HH:mm")} if payment is not received.</p>
+            <p style="font-size: 14px; color: #6b7280;">Your booking expires on ${formatInSpainTimezone(expiresAt, "MMMM d, yyyy 'at' HH:mm")} if payment is not received.</p>
           </div>
 
           <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
@@ -259,7 +267,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Guests:</strong> ${guests}</p>
             <p><strong>Nights:</strong> ${nights}</p>
             <p><strong>Payment Reference:</strong> <span style="background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${paymentReference}</span></p>
-            <p><strong>Booking expires:</strong> ${format(expiresAt, "MMMM d, yyyy 'at' HH:mm")}</p>
+            <p><strong>Booking expires:</strong> ${formatInSpainTimezone(expiresAt, "MMMM d, yyyy 'at' HH:mm")}</p>
           </div>
 
           <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
