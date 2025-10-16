@@ -50,6 +50,16 @@ export async function POST(request: NextRequest) {
           </div>
 
           <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #374151; margin-top: 0;">Property Address</h3>
+            <p>
+              <strong>Casa Sueño</strong><br/>
+              Calle del Lago Bañolas, 28<br/>
+              03186 Orihuela<br/>
+              Alicante, Spain
+            </p>
+          </div>
+
+          <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #374151; margin-top: 0;">Check-in Information</h3>
             <p><strong>Check-in time:</strong> From 3:00 PM onwards</p>
             <p><strong>Check-out time:</strong> Before 11:00 AM</p>

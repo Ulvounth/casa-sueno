@@ -206,6 +206,7 @@ export async function POST(request: NextRequest) {
             <h3 style="color: #92400e; margin-top: 0;">💳 Payment Instructions</h3>
             <p><strong>Amount to transfer:</strong> €${totalPrice}</p>
             <p><strong>Beneficiary:</strong> AMBER VAN GEERT</p>
+            <p><strong>Address:</strong> Calle del Lago Bañolas, 28<br/>03186 Orihuela<br/>Alicante, Spain</p>
             <p><strong>IBAN:</strong> ES44 1583 0001 1290 9729 5996</p>
             <p><strong>BIC/SWIFT:</strong> REVOESM2</p>
             <p><strong>Bank:</strong> Revolut Bank UAB</p>

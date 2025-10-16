@@ -20,7 +20,11 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip internationalization for API routes, sitemap, and robots.txt
-  if (pathname.startsWith("/api") || pathname === "/sitemap.xml" || pathname === "/robots.txt") {
+  if (
+    pathname.startsWith("/api") ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/robots.txt"
+  ) {
     return NextResponse.next();
   }
 
