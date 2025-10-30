@@ -7,6 +7,7 @@ export interface PricingBreakdown {
   seasonalRate: number;
   longStayDiscount: number;
   cleaningFee: number;
+  deposit: number;
   totalAmount: number;
   currency: string;
   averagePricePerNight: number;
@@ -363,42 +364,26 @@ export class PricingService {
         baseTotal += rate;
       }
 
-      // Calculate long stay discount (only applies in low and middle season)
-      const seasonCounts = {
-        high_season: dailyRates.filter((d) => d.season === "high_season")
-          .length,
-        middle_season: dailyRates.filter((d) => d.season === "middle_season")
-          .length,
-        low_season: dailyRates.filter((d) => d.season === "low_season").length,
-      };
-
-      // Check if stay is predominantly in high season
-      const isHighSeasonStay =
-        seasonCounts.high_season > seasonCounts.middle_season &&
-        seasonCounts.high_season > seasonCounts.low_season;
-
+      // Calculate long stay discount: applies only if no nights in June, July, August, September
       const hasLongStayDiscount =
-        nights >= pricing.long_stay_discount_threshold && !isHighSeasonStay;
+        nights >= pricing.long_stay_discount_threshold &&
+        !days.some(
+          (d) => {
+            const m = d.getMonth() + 1;
+            return m === 6 || m === 7 || m === 8 || m === 9;
+          }
+        );
       const longStayDiscount = hasLongStayDiscount
         ? (baseTotal * pricing.long_stay_discount_percent) / 100
         : 0;
 
+      const deposit = 200;
       const subtotal = baseTotal - longStayDiscount;
-      const totalAmount = subtotal + pricing.utilities_and_cleaning_fee;
+      const totalAmount =
+        subtotal + pricing.utilities_and_cleaning_fee + deposit;
 
-      // Determine minimum nights based on predominant season (reuse seasonCounts)
-      let minimumNights = pricing.middle_season_minimum_nights;
-      if (
-        seasonCounts.high_season > seasonCounts.middle_season &&
-        seasonCounts.high_season > seasonCounts.low_season
-      ) {
-        minimumNights = pricing.high_season_minimum_nights;
-      } else if (
-        seasonCounts.low_season > seasonCounts.middle_season &&
-        seasonCounts.low_season > seasonCounts.high_season
-      ) {
-        minimumNights = pricing.low_season_minimum_nights;
-      }
+      // Minimum nights fallback: always use middle_season_minimum_nights
+      const minimumNights = pricing.middle_season_minimum_nights;
 
       return {
         nights,
@@ -406,6 +391,7 @@ export class PricingService {
         seasonalRate: Math.round((baseTotal / nights) * 100) / 100,
         longStayDiscount: Math.round(longStayDiscount * 100) / 100,
         cleaningFee: pricing.utilities_and_cleaning_fee,
+        deposit,
         totalAmount: Math.round(totalAmount * 100) / 100,
         currency: pricing.currency,
         averagePricePerNight: Math.round((baseTotal / nights) * 100) / 100,

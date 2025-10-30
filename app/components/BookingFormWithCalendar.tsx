@@ -533,13 +533,13 @@ export default function BookingFormWithCalendar() {
           </div>
           <div className="flex justify-between">
             <span>Security deposit</span>
-            <span>€200.00</span>
+            <span>€{pricingBreakdown.deposit.toFixed(2)}</span>
           </div>
           <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
             <span>Total</span>
-            <span>€{(pricingBreakdown.totalAmount + 200).toFixed(2)}</span>
+            <span>€{pricingBreakdown.totalAmount.toFixed(2)}</span>
           </div>
-          {pricingBreakdown.nights >= 28 && (
+          {pricingBreakdown.hasLongStayDiscount && (
             <div className="text-xs text-green-600 mt-2">
               🎉 You qualified for a 20% long stay discount!
             </div>
