@@ -11,6 +11,7 @@
   "navigation": {
     "home": "Home",
     "about": "About",
+    "prices": "Prices",
     "contact": "Contact",
     "terms": "Terms",
     "privacy": "Privacy",
@@ -88,7 +89,7 @@
       "bathtubShower": "Bathtub & shower",
       "everythingIncluded": {
         "title": "Everything you need for a perfect holiday",
-        "description": "All basic amenities are included - just bring your clothes and enjoy your stay! From kitchen essentials to fresh linens, we've got you covered."
+        "description": "All basic amenities are included - just bring your clothes and enjoy your stay!"
       }
     },
     "familyAmenities": {
@@ -562,5 +563,48 @@
     "title": "Page Not Found",
     "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
     "goHome": "Go back home"
+  },
+  "prices": {
+    "title": "Prices",
+    "intro": "Below you'll find an overview of our rental prices, fixed costs, and holiday periods.",
+    "seasonPrices": "Seasonal prices per night",
+    "low_season": "Low season",
+    "middle_season": "Middle season",
+    "high_season": "High season",
+    "holidayPeriods": "Holiday periods (high season)",
+    "holidays": {
+      "2025": {
+        "summer_high_season": "Summer High Season",
+        "christmas_nl": "Christmas Holiday (Netherlands)",
+        "christmas_belgium": "Christmas Holiday (Belgium)",
+        "christmas_spain": "Christmas Holiday (Spain)"
+      },
+      "2026": {
+        "summer_high_season": "Summer High Season",
+        "newyear_nl_be": "New Year Holiday (Netherlands/Belgium)",
+        "newyear_spain": "New Year Holiday (Spain)",
+        "winter_nl_midden_zuid": "Winter Holiday (Netherlands Central & South)",
+        "winter_belgium": "Winter Holiday (Belgium - Krokusvakantie)",
+        "winter_nl_noord": "Winter Holiday (Netherlands North)",
+        "easter_belgium": "Easter Holiday (Belgium)",
+        "easter_nl_approx": "Easter Holiday (Netherlands - approx. 2 weeks around Easter)",
+        "easter_spain": "Easter Holiday (Spain - Semana Santa)",
+        "may_nl": "May Holiday (Netherlands)",
+        "autumn_nl_noord": "Autumn Holiday (Netherlands North)",
+        "autumn_nl_midden_zuid": "Autumn Holiday (Netherlands Central & South)",
+        "autumn_belgium_2wk": "Autumn Holiday (Belgium - 2 weeks)",
+        "christmas_nl_be": "Christmas Holiday (Netherlands & Belgium)"
+      },
+      "2027": {
+        "summer_high_season": "Summer High Season",
+        "winter_belgium": "Winter Holiday (Belgium)",
+        "winter_nl_midden_zuid": "Winter Holiday (Netherlands Central & South)",
+        "winter_nl_noord": "Winter Holiday (Netherlands North)"
+      }
+    },
+    "fixedCosts": "Fixed costs",
+    "Utilities & Cleaning": "Utilities & Cleaning",
+    "Security deposit": "Security deposit",
+    "note": "Holiday periods are always high season. For details about which holidays are included, see the table above. Contact us for more info or special requests."
   }
 }

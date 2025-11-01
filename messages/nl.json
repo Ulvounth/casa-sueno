@@ -11,6 +11,7 @@
   "navigation": {
     "home": "Home",
     "about": "Over ons",
+    "prices": "Prijzen",
     "contact": "Contact",
     "terms": "Voorwaarden",
     "privacy": "Privacy",
@@ -562,5 +563,48 @@
     "title": "Pagina Niet Gevonden",
     "description": "De pagina die u zoekt is mogelijk verwijderd, heeft een andere naam gekregen, of is tijdelijk niet beschikbaar.",
     "goHome": "Ga terug naar home"
+  },
+  "prices": {
+    "title": "Prijzen",
+    "intro": "Hieronder vind je een overzicht van onze huurprijzen, vaste kosten en vakantieperiodes.",
+    "seasonPrices": "Seizoensprijzen per nacht",
+    "low_season": "Laagseizoen",
+    "middle_season": "Middenseizoen",
+    "high_season": "Hoogseizoen",
+    "holidayPeriods": "Vakantieperiodes (hoogseizoen)",
+    "holidays": {
+      "2025": {
+        "summer_high_season": "Zomer hoogseizoen",
+        "christmas_nl": "Kerstvakantie (Nederland)",
+        "christmas_belgium": "Kerstvakantie (België)",
+        "christmas_spain": "Kerstvakantie (Spanje)"
+      },
+      "2026": {
+        "summer_high_season": "Zomer hoogseizoen",
+        "newyear_nl_be": "Nieuwjaarsvakantie (Nederland/België)",
+        "newyear_spain": "Nieuwjaarsvakantie (Spanje)",
+        "winter_nl_midden_zuid": "Voorjaarsvakantie (Nederland Midden & Zuid)",
+        "winter_belgium": "Krokusvakantie (België)",
+        "winter_nl_noord": "Voorjaarsvakantie (Nederland Noord)",
+        "easter_belgium": "Paasvakantie (België)",
+        "easter_nl_approx": "Paasvakantie (Nederland - ca. 2 weken rondom Pasen)",
+        "easter_spain": "Paasvakantie (Spanje - Semana Santa)",
+        "may_nl": "Meivakantie (Nederland)",
+        "autumn_nl_noord": "Herfstvakantie (Nederland Noord)",
+        "autumn_nl_midden_zuid": "Herfstvakantie (Nederland Midden & Zuid)",
+        "autumn_belgium_2wk": "Herfstvakantie (België - 2 weken)",
+        "christmas_nl_be": "Kerstvakantie (Nederland & België)"
+      },
+      "2027": {
+        "summer_high_season": "Zomer hoogseizoen",
+        "winter_belgium": "Krokusvakantie (België)",
+        "winter_nl_midden_zuid": "Voorjaarsvakantie (Nederland Midden & Zuid)",
+        "winter_nl_noord": "Voorjaarsvakantie (Nederland Noord)"
+      }
+    },
+    "fixedCosts": "Vaste kosten",
+    "Utilities & Cleaning": "Schoonmaak & nutsvoorzieningen",
+    "Security deposit": "Waarborg",
+    "note": "Vakantieperiodes zijn altijd hoogseizoen. Zie de tabel hierboven voor details over welke vakanties zijn inbegrepen. Neem contact op voor meer info of speciale verzoeken."
   }
 }
